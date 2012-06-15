@@ -77,7 +77,7 @@ emailTemplates(templatesDir, function(err, templates) {
 
 
 
-## Example with [Nodemailer][3])
+## Example with [Nodemailer][3]
 
 ```js
 var path           = require('path')
@@ -210,7 +210,7 @@ emailTemplates(templatesDir, function(err, template) {
 
 
 
-## Example with [Postmark App][4]) (utilizing [Postmark.js][5])
+## Example with [Postmark App][4] (utilizing [Postmark.js][5])
 
 **NOTE**: Did you know `nodemailer` can also be used to send SMTP email through Postmark? See [this section][6] of their Readme for more info.
 
@@ -341,8 +341,8 @@ MIT Licensed
 
 
 
-[1]:
-[2]:
+[1]: https://github.com/visionmedia/ejs
+[2]: https://github.com/LearnBoost/juice
 [3]: https://github.com/andris9/Nodemailer
 [4]: http://postmarkapp.com/
 [5]: https://github.com/voodootikigod/postmark.js
