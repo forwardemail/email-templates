@@ -20,7 +20,7 @@ npm install email-templates
 4. Add the following files inside the template's folder:
 
   * `html.ejs` - html + [ejs][1] version of your email template
-  * `plaintext.ejs` - plaintext + [ejs][1] version of your email template
+  * `text.ejs` - text + [ejs][1] version of your email template
   * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (optional)
 
 5. Utilize one of the examples below for your respective email module and start sending beautiful emails!
