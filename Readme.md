@@ -8,21 +8,15 @@ Node.js module for rendering beautiful emails with [ejs][1] templates and email-
 ## Quick start
 
 1. Install the module for your respective project.
-
 ```bash
 npm install email-templates
 ```
-
 2. Create a folder called `templates` inside your root directory (or elsewhere).
-
 3. For each of your templates, respectively name and create a folder inside the `templates` folder.
-
 4. Add the following files inside the template's folder:
-
-  * `html.ejs` - html + [ejs][1] version of your email template
-  * `text.ejs` - text + [ejs][1] version of your email template
-  * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (optional)
-
+    * `html.ejs` - html + [ejs][1] version of your email template
+    * `text.ejs` - text + [ejs][1] version of your email template
+    * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (optional)
 5. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
