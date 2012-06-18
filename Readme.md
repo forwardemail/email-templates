@@ -20,14 +20,7 @@ Node.js module for rendering beautiful emails with [ejs][1] templates and email-
 
 # Usage
 
-Pass a valid directory path as an argument to the module.
-
-```js
-var path           = require('path')
-  , emailTemplates = require('email-templates')(path.join(__dirname, 'templates'));
-```
-
-Then render a template for a single email or render multiple (having only loaded the template once).
+Render a template for a single email or render multiple (having only loaded the template once).
 
 ```js
 var path           = require('path')
