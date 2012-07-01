@@ -102,7 +102,7 @@ emailTemplates(templatesDir, function(err, template) {
       if (err) {
         console.log(err);
       } else {
-        transportBatch.sendMail({
+        transport.sendMail({
           from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
           to: locals.email,
           subject: 'Mangia gli spaghetti con polpette!',
