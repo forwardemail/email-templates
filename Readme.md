@@ -3,9 +3,21 @@
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
+
+
 ## Email Templates
 
 For professional and customizable email templates, please visit <https://github.com/mailchimp/Email-Blueprints>.
+
+
+
+## Installation
+
+```bash
+npm install email-templates
+```
+
+
 
 ## Quick start
 
