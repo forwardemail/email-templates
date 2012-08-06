@@ -45,7 +45,7 @@ Render a template for a single email or render multiple (having only loaded the 
 
 ```js
 var path           = require('path')
-  , templateDir    = path.join(__dirname, 'templates')
+  , templatesDir   = path.join(__dirname, 'templates')
   , emailTemplates = require('email-templates');
 
 emailTemplates(templatesDir, function(err, templates) {
