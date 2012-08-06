@@ -48,11 +48,11 @@ var path           = require('path')
   , templatesDir   = path.join(__dirname, 'templates')
   , emailTemplates = require('email-templates');
 
-emailTemplates(templatesDir, function(err, templates) {
+emailTemplates(templatesDir, function(err, template) {
 
   // Render a single email with one template
   var locals = { pasta: 'Spaghetti' };
-  templates('pasta-dinner', locals, function(err, html, text) {
+  template('pasta-dinner', locals, function(err, html, text) {
     // ...
   });
 
