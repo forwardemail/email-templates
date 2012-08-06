@@ -52,7 +52,7 @@ emailTemplates(templatesDir, function(err, templates) {
 
   // Render a single email with one template
   var locals = { pasta: 'Spaghetti' };
-  template('pasta-dinner', locals, function(err, html, text) {
+  templates('pasta-dinner', locals, function(err, html, text) {
     // ...
   });
 
