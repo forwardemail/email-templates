@@ -43,6 +43,8 @@ npm install email-templates-windows
 
 Render a template for a single email or render multiple (having only loaded the template once).
 
+Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.  Simply add `open` and `close` properties to your `locals` object.  Read the EJS documentation <a href="https://github.com/visionmedia/ejs#options" target="_blank">about tags and more options</a>.
+
 ```js
 var path           = require('path')
   , templatesDir   = path.join(__dirname, 'templates')
