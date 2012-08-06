@@ -13,10 +13,17 @@ For professional and customizable email templates, please visit <https://github.
 
 ## Installation
 
+### Unix/OS X
+
 ```bash
 npm install email-templates
 ```
 
+### Windows
+
+```bash
+npm install email-templates-windows
+```
 
 
 ## Quick start
