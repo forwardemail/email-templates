@@ -1,9 +1,9 @@
 
-# node-email-templates
+# node-email-templates <sup>0.0.2</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
-
+**NEW**: Added support for custom EJS options such as opening and closing tags (instead of `<%` and `%>`).  See documentation below for more information.
 
 ## Email Templates
 
@@ -38,6 +38,17 @@ npm install email-templates-windows
 5. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
+# EJS Custom Tags
+
+Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
+
+```js
+...
+emailTemplates(templatesDir, { open: '{{', close: '}}' }, function(err, template) {
+...
+```
+
+**NOTE**: You can also pass <a href="https://github.com/visionmedia/ejs#options" target="_blank">other options from EJS's documentation</a>.
 
 # Usage
 
@@ -45,10 +56,10 @@ Render a template for a single email or render multiple (having only loaded the 
 
 ```js
 var path           = require('path')
-  , templateDir    = path.join(__dirname, 'templates')
+  , templatesDir   = path.join(__dirname, 'templates')
   , emailTemplates = require('email-templates');
 
-emailTemplates(templatesDir, function(err, templates) {
+emailTemplates(templatesDir, function(err, template) {
 
   // Render a single email with one template
   var locals = { pasta: 'Spaghetti' };
