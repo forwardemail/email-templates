@@ -44,7 +44,7 @@ Want to use different opening and closing tags instead of the EJS's default `<%`
 
 ```js
 ...
-emailTemplates(templatesDir, { open: '{{', closed: '}}' }, function(err, template) {
+emailTemplates(templatesDir, { open: '{{', close: '}}' }, function(err, template) {
 ...
 ```
 
