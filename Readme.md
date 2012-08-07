@@ -1,9 +1,9 @@
 
-# node-email-templates
+# node-email-templates <sup>0.0.2</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
-
+**NEW**: Added support for custom EJS options such as opening and closing tags (instead of `<%` and `%>`).  See documentation below for more information.
 
 ## Email Templates
 
