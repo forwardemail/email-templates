@@ -1,7 +1,7 @@
 {
     "name": "email-templates"
   , "description": "Node.js module for rendering beautiful emails with ejs templates and email-friendly inline CSS using juice."
-  , "version": "0.0.1"
+  , "version": "0.0.2"
   , "author": "Nick Baugh <niftylettuce@gmail.com>"
   , "contributors": [
       { "name": "Nick Baugh", "email": "niftylettuce@gmail.com" }
@@ -20,5 +20,6 @@
         "ejs": "0.7.1"
       , "juice": "https://github.com/niftylettuce/juice/tarball/master"
       , "async": "0.1.22"
+      , "underscore": "1.3.3"
   }
 }
