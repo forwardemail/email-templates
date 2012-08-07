@@ -48,6 +48,8 @@ emailTemplates(templatesDir, { open: '{{', close: '}}' }, function(err, template
 ...
 ```
 
+**NOTE**: You can also pass <a href="https://github.com/visionmedia/ejs#options" target="_blank">other options from EJS's documentation</a>.
+
 # Usage
 
 Render a template for a single email or render multiple (having only loaded the template once).
