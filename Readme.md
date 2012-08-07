@@ -38,12 +38,19 @@ npm install email-templates-windows
 5. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
+# EJS Custom Tags
+
+Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
+
+```js
+...
+emailTemplates(templatesDir, { open: '{{', closed: '}}' }, function(err, template) {
+...
+```
 
 # Usage
 
 Render a template for a single email or render multiple (having only loaded the template once).
-
-Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.  Simply add `open` and `close` properties to your `locals` object.  Read the EJS documentation <a href="https://github.com/visionmedia/ejs#options" target="_blank">about tags and more options</a>.
 
 ```js
 var path           = require('path')
