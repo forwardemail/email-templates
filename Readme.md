@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/niftylettuce/node-email-templates.png)](http://travis-ci.org/niftylettuce/node-email-templates)
 
 # node-email-templates <sup>0.0.2</sup>
 
