@@ -1,9 +1,10 @@
 
-# node-email-templates <sup>0.0.2</sup>
+# node-email-templates <sup>0.0.3</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
-**NEW**: Added support for custom EJS options such as opening and closing tags (instead of `<%` and `%>`).  See documentation below for more information.
+**New in v0.0.3**:
+* Removed requirement for `style.css` and `text.ejs` files with compatibility in `node` v0.6.x to v0.8.x (utilizes `path.exists` vs. `fs.exists` respectively).
 
 ## Email Templates
 
@@ -32,9 +33,9 @@ npm install email-templates-windows
 2. Create a folder called `templates` inside your root directory (or elsewhere).
 3. For each of your templates, respectively name and create a folder inside the `templates` folder.
 4. Add the following files inside the template's folder:
-    * `html.ejs` - html + [ejs][1] version of your email template
-    * `text.ejs` - text + [ejs][1] version of your email template
-    * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (optional)
+    * `html.ejs` - html + [ejs][1] version of your email template (**required**)
+    * `text.ejs` - text + [ejs][1] version of your email template (**optional**)
+    * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (**optional**)
 5. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
