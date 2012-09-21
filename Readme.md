@@ -1,7 +1,20 @@
 
-# node-email-templates <sup>0.0.4</sup>
+# node-email-templates <sup>0.0.5</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
+
+**v0.0.5**:
+* Added support for an optional [zlib][8] compression type (e.g. you can return compressed html/text buffer for db storage)
+
+```bash
+...
+template('newsletter', locals, 'deflateRaw', function(err, html, text) {
+  // The `html` and `text` are buffers compressed using zlib.deflateRaw
+  // <http://nodejs.org/docs/latest/api/zlib.html#zlib_zlib_deflateraw_buf_callback>
+  // **NOTE**: You could also pass 'deflate' or 'gzip' if necessary, and it works with batch rendering as well
+})
+...
+```
 
 **v0.0.4 (with bug fix for 0.0.3)**:
 * Removed requirement for `style.css` and `text.ejs` files with compatibility in `node` v0.6.x to v0.8.x (utilizes `path.exists` vs. `fs.exists` respectively).
@@ -365,3 +378,4 @@ MIT Licensed
 [5]: https://github.com/voodootikigod/postmark.js
 [6]: https://github.com/andris9/Nodemailer#well-known-services-for-smtp
 [7]: http://developer.postmarkapp.com/developer-build.html#message-format
+[8]: http://nodejs.org/docs/latest/api/zlib.html
