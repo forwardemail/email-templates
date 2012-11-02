@@ -1,7 +1,10 @@
 
-# node-email-templates <sup>0.0.5</sup>
+# node-email-templates <sup>0.0.6</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
+
+**v0.0.6**:
+* Fixed batch problem (`...has no method slice`) thanks to @vekexasia
 
 **v0.0.5**:
 * Added support for an optional [zlib][8] compression type (e.g. you can return compressed html/text buffer for db storage)
@@ -362,7 +365,7 @@ emailTemplates(templatesDir, function(err, template) {
 ## Contributors
 
 * Nick Baugh <niftylettuce@gmail.com>
-
+* Andrea Baccega <vekexasia@gmail.com>
 
 
 ## License
