@@ -1,10 +1,13 @@
 
 
-# node-email-templates <sup>0.0.8</sup>
+# node-email-templates <sup>0.0.9</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
 **UPDATE**: [Teelaunch](https://github.com/teelaunch) plans to rewrite this module, subscribe to their [email newsletter](http://goo.gl/j0ypI) for special updates.
+
+**v0.0.9**:
+* Fixed `juice` dependency issue
 
 **v0.0.7**:
 * Added support for ejs's `include` directive thanks to @nicjansma
