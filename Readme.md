@@ -1,6 +1,5 @@
 
-
-# node-email-templates <sup>0.0.9</sup>
+# node-email-templates <sup>[![Version Badge](http://vb.teelaun.ch/niftylettuce/node-email-templates.svg)](https://npmjs.org/package/email-templates)</sup>
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
