@@ -365,6 +365,8 @@ emailTemplates(templatesDir, function(err, template) {
 
 ## Changelog
 
+* 0.1.0 - Fixed batch documentation issue
+
 * 0.0.9 - Fixed `juice` dependency issue
 
 * 0.0.8 - Minor updates
