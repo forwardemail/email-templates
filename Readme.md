@@ -3,6 +3,9 @@
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
+View these docs generated with [readme-docs](https://github.com/getprove/node-bootstrap-readme-docs) here:
+<http://niftylettuce.github.io/node-email-templates>
+
 Follow [@niftylettuce](http://twitter.com/niftylettuce) on Twitter for updates.
 
 Like this module?  Check out [express-cdn](https://github.com/niftylettuce/express-cdn)!
