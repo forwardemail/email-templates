@@ -18,6 +18,7 @@ Like this module?  Check out [express-cdn](https://github.com/niftylettuce/expre
     * [Basic](#basic)
     * [Nodemailer](#nodemailer)
     * [Postmark](#postmark)
+* [Lazyweb Requests](#lazyweb-requests)
 * [Changelog](#changelog)
 * [Contributors](#contributors)
 * [License](#license)
@@ -361,6 +362,16 @@ emailTemplates(templatesDir, function(err, template) {
   }
 });
 ```
+
+
+## Lazyweb Requests
+
+These are feature requests that we would appreciate contributors for:
+
+* Merge with @superjoe30 swig email templates fork
+* Add ability to specify template language `swig`, `jade`, `ejs`, `handlebars`, ...
+* Add ability to specify css language `sass`, `less`, `styl`, ...
+* Add parsing of HTML with CSS inlining and HTML linting
 
 
 ## Changelog
