@@ -1,7 +1,7 @@
 {
     "name": "email-templates"
   , "description": "Node.js module for rendering beautiful emails with ejs templates and email-friendly inline CSS using juice."
-  , "version": "0.0.9"
+  , "version": "0.1.0"
   , "author": "Nick Baugh <niftylettuce@gmail.com>"
   , "contributors": [
         { "name": "Nick Baugh", "email": "niftylettuce@gmail.com" }
