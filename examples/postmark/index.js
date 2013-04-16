@@ -105,7 +105,7 @@ emailTemplates(templatesDir, function(err, template) {
         }
       };
       this.batch = function(batch) {
-        batch(this.locals, this.send);
+        batch(this.locals, templatesDir, this.send);
       };
     };
 

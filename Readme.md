@@ -3,37 +3,30 @@
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
-**UPDATE**: [Teelaunch](https://github.com/teelaunch) plans to rewrite this module, subscribe to their [email newsletter](http://goo.gl/j0ypI) for special updates.
+Follow [@niftylettuce](http://twitter.com/niftylettuce) on Twitter for updates.
 
-**v0.0.9**:
-* Fixed `juice` dependency issue
+Like this module?  Check out [express-cdn](https://github.com/niftylettuce/express-cdn)!
 
-**v0.0.7**:
-* Added support for ejs's `include` directive thanks to @nicjansma
 
-**v0.0.6**:
-* Fixed batch problem (`...has no method slice`) thanks to @vekexasia
+## Index
 
-**v0.0.5**:
-* Added support for an optional [zlib][8] compression type (e.g. you can return compressed html/text buffer for db storage)
+* [Email Templates](#email-templates)
+* [Installation](#installation)
+* [Quick Start](#quick-start)
+* [EJS Custom Tags](#ejs-custom-tags)
+* [Examples](#examples)
+    * [Basic](#basic)
+    * [Nodemailer](#nodemailer)
+    * [Postmark](#postmark)
+* [Lazyweb Requests](#lazyweb-requests)
+* [Changelog](#changelog)
+* [Contributors](#contributors)
+* [License](#license)
 
-```bash
-...
-template('newsletter', locals, 'deflateRaw', function(err, html, text) {
-  // The `html` and `text` are buffers compressed using zlib.deflateRaw
-  // <http://nodejs.org/docs/latest/api/zlib.html#zlib_zlib_deflateraw_buf_callback>
-  // **NOTE**: You could also pass 'deflate' or 'gzip' if necessary, and it works with batch rendering as well
-})
-...
-```
-
-**v0.0.4 (with bug fix for 0.0.3)**:
-* Removed requirement for `style.css` and `text.ejs` files with compatibility in `node` v0.6.x to v0.8.x (utilizes `path.exists` vs. `fs.exists` respectively).
 
 ## Email Templates
 
 For professional and customizable email templates, please visit <https://github.com/mailchimp/Email-Blueprints>.
-
 
 
 ## Installation
@@ -51,7 +44,7 @@ npm install email-templates-windows
 ```
 
 
-## Quick start
+## Quick Start
 
 1. Install the module for your respective project `npm install email-templates`.
 2. Create a folder called `templates` inside your root directory (or elsewhere).
@@ -64,7 +57,7 @@ npm install email-templates-windows
 6. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
-# EJS Custom Tags
+## EJS Custom Tags
 
 Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
 
@@ -76,7 +69,10 @@ emailTemplates(templatesDir, { open: '{{', close: '}}' }, function(err, template
 
 **NOTE**: You can also pass <a href="https://github.com/visionmedia/ejs#options" target="_blank">other options from EJS's documentation</a>.
 
-# Usage
+
+## Examples
+
+### Basic
 
 Render a template for a single email or render multiple (having only loaded the template once).
 
@@ -117,9 +113,7 @@ emailTemplates(templatesDir, function(err, template) {
 });
 ```
 
-
-
-## Example with [Nodemailer][3]
+### [Nodemailer][3]
 
 ```js
 var path           = require('path')
@@ -234,7 +228,7 @@ emailTemplates(templatesDir, function(err, template) {
         }
       };
       this.batch = function(batch) {
-        batch(this.locals, this.send);
+        batch(this.locals, templatesDir, this.send);
       };
     };
 
@@ -250,9 +244,9 @@ emailTemplates(templatesDir, function(err, template) {
 });
 ```
 
+### [Postmark][4]
 
-
-## Example with [Postmark App][4] (utilizing [Postmark.js][5])
+This example utilizes [Postmark.js][5].
 
 **NOTE**: Did you know `nodemailer` can also be used to send SMTP email through Postmark? See [this section][6] of their Readme for more info.
 
@@ -353,7 +347,7 @@ emailTemplates(templatesDir, function(err, template) {
         }
       };
       this.batch = function(batch) {
-        batch(this.locals, this.send);
+        batch(this.locals, templatesDir, this.send);
       };
     };
 
@@ -370,6 +364,40 @@ emailTemplates(templatesDir, function(err, template) {
 ```
 
 
+## Lazyweb Requests
+
+These are feature requests that we would appreciate contributors for:
+
+* Merge with @superjoe30 swig email templates fork
+* Add ability to specify template language `swig`, `jade`, `ejs`, `handlebars`, ...
+* Add ability to specify css language `sass`, `less`, `styl`, ...
+* Add parsing of HTML with CSS inlining and HTML linting
+
+
+## Changelog
+
+* 0.1.0 - Fixed batch documentation issue
+
+* 0.0.9 - Fixed `juice` dependency issue
+
+* 0.0.8 - Minor updates
+
+* 0.0.7 - Added support for ejs's `include` directive thanks to @nicjansma
+
+* 0.0.6 - Fixed batch problem (`...has no method slice`) thanks to @vekexasia
+
+* 0.0.5 - Added support for an optional [zlib][8] compression type (e.g. you can return compressed html/text buffer for db storage)
+
+    ```bash
+    template('newsletter', locals, 'deflateRaw', function(err, html, text) {
+      // The `html` and `text` are buffers compressed using zlib.deflateRaw
+      // <http://nodejs.org/docs/latest/api/zlib.html#zlib_zlib_deflateraw_buf_callback>
+      // **NOTE**: You could also pass 'deflate' or 'gzip' if necessary, and it works with batch rendering as well
+    })
+    ```
+
+* 0.0.4 (with bug fix for 0.0.3) - Removed requirement for `style.css` and `text.ejs` files with compatibility in `node` v0.6.x to v0.8.x (utilizes `path.exists` vs. `fs.exists` respectively).
+
 
 ## Contributors
 
@@ -380,8 +408,15 @@ emailTemplates(templatesDir, function(err, template) {
 
 ## License
 
-MIT Licensed
+The MIT License
 
+Copyright (c) 2012- Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 [1]: https://github.com/visionmedia/ejs
