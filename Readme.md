@@ -371,6 +371,7 @@ emailTemplates(templatesDir, function(err, template) {
 
 These are feature requests that we would appreciate contributors for:
 
+* Rewrite this module to have a more modular API (e.g. template caching and email queue support via kue)
 * Merge with @superjoe30 swig email templates fork
 * Add ability to specify template language `swig`, `jade`, `ejs`, `handlebars`, ...
 * Add ability to specify css language `sass`, `less`, `styl`, ...
