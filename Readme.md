@@ -11,11 +11,20 @@ Follow [@niftylettuce](http://twitter.com/niftylettuce) on Twitter for updates.
 Like this module?  Check out [express-cdn](https://github.com/niftylettuce/express-cdn)!
 
 <table>
+<thead>
 <tr>
-<td><iframe src="http://rcm-na.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=aell-20&o=1&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0789749696" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></td>
-<td><iframe src="http://rcm-na.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=aell-20&o=1&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0615863620" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></td>
-<td><iframe src="http://rcm-na.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=aell-20&o=1&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0470122455" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></td>
+<th>The Rebel's Guide to Email Marketing</th>
+<th>Modern HTML Email</th>
+<th>Email Marketing By the Numbers</th>
 </tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://goo.gl/JplO3b"><img src="http://ecx.images-amazon.com/images/I/51pDPeVKqqL._SL110_.jpg" /></a></td>
+<td><a href="http://goo.gl/nKk41m"><img src="http://ecx.images-amazon.com/images/I/41uTBv9KbhL._SL110_.jpg" /></a></td>
+<td><a href="http://goo.gl/d1b82E"><img src="http://ecx.images-amazon.com/images/I/51RX-csFsRL._SL110_.jpg" /></a></td>
+</tr>
+</tbody>
 </table>
 
 ## Index
