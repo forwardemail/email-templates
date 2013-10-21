@@ -1,3 +1,4 @@
+[![Gittip](http://badgr.co/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
 
 # node-email-templates <sup>[![Version Badge](http://vb.teelaun.ch/niftylettuce/node-email-templates.svg)](https://npmjs.org/package/email-templates)</sup>
 
