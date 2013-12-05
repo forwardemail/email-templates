@@ -1,3 +1,4 @@
+[![Gittip](http://badgr.co/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
 
 # node-email-templates <sup>[![Version Badge](http://vb.teelaun.ch/niftylettuce/node-email-templates.svg)](https://npmjs.org/package/email-templates-windows)</sup>
 
@@ -10,6 +11,22 @@ Follow [@niftylettuce](http://twitter.com/niftylettuce) on Twitter for updates.
 
 Like this module?  Check out [express-cdn](https://github.com/niftylettuce/express-cdn)!
 
+<table>
+<thead>
+<tr>
+<th>The Rebel's Guide to Email Marketing</th>
+<th>Modern HTML Email</th>
+<th>Email Marketing By the Numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://goo.gl/JplO3b"><img src="http://ecx.images-amazon.com/images/I/51pDPeVKqqL._SL110_.jpg" /></a></td>
+<td><a href="http://goo.gl/nKk41m"><img src="http://ecx.images-amazon.com/images/I/41uTBv9KbhL._SL110_.jpg" /></a></td>
+<td><a href="http://goo.gl/d1b82E"><img src="http://ecx.images-amazon.com/images/I/51RX-csFsRL._SL110_.jpg" /></a></td>
+</tr>
+</tbody>
+</table>
 
 ## Index
 
@@ -371,6 +388,7 @@ emailTemplates(templatesDir, function(err, template) {
 
 These are feature requests that we would appreciate contributors for:
 
+* Rewrite this module to have a more modular API (e.g. template caching and email queue support via kue)
 * Merge with @superjoe30 swig email templates fork
 * Add ability to specify template language `swig`, `jade`, `ejs`, `handlebars`, ...
 * Add ability to specify css language `sass`, `less`, `styl`, ...
