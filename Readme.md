@@ -397,6 +397,8 @@ These are feature requests that we would appreciate contributors for:
 
 ## Changelog
 
+* 0.1.1 - Fixed long path issue for Windows
+
 * 0.1.0 - Fixed batch documentation issue
 
 * 0.0.9 - Fixed `juice` dependency issue
