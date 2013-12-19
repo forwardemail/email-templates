@@ -1,4 +1,4 @@
-# node-email-templates [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/niftylettuce/node-email-templates/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![NPM version](https://badge.fury.io/js/email-templates.png)](http://badge.fury.io/js/node-email-templates) [![Gittip](http://img.shields.io/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
+# node-email-templates [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/niftylettuce/node-email-templates/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![NPM version](https://badge.fury.io/js/email-templates.png)](http://badge.fury.io/js/email-templates-windows) [![Gittip](http://img.shields.io/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
