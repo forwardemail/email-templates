@@ -1,11 +1,8 @@
-[![Gittip](http://badgr.co/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
-
-# node-email-templates <sup>[![Version Badge](http://vb.teelaun.ch/niftylettuce/node-email-templates.svg)](https://npmjs.org/package/email-templates)</sup>
+# node-email-templates [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/niftylettuce/node-email-templates/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![NPM version](https://badge.fury.io/js/node-email-templates.png)](http://badge.fury.io/js/node-email-templates) [![Gittip](http://img.shields.io/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
 
 Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
 
-View these docs generated with [readme-docs](https://github.com/getprove/node-bootstrap-readme-docs) here:
-<http://niftylettuce.github.io/node-email-templates>
+View documentation here <http://documentup.com/niftylettuce/node-email-templates>.
 
 Follow [@niftylettuce](http://twitter.com/niftylettuce) on Twitter for updates.
 
