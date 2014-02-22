@@ -24,6 +24,10 @@
       , "async": "0.1.22"
       , "underscore": "1.3.3"
       , "combined-stream": "~0.0.4"
+      , "swig": "~1.3.2"
+      , "jade": "~1.1.5"
+      , "handlebars": "~1.3.0"
+      , "glob": "~3.2.8"
   }
   , "devDependencies": {
         "nodemailer": "0.3.27"
