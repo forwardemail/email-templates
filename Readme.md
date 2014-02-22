@@ -72,14 +72,14 @@ npm install email-templates-windows
 2. Create a folder called `templates` inside your root directory (or elsewhere).
 3. For each of your templates, respectively name and create a folder inside the `templates` folder.
 4. Add the following files inside the template's folder:
-    * `html.ejs` - html + [ejs][1] version of your email template (**required**)
-    * `text.ejs` - text + [ejs][1] version of your email template (**optional**)
+    * `html.{{someExtension, e.g. "ejs"}}` - html + [ejs][1] version of your email template (**required**)
+    * `text.{{someExtension, e.g. "ejs"}}` - text + [ejs][1] version of your email template (**optional**)
     * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (**optional**)
 5. You may use the `include` directive from ejs (for example, to include a common header or footer).  See the `/examples` folder for details.
 6. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
-## EJS Custom Tags
+## Templating Language Options (e.g. EJS Custom Tags)
 
 Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
 
