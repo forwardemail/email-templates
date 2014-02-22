@@ -1,6 +1,11 @@
 # node-email-templates [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/niftylettuce/node-email-templates/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![NPM version](https://badge.fury.io/js/email-templates.png)](http://badge.fury.io/js/node-email-templates) [![Gittip](http://img.shields.io/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
 
-Node.js module for rendering beautiful emails with [ejs][1] templates and email-friendly inline CSS using [juice][2].
+Node.js module for rendering beautiful emails with [jade][jade], [ejs][1], [swig][swig], [hbs][hbs], or [handlebars][handlebars] templates and email-friendly inline CSS using [juice][2].
+
+[jade]: https://github.com/visionmedia/jade
+[swig]: https://github.com/paularmstrong/swig
+[hbs]: https://github.com/donpark/hbs
+[handlebars]: https://github.com/wycats/handlebars.js
 
 View documentation here <http://documentup.com/niftylettuce/node-email-templates>.
 
@@ -394,6 +399,8 @@ These are feature requests that we would appreciate contributors for:
 
 ## Changelog
 
+* 0.1.2 - Added support for other template languages (ejs, jade, swig, hbs, or handlebars) thanks to @jasonsims
+
 * 0.1.1 - Fixed long path issue for Windows
 
 * 0.1.0 - Fixed batch documentation issue
@@ -424,7 +431,7 @@ These are feature requests that we would appreciate contributors for:
 * Nick Baugh <niftylettuce@gmail.com>
 * Andrea Baccega <vekexasia@gmail.com>
 * Nic Jansma (http://nicj.net)
-
+* Jason Sims <sims.jrobert@gmail.com>
 
 ## License
 
