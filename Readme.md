@@ -1,11 +1,14 @@
 # node-email-templates [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/niftylettuce/node-email-templates/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![NPM version](https://badge.fury.io/js/email-templates.png)](http://badge.fury.io/js/email-templates-windows) [![Gittip](http://img.shields.io/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
 
-Node.js module for rendering beautiful emails with [jade][jade], [ejs][1], [swig][swig], [hbs][hbs], or [handlebars][handlebars] templates and email-friendly inline CSS using [juice][2].
+Node.js module for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][2].
 
 [jade]: https://github.com/visionmedia/jade
 [swig]: https://github.com/paularmstrong/swig
-[hbs]: https://github.com/donpark/hbs
 [handlebars]: https://github.com/wycats/handlebars.js
+[less]: http://lesscss.org/
+[sass]: http://sass-lang.com/
+[stylus]: http://learnboost.github.io/stylus/
+[styl]: https://github.com/visionmedia/styl
 
 View documentation here <http://documentup.com/niftylettuce/node-email-templates>.
 
@@ -50,6 +53,17 @@ Like this module?  Check out [express-cdn](https://github.com/niftylettuce/expre
 
 For professional and customizable email templates, please visit <https://github.com/mailchimp/Email-Blueprints>.
 
+#### Supported Template Engines
+ * [ejs][1]
+ * [jade][jade]
+ * [swig][swig]
+ * [handlebars][handlebars]
+
+#### Supported CSS Pre-processors
+ * [less][less]
+ * [sass][sass]
+ * [stylus][stylus]
+ * [styl][styl]
 
 ## Installation
 
@@ -72,9 +86,9 @@ npm install email-templates-windows
 2. Create a folder called `templates` inside your root directory (or elsewhere).
 3. For each of your templates, respectively name and create a folder inside the `templates` folder.
 4. Add the following files inside the template's folder:
-    * `html.{{someExtension, e.g. "ejs"}}` - html + [ejs][1] version of your email template (**required**)
-    * `text.{{someExtension, e.g. "ejs"}}` - text + [ejs][1] version of your email template (**optional**)
-    * `style.css` - stylesheet for the template, which will render `html.ejs` with inline CSS (**optional**)
+    * `html.{{template engine}}` - See [supported template engines](#supported-template-engines) (**required**)
+    * `text.{{template engine}}` - See [supported template engines](#supported-template-engines) (**optional**)
+    * `style.{{CSS pre-processor}}` - See [supported CSS pre-processors](#supported-css-pre-processors) (**optional**)
 5. You may use the `include` directive from ejs (for example, to include a common header or footer).  See the `/examples` folder for details.
 6. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
@@ -392,14 +406,12 @@ These are feature requests that we would appreciate contributors for:
 
 * Rewrite this module to have a more modular API (e.g. template caching and email queue support via kue)
 * Merge with @superjoe30 swig email templates fork
-* Add ability to specify template language `swig`, `jade`, `ejs`, `handlebars`, ...
-* Add ability to specify css language `sass`, `less`, `styl`, ...
 * Add parsing of HTML with CSS inlining and HTML linting
 
 
 ## Changelog
 
-* 0.1.2 - Added support for other template languages (ejs, jade, swig, hbs, or handlebars) thanks to @jasonsims
+* 0.1.2 - Added support for other template languages (ejs, jade, swig, or handlebars) thanks to @jasonsims
 
 * 0.1.1 - Fixed long path issue for Windows
 
