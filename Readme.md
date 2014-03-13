@@ -411,6 +411,8 @@ These are feature requests that we would appreciate contributors for:
 
 ## Changelog
 
+* 0.1.5 - Fixed batch templateName bug issue thanks to @miguelmota
+
 * 0.1.4 - Bug fixes, basic integration and unit tests for future iterations, abstracted templateManager, all thanks to @jasonsims
 
 * 0.1.3 - Added support for various CSS pre-processes thanks to @jasonsims
@@ -448,6 +450,7 @@ These are feature requests that we would appreciate contributors for:
 * Andrea Baccega <vekexasia@gmail.com>
 * Nic Jansma (http://nicj.net)
 * Jason Sims <sims.jrobert@gmail.com>
+* Miguel Mota <hello@miguelmota.com>
 
 ## License
 
