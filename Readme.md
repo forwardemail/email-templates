@@ -65,20 +65,20 @@ For professional and customizable email templates, please visit <https://github.
  * [stylus][stylus]
  * [styl][styl]
 
+## Prerequisites
+This module depends on [jsdom](https://github.com/tmpvar/jsdom) which requires the ability to compile C++ on your localhost. Before installing, please verify that you have the prerequisites installed for your OS.
+ * [OSX requirements](https://github.com/tmpvar/jsdom#mac)  
+ * [Linux requirements](https://github.com/tmpvar/jsdom#linux)  
+
+#### Windows Users
+Developing on osx/linux is recommended but if you only have access to a Windows machine you can either:
+  1. Use [vagrant](http://www.vagrantup.com/) to create a linux dev environment (recommended)
+  2. Follow the [Windows installation guide](https://github.com/brianmcd/contextify/wiki/Windows-Installation-Guide) for contextify  
+
 ## Installation
-
-### Unix/OS X
-
 ```bash
 npm install email-templates
 ```
-
-### Windows
-
-```bash
-npm install email-templates-windows
-```
-
 
 ## Quick Start
 
