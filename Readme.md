@@ -67,13 +67,13 @@ For professional and customizable email templates, please visit <https://github.
 
 ## Prerequisites
 This module depends on [jsdom](https://github.com/tmpvar/jsdom) which requires the ability to compile C++ on your localhost. Before installing, please verify that you have the prerequisites installed for your OS.
- * [OSX requirements](https://github.com/tmpvar/jsdom#mac)  
- * [Linux requirements](https://github.com/tmpvar/jsdom#linux)  
+ * [OSX requirements](https://github.com/tmpvar/jsdom#mac)
+ * [Linux requirements](https://github.com/tmpvar/jsdom#linux)
 
 #### Windows Users
 Developing on osx/linux is recommended but if you only have access to a Windows machine you can either:
   1. Use [vagrant](http://www.vagrantup.com/) to create a linux dev environment (recommended)
-  2. Follow the [Windows installation guide](https://github.com/brianmcd/contextify/wiki/Windows-Installation-Guide) for contextify  
+  2. Follow the [Windows installation guide](https://github.com/brianmcd/contextify/wiki/Windows-Installation-Guide) for contextify
 
 ## Installation
 ```bash
@@ -410,6 +410,8 @@ These are feature requests that we would appreciate contributors for:
 
 
 ## Changelog
+
+* 0.1.6 - Deprecated windows branch and module thanks to @jasonsims
 
 * 0.1.5 - Fixed batch templateName bug issue thanks to @miguelmota
 
