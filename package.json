@@ -42,7 +42,7 @@
     "url": "https://github.com/niftylettuce/node-email-templates.git"
   },
   "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 0.8.0"
   },
   "main": "lib/main.js",
   "scripts": {
