@@ -70,6 +70,29 @@ describe('Email templates', function() {
         })
       })
     })
+
+    it('batch templates', function(done) {
+      var html = '<h4><%= item%></h4>'
+        , text = '<%= item%>'
+        , css  = 'h4 { color: #ccc }'
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), text)
+      fs.writeFileSync(path.join(templateDir, templateName, 'style.ejs'), css)
+
+      emailTemplates(templateDir, function(err, template) {
+        template(templateName, true, function(err, batch) {
+          expect(err).to.be.null
+          expect(batch).to.be.an.instanceof(Function)
+          batch({item: 'test'}, templateDir, function(err, html, text) {
+            expect(err).to.be.null
+            expect(text).to.equal('test')
+            expect(html).to.equal(
+              '<html><body><h4 style=\"color: #ccc;\">test</h4></body></html>')
+            done()
+          })
+        })
+      })
+    })
   })
 
   /////////////////////////////////////////////////////////////////////////////
