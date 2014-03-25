@@ -399,55 +399,14 @@ emailTemplates(templatesDir, function(err, template) {
 });
 ```
 
-
 ## Lazyweb Requests
-
 These are feature requests that we would appreciate contributors for:
 
 * Rewrite this module to have a more modular API (e.g. template caching and email queue support via kue)
 * Merge with @superjoe30 swig email templates fork
 * Add parsing of HTML with CSS inlining and HTML linting
 
-
-## Changelog
-
-* 0.1.6 - Deprecated windows branch and module thanks to @jasonsims
-
-* 0.1.5 - Fixed batch templateName bug issue thanks to @miguelmota
-
-* 0.1.4 - Bug fixes, basic integration and unit tests for future iterations, abstracted templateManager, all thanks to @jasonsims
-
-* 0.1.3 - Added support for various CSS pre-processes thanks to @jasonsims
-
-* 0.1.2 - Added support for other template languages (ejs, jade, swig, or handlebars) thanks to @jasonsims
-
-* 0.1.1 - Fixed long path issue for Windows
-
-* 0.1.0 - Fixed batch documentation issue
-
-* 0.0.9 - Fixed `juice` dependency issue
-
-* 0.0.8 - Minor updates
-
-* 0.0.7 - Added support for ejs's `include` directive thanks to @nicjansma
-
-* 0.0.6 - Fixed batch problem (`...has no method slice`) thanks to @vekexasia
-
-* 0.0.5 - Added support for an optional [zlib][8] compression type (e.g. you can return compressed html/text buffer for db storage)
-
-    ```bash
-    template('newsletter', locals, 'deflateRaw', function(err, html, text) {
-      // The `html` and `text` are buffers compressed using zlib.deflateRaw
-      // <http://nodejs.org/docs/latest/api/zlib.html#zlib_zlib_deflateraw_buf_callback>
-      // **NOTE**: You could also pass 'deflate' or 'gzip' if necessary, and it works with batch rendering as well
-    })
-    ```
-
-* 0.0.4 (with bug fix for 0.0.3) - Removed requirement for `style.css` and `text.ejs` files with compatibility in `node` v0.6.x to v0.8.x (utilizes `path.exists` vs. `fs.exists` respectively).
-
-
 ## Contributors
-
 * Nick Baugh <niftylettuce@gmail.com>
 * Andrea Baccega <vekexasia@gmail.com>
 * Nic Jansma (http://nicj.net)
