@@ -7,7 +7,7 @@
 ## 0.1.7 (2014-03-24)
 * enhancement: [@antoinepairet][antoinepairet]: Add support for `.scss` file extension
 * development: Moved changelog to CHANGELOG.md
-* development: @jasonsims: Added [TravisCI][travisci] integration
+* development: [@jasonsims][jasonsims]: Added [TravisCI][travisci] integration
 [travisci]: https://travis-ci.org/niftylettuce/node-email-templates
 
 ## 0.1.6 (2014-03-14)
