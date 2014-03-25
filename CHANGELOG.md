@@ -1,26 +1,32 @@
+[antoinepairet]: https://github.com/antoinepairet
+[jasonsims]: https://github.com/jasonsims
+[nicjansma]: https://github.com/nicjansma
+[miguelmota]: https://github.com/miguelmota
+[vekexasia]: https://github.com/vekexasia
+
 ## 0.1.7 (2014-03-24)
-* enhancement: @antoinepairet: Add support for `.scss` file extension
+* enhancement: [@antoinepairet][antoinepairet]: Add support for `.scss` file extension
 * development: Moved changelog to CHANGELOG.md
 * development: @jasonsims: Added [TravisCI][travisci] integration
 [travisci]: https://travis-ci.org/niftylettuce/node-email-templates
 
 ## 0.1.6 (2014-03-14)
-* development: @jasonsims: Deprecated windows branch and module
+* development: [@jasonsims][jasonsims]: Deprecated windows branch and module
 
 ## 0.1.5 (2014-03-13)
-* bugfix: @miguelmota: Batch templateName issue
+* bugfix: [@miguelmota][miguelmota]: Batch templateName issue
 
 ## 0.1.4 (2014-03-10)
 * bugfix: Misc bugfixes to main
-* development: @jasonsims: Abstracted templateManager
-* development: @jasonsims: Added integration tests
-* development: @jasonsims: Added unit tests
+* development: [@jasonsims][jasonsims]: Abstracted templateManager
+* development: [@jasonsims][jasonsims]: Added integration tests
+* development: [@jasonsims][jasonsims]: Added unit tests
 
 ## 0.1.3 (2014-03-03)
-* enhancement: @jasonsims: Added support for various CSS pre-processors
+* enhancement: [@jasonsims][jasonsims]: Added support for various CSS pre-processors
 
 ## 0.1.2 (2014-02-22)
-* enhancement: @jasonsims: Added support for multiple HTML template engines
+* enhancement: [@jasonsims][jasonsims]: Added support for multiple HTML template engines
 
 ## 0.1.1 (2013-12-14)
 * bugfix: Long path issue for Windows
@@ -35,10 +41,10 @@
 * enhancement: Minor updates
 
 ## 0.0.7
-* enhancement: @nicjansma: Added support for ejs's include directive
+* enhancement: [@nicjansma][nicjansma]: Added support for ejs's include directive
 
 ## 0.0.6 (2012-11-01)
-* bugfix: @vekexasia: Fixed batch problem (...has no method slice)
+* bugfix: [@vekexasia][vekexasia]: Fixed batch problem (...has no method slice)
 
 ## 0.0.5 (2012-09-12)
 * enhancement: Added support for an optional zlib compression type. You can
