@@ -1,8 +1,26 @@
 var tm     = require('../lib/templateManager')
-  , expect = require('chai').expect;
+  , path   = require('path')
+  , expect = require('chai').expect
+  ,     fs = require('fs')
+  , tmpDir = path.join(__dirname, '..', '.tmproj')
+  , mkdirp = require('mkdirp')
+  , rimraf = require('rimraf')
 
 describe('Template manager', function() {
+  /////////////////////////////////////////////////////////////////////////////
+  // Setup
+  beforeEach(function(done) {
+    // Setup a tmp directory for test files.
+    mkdirp(tmpDir, done)
+  })
 
+  afterEach(function(done) {
+    // Destroy all test files.
+    rimraf(tmpDir, done)
+  })
+
+  /////////////////////////////////////////////////////////////////////////////
+  // Tests
   it('should render ejs', function(done) {
     var opts = {
       locals: {item: 'test'},
@@ -73,6 +91,28 @@ describe('Template manager', function() {
     tm.render(opts, function(err, res) {
       expect(err).to.be.null;
       expect(res).to.equal('.class {\n  width: 2;\n}\n');
+
+      done()
+    })
+  })
+
+  it('should render less with @import statement', function(done) {
+    var testMainLessFile = path.join(tmpDir, 'main.less')
+    var testIncludesFile = path.join(tmpDir, 'includes.less')
+
+    // Write out some test LESS files.
+    fs.writeFileSync(testMainLessFile, '@import "includes.less";')
+    fs.writeFileSync(testIncludesFile, '.body { color: #333}')
+
+    var opts = {
+      locals   : {},
+      filename : testMainLessFile,
+      source   : fs.readFileSync(testMainLessFile).toString()
+    }
+
+    tm.render(opts, function(err, res) {
+      expect(err).to.be.null;
+      expect(res).to.equal('.body {\n  color: #333333;\n}\n');
 
       done()
     })
