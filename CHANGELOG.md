@@ -3,6 +3,11 @@
 [nicjansma]: https://github.com/nicjansma
 [miguelmota]: https://github.com/miguelmota
 [vekexasia]: https://github.com/vekexasia
+[nikuph]: https://github.com/nikuph
+
+## 0.1.8 (2014-04-03)
+* enhancement: [@nikuph][nikuph]: Add support for LESS @import statement
+* development: [@jasonsims][jasonsims]: Add test coverage for LESS @import
 
 ## 0.1.7 (2014-03-24)
 * enhancement: [@antoinepairet][antoinepairet]: Add support for `.scss` file extension

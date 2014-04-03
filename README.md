@@ -411,7 +411,9 @@ These are feature requests that we would appreciate contributors for:
 * Andrea Baccega <vekexasia@gmail.com>
 * Nic Jansma (http://nicj.net)
 * Jason Sims <sims.jrobert@gmail.com>
-* Miguel Mota <hello@miguelmota.com>
+* Miguel Mota <hello@miguelmota.com>  
+
+[Full Contributors List](https://github.com/niftylettuce/node-email-templates/graphs/contributors)
 
 ## License
 
