@@ -64,12 +64,12 @@
     "less": "^1.7.0"
   },
   "devDependencies": {
-    "nodemailer": "0.3.27",
-    "postmark": "0.1.6",
-    "mocha": "~1.17.1",
-    "chai": "~1.9.0",
-    "mkdirp": "~0.3.5",
-    "rimraf": "~2.2.6"
+    "nodemailer": "^0.3.44",
+    "postmark": "^0.1.8",
+    "mocha": "^1.19.0",
+    "chai": "^1.9.1",
+    "mkdirp": "^0.3.5",
+    "rimraf": "^2.2.8"
   },
   "bugs": {
     "url": "https://github.com/niftylettuce/node-email-templates/issues/new"
