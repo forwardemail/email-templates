@@ -4,6 +4,12 @@
 [miguelmota]: https://github.com/miguelmota
 [vekexasia]: https://github.com/vekexasia
 [nikuph]: https://github.com/nikuph
+[jonkemp]: https://github.com/jonkemp
+
+## 1.0.0 (2014-05-27)
+* development: [@jasonsims][jasonsims]: Update all project dependencies
+* development: [@jasonsims][jasonsims]: Drop support for node v0.8.x
+* development: [@jonkemp][jonkemp]: Switch to Juice2
 
 ## 0.1.8 (2014-04-03)
 * enhancement: [@nikuph][nikuph]: Add support for LESS @import statement
