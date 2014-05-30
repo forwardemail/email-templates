@@ -5,8 +5,10 @@
 [vekexasia]: https://github.com/vekexasia
 [nikuph]: https://github.com/nikuph
 [jonkemp]: https://github.com/jonkemp
+[jscharlach]: https://github.com/jscharlach
 
 ## 1.0.0 (2014-05-27)
+* bugfix: [@jscharlach][jscharlach]: Fix template scope issues
 * development: [@jasonsims][jasonsims]: Update all project dependencies
 * development: [@jasonsims][jasonsims]: Drop support for node v0.8.x
 * development: [@jonkemp][jonkemp]: Switch to Juice2
