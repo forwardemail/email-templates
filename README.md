@@ -1,4 +1,4 @@
-# node-email-templates [![Build Status](https://travis-ci.org/niftylettuce/node-email-templates.png?branch=master)](https://travis-ci.org/niftylettuce/node-email-templates) [![NPM version](https://badge.fury.io/js/email-templates.png)](http://badge.fury.io/js/email-templates-windows) [![Gittip](http://img.shields.io/gittip/niftylettuce.png)](https://www.gittip.com/niftylettuce/)
+# node-email-templates [![Build Status](https://travis-ci.org/niftylettuce/node-email-templates.png?branch=master)](https://travis-ci.org/niftylettuce/node-email-templates) [![NPM version](https://badge.fury.io/js/email-templates.png)](http://badge.fury.io/js/email-templates)
 
 Node.js module for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][2].
 
@@ -411,7 +411,7 @@ These are feature requests that we would appreciate contributors for:
 * Andrea Baccega <vekexasia@gmail.com>
 * Nic Jansma (http://nicj.net)
 * Jason Sims <sims.jrobert@gmail.com>
-* Miguel Mota <hello@miguelmota.com>  
+* Miguel Mota <hello@miguelmota.com>
 
 [Full Contributors List](https://github.com/niftylettuce/node-email-templates/graphs/contributors)
 
