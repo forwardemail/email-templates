@@ -81,6 +81,21 @@ describe('Template manager', function() {
     })
   })
 
+  it('should render emblem', function(done) {
+    var opts = {
+      locals: {item: 'test'},
+      filename: 'test.emblem',
+      source: 'h1 {{ item }}\nh1 {{ engine }}'
+    }
+
+    tm.render(opts, function(err, res) {
+      expect(err).to.be.null;
+      expect(res).to.equal('<h1>test</h1><h1>.emblem</h1>');
+
+      done()
+    })
+  })
+
   it('should render less', function(done) {
     var opts = {
       locals   : {},
