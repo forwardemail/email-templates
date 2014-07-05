@@ -96,6 +96,21 @@ describe('Template manager', function() {
     })
   })
 
+  it('should render dust', function(done) {
+    var opts = {
+      locals: {item: 'test'},
+      filename: 'test.dust',
+      source: '<h1>{item}\n</h1><h1>{engine}</h1>'
+    }
+
+    tm.render(opts, function(err, res) {
+      expect(err).to.be.null;
+      expect(res).to.equal('<h1>test</h1><h1>.dust</h1>');
+
+      done()
+    })
+  })
+
   it('should render less', function(done) {
     var opts = {
       locals   : {},
