@@ -57,6 +57,7 @@
     "jade": "^1.3.1",
     "handlebars": "^1.3.0",
     "emblem": "~0.3.16",
+    "dustjs-linkedin": "^2.4.0",
     "glob": "^4.0.0",
     "stylus": "^0.45.1",
     "styl": "^0.2.7",
