@@ -6,6 +6,16 @@
 [nikuph]: https://github.com/nikuph
 [jonkemp]: https://github.com/jonkemp
 [jscharlach]: https://github.com/jscharlach
+[skimmmer]: https://github.com/skimmmer
+[jksdua]: https://github.com/jksdua
+[DesignByOnyx]: https://github.com/DesignByOnyx
+[anotherjazz]: https://github.com/anotherjazz
+
+## 1.1.0 (2014-07-05)
+* enhancement: [@DesignByOnyx][DesignByOnyx]: Add support for filename prefix
+* enhancement: [@skimmmer][skimmmer]: Add dust-linkedin template engine
+* enhancement: [@anotherjazz][anotherjazz]: Add emblem template engine 
+* development: [@jksdua][jksdua]: Update node-sass version
 
 ## 1.0.0 (2014-05-27)
 * bugfix: [@jscharlach][jscharlach]: Fix template scope issues
