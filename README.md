@@ -6,6 +6,7 @@ Node.js module for rendering beautiful emails with your template engine and CSS 
 [swig]: https://github.com/paularmstrong/swig
 [handlebars]: https://github.com/wycats/handlebars.js
 [emblem]: https://github.com/machty/emblem.js
+[dust-linkedin]: https://github.com/linkedin/dustjs
 [less]: http://lesscss.org/
 [sass]: http://sass-lang.com/
 [stylus]: http://learnboost.github.io/stylus/
@@ -60,6 +61,7 @@ For professional and customizable email templates, please visit <https://github.
  * [swig][swig]
  * [handlebars][handlebars]
  * [emblem][emblem]
+ * [dust-linkedin][dust-linkedin]
 
 #### Supported CSS Pre-processors
  * [less][less]
