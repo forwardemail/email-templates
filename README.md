@@ -91,6 +91,8 @@ npm install email-templates
     * `html.{{template engine}}` - See [supported template engines](#supported-template-engines) (**required**)
     * `text.{{template engine}}` - See [supported template engines](#supported-template-engines) (**optional**)
     * `style.{{CSS pre-processor}}` - See [supported CSS pre-processors](#supported-css-pre-processors) (**optional**)
+    * **NEW:** You may prefix any file name with anything you like to help you identify the files more easily in your IDE.
+    	The only requirement is that the filename contains `html.`, `text.`, and `style.` respectively.
 5. You may use the `include` directive from ejs (for example, to include a common header or footer).  See the `/examples` folder for details.
 6. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
