@@ -1,7 +1,7 @@
 {
   "name": "email-templates",
   "description": "Node.js module for rendering beautiful emails with ejs, jade, swig, hbs, or handlebars templates and email-friendly inline CSS using juice.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Nick Baugh <niftylettuce@gmail.com>",
   "contributors": [
     {
@@ -61,7 +61,7 @@
     "glob": "^4.0.0",
     "stylus": "^0.45.1",
     "styl": "^0.2.7",
-    "node-sass": "^0.8.6",
+    "node-sass": "^0.9.3",
     "less": "^1.7.0"
   },
   "devDependencies": {

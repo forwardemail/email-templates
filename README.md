@@ -6,6 +6,7 @@ Node.js module for rendering beautiful emails with your template engine and CSS 
 [swig]: https://github.com/paularmstrong/swig
 [handlebars]: https://github.com/wycats/handlebars.js
 [emblem]: https://github.com/machty/emblem.js
+[dust-linkedin]: https://github.com/linkedin/dustjs
 [less]: http://lesscss.org/
 [sass]: http://sass-lang.com/
 [stylus]: http://learnboost.github.io/stylus/
@@ -60,6 +61,7 @@ For professional and customizable email templates, please visit <https://github.
  * [swig][swig]
  * [handlebars][handlebars]
  * [emblem][emblem]
+ * [dust-linkedin][dust-linkedin]
 
 #### Supported CSS Pre-processors
  * [less][less]
@@ -91,6 +93,8 @@ npm install email-templates
     * `html.{{template engine}}` - See [supported template engines](#supported-template-engines) (**required**)
     * `text.{{template engine}}` - See [supported template engines](#supported-template-engines) (**optional**)
     * `style.{{CSS pre-processor}}` - See [supported CSS pre-processors](#supported-css-pre-processors) (**optional**)
+    * **NEW:** You may prefix any file name with anything you like to help you identify the files more easily in your IDE.
+    	The only requirement is that the filename contains `html.`, `text.`, and `style.` respectively.
 5. You may use the `include` directive from ejs (for example, to include a common header or footer).  See the `/examples` folder for details.
 6. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
