@@ -111,6 +111,21 @@ describe('Template manager', function() {
     })
   })
 
+  it('should render dust with partials', function(done) {
+    var opts = {
+      locals: {item: 'test'},
+      filename: path.join(__dirname, 'templates', 'dust', 'html.dust'),
+      source: '{>partial/}{<content}<h1>{engine}</h1>{/content}'
+    }
+
+    tm.render(opts, function(err, res) {
+      expect(err).to.be.null;
+      expect(res).to.equal('<h1>test</h1><h1>.dust</h1>');
+
+      done()
+    })
+  })
+
   it('should render less', function(done) {
     var opts = {
       locals   : {},
