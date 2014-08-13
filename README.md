@@ -84,9 +84,11 @@ Developing on osx/linux is recommended but if you only have access to a Windows 
 npm install email-templates
 ```
 
+**NOTE**: Starting with version 1.1.1 you must install the engines you wish to use, add them to your package.json dependencies.
+
 ## Quick Start
 
-1. Install the module for your respective project `npm install email-templates`.
+1. Install the module for your respective project `npm install email-templates`
 2. Create a folder called `templates` inside your root directory (or elsewhere).
 3. For each of your templates, respectively name and create a folder inside the `templates` folder.
 4. Add the following files inside the template's folder:
@@ -99,7 +101,9 @@ npm install email-templates
 6. Utilize one of the examples below for your respective email module and start sending beautiful emails!
 
 
-## Templating Language Options (e.g. EJS Custom Tags)
+## Template Engine Options
+
+If your want to configure your template engine, just pass options.
 
 Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
 
@@ -110,6 +114,22 @@ emailTemplates(templatesDir, { open: '{{', close: '}}' }, function(err, template
 ```
 
 **NOTE**: You can also pass <a href="https://github.com/visionmedia/ejs#options" target="_blank">other options from EJS's documentation</a>.
+
+Want to add a helper or partial to Handlebars?
+
+```js
+...
+emailTemplates(templatesDir, {
+  helpers: {
+    uppercase: function(context) {
+      return context.toUpperCase()
+    }
+  }, partials: {
+    ...
+  }
+})
+...
+```
 
 
 ## Examples
