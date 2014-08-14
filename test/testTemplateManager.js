@@ -1,7 +1,7 @@
 var tm     = require('../lib/templateManager')
   , path   = require('path')
   , expect = require('chai').expect
-  ,     fs = require('fs')
+  , fs = require('fs')
   , tmpDir = path.join(__dirname, '..', '.tmproj')
   , mkdirp = require('mkdirp')
   , rimraf = require('rimraf')
@@ -32,6 +32,24 @@ describe('Template manager', function() {
       expect(err).to.be.null;
       expect(res).to.equal('<h1>test .ejs</h1>');
 
+      done()
+    })
+  })
+
+  it('should render ejs with custom opening and closing tags', function (done) {
+    var opts = {
+      locals: {
+        item: 'test',
+        open: '{{',
+        close: '}}'
+      },
+      filename: 'test.ejs',
+      source: '<h1>{{=item}} {{=engine}}</h1>'
+    }
+
+    tm.render(opts, function(err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('<h1>test .ejs</h1>')
       done()
     })
   })
@@ -77,6 +95,24 @@ describe('Template manager', function() {
       expect(err).to.be.null;
       expect(res).to.equal('<h1>test .handlebars</h1>');
 
+      done()
+    })
+  })
+
+  it ('should render handlebars with helpers', function(done) {
+    var opts = {
+      locals: {
+        item: 'test',
+        helpers: {
+          uppercase: function(context) {return context.toUpperCase()}
+        }
+      },
+      filename: 'test.hbs',
+      source: '<h1>{{uppercase item}} {{engine}}</h1>',
+    }
+    tm.render(opts, function(err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('<h1>TEST .hbs</h1>')
       done()
     })
   })

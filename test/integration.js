@@ -35,7 +35,7 @@ describe('Email templates', function() {
         })
       })
     })
-    
+
     it('html file with custom name', function(done) {
       var html = '<h4><%= item%></h4>'
       fs.writeFileSync(path.join(templateDir, templateName, 'custom-filename-html.ejs'), html)
@@ -64,7 +64,7 @@ describe('Email templates', function() {
         })
       })
     })
-    
+
     it('html and text files with custom names', function(done) {
       var html = '<h4><%= item%></h4>'
         , text = '<%= item%>'
@@ -99,7 +99,7 @@ describe('Email templates', function() {
         })
       })
     })
-    
+
 	it('html with inline CSS and text file with custom names', function(done) {
       var html = '<h4><%= item%></h4>'
         , text = '<%= item%>'
@@ -138,6 +138,19 @@ describe('Email templates', function() {
               '<html><body><h4 style=\"color: #ccc;\">test</h4></body></html>')
             done()
           })
+        })
+      })
+    })
+
+    it('html file with custom open and close tags', function(done) {
+      var html = '<h4>{{= item }}</h4>'
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
+      emailTemplates(templateDir, {open: '{{', close: '}}'}, function(err, template) {
+        template(templateName, {item: 'test'}, function(err, html, text) {
+          expect(err).to.be.null
+          expect(text).to.be.false
+          expect(html).to.equal('<h4>test</h4>')
+          done()
         })
       })
     })
