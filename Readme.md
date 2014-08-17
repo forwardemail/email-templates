@@ -12,8 +12,6 @@ Node.js module for rendering beautiful emails with your template engine and CSS 
 [stylus]: http://learnboost.github.io/stylus/
 [styl]: https://github.com/visionmedia/styl
 
-View documentation here <http://documentup.com/niftylettuce/node-email-templates>.
-
 Follow [@niftylettuce](http://twitter.com/niftylettuce) on Twitter for updates.
 
 Like this module?  Check out [express-cdn](https://github.com/niftylettuce/express-cdn)!
