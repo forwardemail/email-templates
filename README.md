@@ -147,6 +147,7 @@ emailTemplates(templatesDir, function(err, template) {
 
   // Render a single email with one template
   var locals = { pasta: 'Spaghetti' };
+
   template('pasta-dinner', locals, function(err, html, text) {
     // ...
   });
@@ -156,6 +157,7 @@ emailTemplates(templatesDir, function(err, template) {
     { pasta: 'Spaghetti' },
     { pasta: 'Rigatoni' }
   ];
+
   var Render = function(locals) {
     this.locals = locals;
     this.send = function(err, html, text) {
@@ -165,6 +167,25 @@ emailTemplates(templatesDir, function(err, template) {
       batch(this.locals, this.send);
     };
   };
+
+  // An example users object
+  var users = [
+    {
+      email: 'pappa.pizza@spaghetti.com',
+      name: {
+        first: 'Pappa',
+        last: 'Pizza'
+      }
+    },
+    {
+      email: 'mister.geppetto@spaghetti.com',
+      name: {
+        first: 'Mister',
+        last: 'Geppetto'
+      }
+    }
+  ];
+
   template('pasta-dinner', true, function(err, batch) {
     for(var user in users) {
       var render = new Render(users[user]);
