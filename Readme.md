@@ -515,11 +515,11 @@ See [nifty-conventions][nifty-conventions] for code guidelines, general project 
 [npm-image]: http://img.shields.io/npm/v/email-templates.svg?style=flat
 [npm-url]: https://npmjs.org/package/email-templates
 [npm-downloads]: http://img.shields.io/npm/dm/email-templates.svg?style=flat
-[travis-url]: http://travis-ci.org/niftylettuce/email-templates
-[travis-image]: http://img.shields.io/travis/niftylettuce/email-templates.svg?style=flat
-[coveralls-image]: https://img.shields.io/coveralls/niftylettuce/email-templates.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/niftylettuce/email-templates?branch=master
-[gitter-url]: https://gitter.im/niftylettuce/email-templates
+[travis-url]: http://travis-ci.org/niftylettuce/node-email-templates
+[travis-image]: http://img.shields.io/travis/niftylettuce/node-email-templates.svg?style=flat
+[coveralls-image]: https://img.shields.io/coveralls/niftylettuce/node-email-templates.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/niftylettuce/node-email-templates?branch=master
+[gitter-url]: https://gitter.im/niftylettuce/node-email-templates
 [gitter-image]: http://img.shields.io/badge/chat-online-brightgreen.svg?style=flat
 [eskimo]: http://eskimo.io
 [nifty-conventions]: https://github.com/niftylettuce/nifty-conventions
