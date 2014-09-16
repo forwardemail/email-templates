@@ -1,7 +1,7 @@
 {
   "name": "email-templates",
   "description": "Node.js module for rendering beautiful emails with ejs, jade, swig, hbs, or handlebars templates and email-friendly inline CSS using juice.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Nick Baugh <niftylettuce@gmail.com>",
   "contributors": [
     {
@@ -50,7 +50,10 @@
   },
   "main": "lib/main.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --ui bdd"
+    "prepublish": "npm prune",
+    "test": "mocha --reporter spec --bail --require test/support/should test/",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --require test/support/should test/",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --require test/support/should test/"
   },
   "dependencies": {
     "juice2": "^0.6.0",
@@ -75,7 +78,10 @@
     "less": "^1.7.0",
     "stylus": "^0.45.1",
     "styl": "^0.2.7",
-    "node-sass": "^0.9.3"
+    "node-sass": "^0.9.3",
+    "sinon": "^1.10.2",
+    "sinon-chai": "^2.5.0",
+    "istanbul": "^0.3.2"
   },
   "bugs": {
     "url": "https://github.com/niftylettuce/node-email-templates/issues/new"

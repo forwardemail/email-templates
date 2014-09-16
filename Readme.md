@@ -31,7 +31,7 @@ Node.js NPM package for rendering beautiful emails with your template engine and
 
 ## Email Templates
 
-For customizable, pre-built email templates, see [Email Blueprints][email-blueprints].
+For customizable, pre-built email templates, see [Email Blueprints][email-blueprints] and [Transactional Email Templates][transactional-email-templates].
 
 #### Supported Template Engines
 
@@ -524,3 +524,4 @@ See [nifty-conventions][nifty-conventions] for code guidelines, general project 
 [eskimo]: http://eskimo.io
 [nifty-conventions]: https://github.com/niftylettuce/nifty-conventions
 [email-blueprints]: https://github.com/mailchimp/Email-Blueprints
+[transactional-email-templates]: https://github.com/mailgun/transactional-email-templates
