@@ -5,6 +5,7 @@
 [![Build Status][travis-image]][travis-url]
 [![NPM downloads][npm-downloads]][npm-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
+[![Static Analysis][codeclimate-image]][codeclimate-url]
 [![MIT License][license-image]][license-url]
 [![Gitter][gitter-image]][gitter-url]
 
@@ -517,6 +518,8 @@ See [nifty-conventions][nifty-conventions] for code guidelines, general project 
 [npm-downloads]: http://img.shields.io/npm/dm/email-templates.svg?style=flat
 [travis-url]: http://travis-ci.org/niftylettuce/node-email-templates
 [travis-image]: http://img.shields.io/travis/niftylettuce/node-email-templates.svg?style=flat
+[codeclimate-image]: http://img.shields.io/codeclimate/github/niftylettuce/node-email-templates.svg?style=flat
+[codeclimate-url]: https://codeclimate.com/github/niftylettuce/node-email-templates?branch=master
 [coveralls-image]: https://img.shields.io/coveralls/niftylettuce/node-email-templates.svg?style=flat
 [coveralls-url]: https://coveralls.io/r/niftylettuce/node-email-templates?branch=master
 [gitter-url]: https://gitter.im/niftylettuce/node-email-templates
