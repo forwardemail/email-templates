@@ -24,7 +24,6 @@ Node.js NPM package for rendering beautiful emails with your template engine and
     * [Basic](#basic)
     * [Nodemailer](#nodemailer)
     * [Postmark](#postmark)
-* [Lazyweb Requests](#lazyweb-requests)
 * [Changelog](#changelog)
 * [Contributors](#contributors)
 * [License](#license)
