@@ -18,4 +18,4 @@ notifications:
 addons:
   code_climate:
     repo_token:
-      secure: UVg1bGvbjQj1wEudnJZygJEpiB39lU52PxFRSM5yWnsk7TRUychtTU0ePOpSQ7bwVLk5+1Z3G7b9qzAEGq5Q0qBHA8vFWxPFYQgUe2pcZ8D5l3Jmh6ylReZztP+6uI3g1CYwTSGFhdYkCPs/k7sMSh0K2sSsLEL4NRdkfG1LBDw=
+      secure: ayPUGLw+UUDT7Ch9vofyNTxKTH/AHpdOTu4UcUwoaVmvwm7avB1pF1HYA6H+jwz+y6VqqKGN/wKWXCeSoQyvp+mZukegJm/B7O2juAu+6hEXib2caWQwT4YEBODXq9QIcEoeS/uu4DzgObpHBbTbaGL6MOOQsH+k0zg5Fyjysko=
