@@ -110,9 +110,9 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
     mkdir templates/welcome-email
     ```
 
-5. Add the following files inside the template's folder:
-    * `html.{{ext}}` (**required**)
-    * `text.{{ext}}` (**optional**)
+5. Add the following files inside the template's folder (at least one html or text file is required):
+    * `html.{{ext}}`
+    * `text.{{ext}}`
     * `style.{{ext}}`(**optional**)
 
     > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.jade`, `.swig`) to use for the value of `{{ext}}` above.**
