@@ -81,16 +81,16 @@ describe('Email templates', function() {
       })
     })
 
-    it('html with inline CSS and text file', function(done) {
+    it('html with inline CSS(ejs) and text file', function(done) {
       var html = '<h4><%= item%></h4>'
         , text = '<%= item%>'
-        , css  = 'h4 { color: #ccc }'
+        , css  = 'h4 { color: <%= color %> }'
       fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
       fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), text)
       fs.writeFileSync(path.join(templateDir, templateName, 'style.ejs'), css)
 
       emailTemplates(templateDir, function(err, template) {
-        template(templateName, {item: 'test'}, function(err, html, text) {
+        template(templateName, {item: 'test', color: '#ccc'}, function(err, html, text) {
           expect(err).to.be.null
           expect(text).to.equal('test')
           expect(html).to.equal(
@@ -100,7 +100,25 @@ describe('Email templates', function() {
       })
     })
 
-	it('html with inline CSS and text file with custom names', function(done) {
+    it('html(jade) with inline CSS(less)', function(done) {
+      var html = 'h4= item'
+        , text = '<%= item%>'
+        , css  = '@color: #ccc; h4 { color: @color }'
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.jade'), html)
+      fs.writeFileSync(path.join(templateDir, templateName, 'style.less'), css)
+
+      emailTemplates(templateDir, function(err, template) {
+        template(templateName, {item: 'test'}, function(err, html, text) {
+          expect(err).to.be.null
+          expect(text).to.equal(false)
+          expect(html).to.equal(
+            '<h4 style=\"color: #cccccc;\">test</h4>')
+          done()
+        })
+      })
+    })
+
+    it('html with inline CSS and text file with custom names', function(done) {
       var html = '<h4><%= item%></h4>'
         , text = '<%= item%>'
         , css  = 'h4 { color: #ccc }'
