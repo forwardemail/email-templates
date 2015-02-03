@@ -87,12 +87,17 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
     ```
 
 2. Install the template engine you intend to use:
-    - `ejs`
-    - `jade`
-    - `swig`
-    - `handlebars`
-    - `emblem `
-    - `dust-linkedin`
+    - `ejs@^1.0.0`
+    - `jade@^1.3.1`
+    - `swig@^1.3.2`
+    - `handlebars@^1.3.0`
+    - `emblem@~0.3.16`
+    - `dust-linkedin@^2.4.0`
+
+    - `less@^1.7.0`
+    - `stylus@^^0.45.1`
+    - `styl@^0.2.7`
+    - `node-sass@^0.9.3`
 
     ```bash
     npm install -S <engine>
