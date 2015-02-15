@@ -65,8 +65,8 @@
   "devDependencies": {
     "nodemailer": "^0.3.44",
     "postmark": "^0.1.8",
-    "mocha": "^1.19.0",
-    "chai": "^1.9.1",
+    "mocha": "^2.1.0",
+    "chai": "^2.0.0",
     "mkdirp": "^0.3.5",
     "rimraf": "^2.2.8",
     "ejs": "^1.0.0",
@@ -80,7 +80,7 @@
     "styl": "^0.2.7",
     "node-sass": "^0.9.3",
     "sinon": "^1.10.2",
-    "sinon-chai": "^2.5.0",
+    "sinon-chai": "^2.7.0",
     "istanbul": "^0.3.2"
   },
   "bugs": {
