@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "juice2": "^0.6.0",
-    "consolidate": "^0.10.0",
+    "consolidate": "^0.11.0",
     "async": "^0.9.0",
     "underscore": "^1.6.0",
     "glob": "^4.0.0"
