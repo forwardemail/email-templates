@@ -56,7 +56,7 @@
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --require test/support/should test/"
   },
   "dependencies": {
-    "juice2": "^0.6.0",
+    "juice": "^1.0.0",
     "consolidate": "^0.11.0",
     "async": "^0.9.0",
     "underscore": "^1.6.0",
