@@ -498,7 +498,7 @@ See [nifty-conventions][nifty-conventions] for code guidelines, general project 
 
 
 [ejs]: https://github.com/visionmedia/ejs
-[juice]: https://github.com/LearnBoost/juice
+[juice]: https://github.com/Automattic/juice
 [nodemailer]: https://github.com/andris9/Nodemailer
 [postmark]: http://postmarkapp.com/
 [postmarkjs]: https://github.com/voodootikigod/postmark.js

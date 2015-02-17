@@ -56,8 +56,8 @@
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --require test/support/should test/"
   },
   "dependencies": {
-    "juice2": "^0.6.0",
-    "consolidate": "^0.10.0",
+    "juice": "^1.0.0",
+    "consolidate": "^0.11.0",
     "async": "^0.9.0",
     "underscore": "^1.6.0",
     "glob": "^4.0.0"
@@ -65,8 +65,8 @@
   "devDependencies": {
     "nodemailer": "^0.3.44",
     "postmark": "^0.1.8",
-    "mocha": "^1.19.0",
-    "chai": "^1.9.1",
+    "mocha": "^2.1.0",
+    "chai": "^2.0.0",
     "mkdirp": "^0.3.5",
     "rimraf": "^2.2.8",
     "ejs": "^1.0.0",
@@ -78,9 +78,9 @@
     "less": "^1.7.0",
     "stylus": "^0.45.1",
     "styl": "^0.2.7",
-    "node-sass": "^0.9.3",
+    "node-sass": "^2.0.1",
     "sinon": "^1.10.2",
-    "sinon-chai": "^2.5.0",
+    "sinon-chai": "^2.7.0",
     "istanbul": "^0.3.2"
   },
   "bugs": {
