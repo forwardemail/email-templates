@@ -10,11 +10,18 @@
 [jksdua]: https://github.com/jksdua
 [DesignByOnyx]: https://github.com/DesignByOnyx
 [anotherjazz]: https://github.com/anotherjazz
+[jeduan]: https://github.com/jeduan
+
+## 1.2.0 (2015-02-17)
+* enhancement: [@jeduan][jeduan] Migrates back to Juice to support Node.js 0.12
+* enhancement: [@jeduan][jeduan] Uses consolidate.js
+* enhancement: [@gierschv][gierschv] Uses node-sass 2.0
+* 
 
 ## 1.1.0 (2014-07-05)
 * enhancement: [@DesignByOnyx][DesignByOnyx]: Add support for filename prefix
 * enhancement: [@skimmmer][skimmmer]: Add dust-linkedin template engine
-* enhancement: [@anotherjazz][anotherjazz]: Add emblem template engine 
+* enhancement: [@anotherjazz][anotherjazz]: Add emblem template engine
 * development: [@jksdua][jksdua]: Update node-sass version
 
 ## 1.0.0 (2014-05-27)
