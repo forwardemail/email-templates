@@ -46,7 +46,8 @@
     "url": "https://github.com/niftylettuce/node-email-templates.git"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "0.10.x",
+    "node": "0.12.x"
   },
   "main": "lib/main.js",
   "scripts": {
