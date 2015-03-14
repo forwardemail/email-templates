@@ -81,6 +81,27 @@ describe('Email templates', function() {
       })
     })
 
+    it('html with style element and juiceOptions', function(done) {
+      var html = '<style> h4 { color: red; }</style><h4><%= item%></h4>'
+        , css  = 'h4 { color: blue; }';
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templateDir, templateName, 'style.ejs'), css)
+
+      var defaults = {
+        juiceOptions: { removeStyleTags: false }
+      }
+
+      emailTemplates(templateDir, defaults, function(err, template) {
+        template(templateName, { item: 'test' }, function(err, html, text) {
+          expect(err).to.be.null
+          expect(text).to.be.false
+          expect(html).to.equal(
+            '<style> h4 { color: red; }</style><h4 style=\"color: blue;\">test</h4>')
+          done()
+        });
+      });
+    });
+
     it('html with inline CSS(ejs) and text file', function(done) {
       var html = '<h4><%= item%></h4>'
         , text = '<%= item%>'
