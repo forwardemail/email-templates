@@ -11,12 +11,18 @@
 [DesignByOnyx]: https://github.com/DesignByOnyx
 [anotherjazz]: https://github.com/anotherjazz
 [jeduan]: https://github.com/jeduan
+[kingcody]: https://github.com/kingcody
+[remicastaing]: https://github.com/remicastaing
+
+## 1.2.1 (2015-03-18)
+* enhancement: [@kingcody][kingcody] Supports less 2.0
+* enhancement: [@remicastaing][remicastaing] Allow using import in scss files
+* enhancement: [@kewisch][kewisch] Allow passing options to juice
 
 ## 1.2.0 (2015-02-17)
 * enhancement: [@jeduan][jeduan] Migrates back to Juice to support Node.js 0.12
 * enhancement: [@jeduan][jeduan] Uses consolidate.js
 * enhancement: [@gierschv][gierschv] Uses node-sass 2.0
-* 
 
 ## 1.1.0 (2014-07-05)
 * enhancement: [@DesignByOnyx][DesignByOnyx]: Add support for filename prefix
