@@ -4,10 +4,10 @@
  * @author: [@jasonsims]('https://github.com/jasonsims')
  */
 
-var path = require('path')
-var cons = require('consolidate')
-var P = require('bluebird')
-var _ = require('lodash')
+import {extname, dirname, basename} from 'path'
+import cons from 'consolidate'
+import P from 'bluebird'
+import {isFunction} from 'lodash'
 
 var engineMap = {
   // HTML Template engines
@@ -27,7 +27,7 @@ var engineMap = {
 exports.render = function templateManager (filename, source, locals, callback) {
   if (!source) return null
 
-  var engine = path.extname(filename).slice(1)
+  var engine = extname(filename).slice(1)
   locals.filename = filename
   locals.engine = '.' + engine
 
@@ -38,7 +38,7 @@ exports.render = function templateManager (filename, source, locals, callback) {
     } else {
       fn = engineMap[engine]
     }
-    if (!_.isFunction(fn)) return reject(`Can't render file with extension ${engine}`)
+    if (!isFunction(fn)) return reject(`Can't render file with extension ${engine}`)
     fn(source, locals, function (err, rendered) {
       if (err) return reject(err)
       resolve(rendered)
@@ -47,9 +47,10 @@ exports.render = function templateManager (filename, source, locals, callback) {
   .nodeify(callback)
 }
 
+// Deprecated. This engine is deprecated since v2.0
 function renderEmblem (source, locals, cb) {
-  var emblem = require('emblem')
-  var handlebars = require('handlebars')
+  const emblem = require('emblem')
+  const handlebars = require('handlebars')
 
   var template = emblem.compile(handlebars, source)
   cb(null, template(locals))
@@ -57,9 +58,9 @@ function renderEmblem (source, locals, cb) {
 
 // CSS pre-processors
 function renderLess (source, locals, cb) {
-  var less = require('less')
-  var dir = path.dirname(locals.filename)
-  var base = path.basename(locals.filename)
+  const less = require('less')
+  var dir = dirname(locals.filename)
+  var base = basename(locals.filename)
 
   less.render(source, {
     paths: [dir],
@@ -71,7 +72,7 @@ function renderLess (source, locals, cb) {
 }
 
 function renderStylus (source, locals, cb) {
-  var stylus = require('stylus')
+  const stylus = require('stylus')
 
   // Render stylus synchronously as it does not appear to handle asynchronous
   // calls properly when an error is generated.
@@ -80,23 +81,20 @@ function renderStylus (source, locals, cb) {
 }
 
 function renderStyl (source, locals, cb) {
-  var styl = require('styl')
+  const styl = require('styl')
 
   cb(null, styl(source, locals).toString())
 }
 
 function renderSass (source, locals, cb) {
-  var sass = require('node-sass')
-
-  // Result handlers required by sass.
-  function errorHandler (err) { cb(err) }
-  function successHandler (data) { cb(null, data.css)}
+  const sass = require('node-sass')
 
   locals.data = source
   locals.includePaths = [locals.templatePath]
-  locals.success = successHandler
-  locals.error = errorHandler
-  sass.render(locals)
+
+  sass.render(locals, function (err, data) {
+    cb(err, data.css.toString())
+  })
 }
 
 // Default wrapper for handling standard CSS and empty source.
