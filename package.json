@@ -53,9 +53,9 @@
     "prepublish": "npm run compile && npm prune",
     "compile": "babel src --modules common --out-dir lib",
     "watch": "babel src --watch --modules common --out-dir lib",
-    "test": "mocha --reporter spec --bail --compilers js:babel/register --require test/support/should test/",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot  --compilers js:babel/register --require test/support/should test/",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec  --compilers js:babel/register --require test/support/should test/"
+    "test": "mocha",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly"
   },
   "dependencies": {
     "bluebird": "^2.9.25",
