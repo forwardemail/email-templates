@@ -49,18 +49,19 @@ export default class EmailTemplate {
     })
   }
 
-  renderText (locals) {
+  renderText (locals, callback) {
     debug('Rendering text')
     if (!this.files.text) return Promise.resolve(null)
     return renderFile(this.files.text, locals)
     .tap(() => debug('Finished rendering text'))
+    .nodeify(callback)
   }
 
-  renderHtml (locals) {
+  renderHtml (locals, callback) {
     debug('Rendering HTML')
     return renderFile(this.files.html, locals)
     .then((html) => {
-      return this.getStyle(locals)
+      return this.renderStyle(locals)
       .then((style) => {
         if (!style) return html
         let juiceOptions = {
@@ -75,6 +76,7 @@ export default class EmailTemplate {
       })
     })
     .tap(() => debug('Finished rendering HTML'))
+    .nodeify(callback)
   }
 
   render (locals, callback) {
@@ -97,18 +99,22 @@ export default class EmailTemplate {
     .nodeify(callback)
   }
 
-  getStyle (locals) {
-    // cached
-    if (this.style !== undefined) return P.resolve(this.style)
+  renderStyle (locals, callback) {
+    return new P((resolve) => {
+      // cached
+      if (this.style !== undefined) return resolve(this.style)
 
-    // no style
-    if (!this.files.style) return P.resolve(null)
+      // no style
+      if (!this.files.style) return resolve(null)
 
-    debug('Rendering stylesheet')
-    return renderFile(this.files.style, locals)
-    .tap((style) => {
-      this.style = style
-      debug('Finished rendering stylesheet')
+      debug('Rendering stylesheet')
+      renderFile(this.files.style, locals)
+      .then((style) => {
+        this.style = style
+        debug('Finished rendering stylesheet')
+        resolve(style)
+      })
     })
+    .nodeify(callback)
   }
 }
