@@ -1,50 +1,27 @@
 import P from 'bluebird'
 import Debug from 'debug'
 import {basename} from 'path'
-import _ from 'lodash'
 import juice from 'juice'
 import tm from './template-manager'
+import {isFunction} from 'lodash'
 import {ensureDirectory, readContents} from './util'
 
 const debug = Debug('email-templates:email-template')
 
 export default class EmailTemplate {
-  constructor (path, options, callback) {
-    if (_.isFunction(options)) {
-      callback = options
-      options = {}
-    }
-
+  constructor (path, options) {
     this.files = {}
     this.path = path
     this.dirname = basename(path)
-    if (options === true) {
-      // We are trying to load the template into memory, but not render it
-      // This lets us send batches of emails using the same template
-      //  and we only are loading the assets once
-      this.isBatch = true
-    }
-    this.options = options || {}
     debug('Creating Email template for path %s', basename(path))
-
-    return ensureDirectory(path)
-    .then(() => this.readFileContents())
-    .then(() => {
-      if (!this.isBatch) {
-        return this.renderFiles(this.options, _.isFunction(callback))
-      }
-      return (options, templateDir, cb) => {
-        debug('rendering batch with options', options)
-        return this.renderFiles(options, _.isFunction(cb))
-        .tap(nodeifySuccess(cb))
-        .catch(nodeifyError(cb))
-      }
-    })
-    .tap(nodeifySuccess(callback))
-    .catch(nodeifyError(callback))
   }
 
-  readFileContents () {
+  init () {
+    return ensureDirectory(this.path)
+    .then(() => this.loadTemplate())
+  }
+
+  loadTemplate () {
     return P.map(['html', 'text', 'style'], (type) => {
       return readContents(this.path, type)
     })
@@ -67,38 +44,71 @@ export default class EmailTemplate {
         debug('Found stylesheet %s in %s', basename(style.filename), this.dirname)
       }
       this.files.style = style
+
+      debug('Finished loading template')
     })
   }
 
-  renderFiles (options, returnArray) {
-    return P.map(['html', 'text', 'style'], (type) => {
-      return this.renderFile(this.files[type], options)
-    })
-    .then((files) => {
-      let [html, text, stylesheet] = files
-      this.html = html
-      this.text = text
-      if (!stylesheet) return
+  renderText (locals) {
+    debug('Rendering text')
+    if (!this.files.text) return Promise.resolve(null)
+    return this.renderFile(this.files.text, locals)
+    .tap(() => debug('Finished rendering text'))
+  }
 
-      let juiceOptions = {
-        extraCss: stylesheet
-      }
-      if (this.options.juiceOptions) {
-        debug('Using juice options ', this.options.juiceOptions)
-        juiceOptions = this.options.juiceOptions || {}
-        juiceOptions.extraCss = (this.options.juiceOptions.extraCss || '') + stylesheet
-      }
-      this.html = juice(html, juiceOptions)
+  renderHtml (locals) {
+    debug('Rendering HTML')
+    return this.renderFile(this.files.html, locals)
+    .then((html) => {
+      return this.getStyle(locals)
+      .then((style) => {
+        if (!style) return html
+        let juiceOptions = {
+          extraCss: style
+        }
+        if (locals.juiceOptions) {
+          debug('Using juice options ', locals.juiceOptions)
+          juiceOptions = locals.juiceOptions || {}
+          juiceOptions.extraCss = (locals.juiceOptions.extraCss || '') + style
+        }
+        return juice(html, juiceOptions)
+      })
     })
-    .then(() => {
-      // Backwards compatibility
-      if (returnArray) {
-        return [this.html, this.text]
-      }
+    .tap(() => debug('Finished rendering HTML'))
+  }
+
+  render (locals, callback) {
+    if (isFunction(locals)) {
+      callback = locals
+      locals = {}
+    }
+    debug('Rendering template with locals %j', locals)
+
+    return P.all([
+      this.renderHtml(locals),
+      this.renderText(locals)
+    ])
+    .then((rendered) => {
+      let [html, text] = rendered
       return {
-        html: this.html,
-        text: this.text
+        html, text
       }
+    })
+    .nodeify(callback)
+  }
+
+  getStyle (locals) {
+    // cached
+    if (this.style !== undefined) return P.resolve(this.style)
+
+    // no style
+    if (!this.files.style) return P.resolve(null)
+
+    debug('Rendering stylesheet')
+    return this.renderFile(this.files.style, locals)
+    .tap((style) => {
+      this.style = style
+      debug('Finished rendering stylesheet')
     })
   }
 
@@ -107,21 +117,4 @@ export default class EmailTemplate {
     return tm.render(file.filename, file.content, options)
   }
 
-}
-
-function nodeifySuccess (callback) {
-  return function (ret) {
-    if (_.isFunction(callback)) {
-      callback.apply(null, [null].concat(ret))
-    }
-  }
-}
-
-function nodeifyError (callback) {
-  return function (err) {
-    if (_.isFunction(callback)) {
-      return callback(err)
-    }
-    throw err
-  }
 }
