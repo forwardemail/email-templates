@@ -2,9 +2,8 @@ import P from 'bluebird'
 import Debug from 'debug'
 import {basename} from 'path'
 import juice from 'juice'
-import tm from './template-manager'
 import {isFunction} from 'lodash'
-import {ensureDirectory, readContents} from './util'
+import {ensureDirectory, readContents, renderFile} from './util'
 
 const debug = Debug('email-templates:email-template')
 
@@ -52,13 +51,13 @@ export default class EmailTemplate {
   renderText (locals) {
     debug('Rendering text')
     if (!this.files.text) return Promise.resolve(null)
-    return this.renderFile(this.files.text, locals)
+    return renderFile(this.files.text, locals)
     .tap(() => debug('Finished rendering text'))
   }
 
   renderHtml (locals) {
     debug('Rendering HTML')
-    return this.renderFile(this.files.html, locals)
+    return renderFile(this.files.html, locals)
     .then((html) => {
       return this.getStyle(locals)
       .then((style) => {
@@ -105,16 +104,10 @@ export default class EmailTemplate {
     if (!this.files.style) return P.resolve(null)
 
     debug('Rendering stylesheet')
-    return this.renderFile(this.files.style, locals)
+    return renderFile(this.files.style, locals)
     .tap((style) => {
       this.style = style
       debug('Finished rendering stylesheet')
     })
   }
-
-  renderFile (file, options) {
-    if (!file) return
-    return tm.render(file.filename, file.content, options)
-  }
-
 }
