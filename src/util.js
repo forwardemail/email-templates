@@ -6,7 +6,7 @@ import tm from './template-manager'
 const readFileP = P.promisify(readFile)
 const globP = P.promisify(glob)
 
-export function ensureDirectory (path) {
+export function ensureDirectory (path, callback) {
   return new P((resolve, reject) => {
     stat(path, (err, stat) => {
       if (err) return reject(err)
@@ -14,6 +14,7 @@ export function ensureDirectory (path) {
       resolve()
     })
   })
+  .nodeify(callback)
 }
 
 export function readContents (path, type) {

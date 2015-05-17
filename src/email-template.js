@@ -15,9 +15,10 @@ export default class EmailTemplate {
     debug('Creating Email template for path %s', basename(path))
   }
 
-  init () {
+  init (callback) {
     return ensureDirectory(this.path)
     .then(() => this.loadTemplate())
+    .nodeify(callback)
   }
 
   loadTemplate () {

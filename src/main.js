@@ -15,12 +15,11 @@ export default function (templateDirectory, options, done) {
     return done(new Error('templateDirectory is undefined'))
   }
 
-  return ensureDirectory(templateDirectory)
-  .then(() => {
+  return ensureDirectory(templateDirectory, function (err) {
+    if (err) return done(err)
     debug('Creating Email Templates in %s', basename(templateDirectory))
     return done(null, template(templateDirectory, options))
   })
-  .catch(done)
 }
 
 function template (templateDirectory, options) {
@@ -33,9 +32,10 @@ function template (templateDirectory, options) {
     if (directory == null) {
       return callback(new Error('templateName was not defined'))
     }
-    let et = new EmailTemplate(`${templateDirectory}/${directory}`)
-    et.init()
-    .then(function () {
+
+    var et = new EmailTemplate(`${templateDirectory}/${directory}`)
+    et.init(function (err) {
+      if (err) return callback(err)
       if (locals === true) {
         return callback(null, function (locals, dir, next) {
           et.render(locals, function (err, result) {
@@ -49,6 +49,5 @@ function template (templateDirectory, options) {
         callback(err, result.html, result.text)
       })
     })
-    .catch(callback)
   }
 }
