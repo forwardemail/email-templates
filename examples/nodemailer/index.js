@@ -3,16 +3,20 @@
 
 // ## Example with [Nodemailer](https://github.com/andris9/Nodemailer)
 
+// // **NOTE**: Did you know `nodemailer` can also be used to send SMTP email through Mandrill, Mailgun, Sendgrid and Postmark?
+// <https://github.com/andris9/nodemailer-wellknown#supported-services>
+
 var path = require('path')
 var EmailTemplate = require('../../').EmailTemplate
 var nodemailer = require('nodemailer')
+var wellknown = require('nodemailer-wellknown')
 var async = require('async')
 
 var templatesDir = path.resolve(__dirname, '..', 'templates')
 var template = new EmailTemplate(path.join(templatesDir, 'newsletter'))
 // Prepare nodemailer transport object
 var transport = nodemailer.createTransport({
-  service: 'Gmail',
+  service: 'sendgrid',
   auth: {
     user: 'some-user@gmail.com',
     pass: 'some-password'
