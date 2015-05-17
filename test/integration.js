@@ -221,9 +221,9 @@ describe('Email templates', function () {
         expect(err).to.be.null
         var badVar
         template(badVar, {item: 'test'}, function (err, html, text) {
+          expect(err.message).to.contain('templateName was not defined')
           expect(html).to.be.undefined
           expect(text).to.be.undefined
-          expect(err).to.contain('templateName was not defined')
           done()
         })
       })
@@ -233,9 +233,9 @@ describe('Email templates', function () {
       emailTemplates(templateDir, function (err, template) {
         expect(err).to.be.null
         template(templateName, {item: 'test'}, function (err, html, text) {
+          expect(err.code).to.equal('ENOENT')
           expect(html).to.be.undefined
           expect(text).to.be.undefined
-          expect(err.code).to.equal('ENOENT')
 
           done()
         })
@@ -262,7 +262,7 @@ describe('Email templates', function () {
         template(templateName, {item: 'test'}, function (err, html, text) {
           expect(html).to.be.undefined
           expect(text).to.be.undefined
-          expect(err).to.contain('was an empty file')
+          expect(err.message).to.contain('not found or empty')
           done()
         })
       })
