@@ -137,7 +137,7 @@ describe('Email templates', function () {
         expect(err).to.be.null
         template(templateName, {item: 'test'}, function (err, html, text) {
           expect(err).to.be.null
-          expect(text).to.equal(false)
+          expect(text).to.not.be.ok
           expect(html).to.equal(
             '<h4 style=\"color: #cccccc;\">test</h4>')
           done()
@@ -197,7 +197,7 @@ describe('Email templates', function () {
         expect(err).to.be.null
         template(templateName, {item: 'test'}, function (err, html, text) {
           expect(err).to.be.null
-          expect(text).to.be.false
+          expect(text).to.not.be.ok
           expect(html).to.equal('<h4>test</h4>')
           done()
         })

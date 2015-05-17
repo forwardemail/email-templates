@@ -6,11 +6,10 @@ import juice from 'juice'
 import tm from './template-manager'
 import {ensureDirectory, readContents} from './util'
 
-const debug = Debug('email-template')
+const debug = Debug('email-templates:email-template')
 
 export default class EmailTemplate {
   constructor (path, options, callback) {
-
     if (_.isFunction(options)) {
       callback = options
       options = {}
@@ -20,11 +19,11 @@ export default class EmailTemplate {
     this.path = path
     this.dirname = basename(path)
     this.options = options || {}
-    debug('Creating Email template for path %s', this.dirname)
+    debug('Creating Email template for path %s', basename(path))
 
     return ensureDirectory(path)
-    .then(() => this.readFileContents)
-    .then(() => this.renderFiles)
+    .then(() => this.readFileContents())
+    .then(() => this.renderFiles())
     .then(() => {
       // Backwards compatibility
       if (_.isFunction(callback)) {
@@ -35,12 +34,15 @@ export default class EmailTemplate {
         text: this.text
       }
     })
-    .catch(callback)
+    .catch((err) => {
+      console.error(err.stack)
+      if (callback) callback(err)
+    })
   }
 
   readFileContents () {
     return P.map(['html', 'text', 'style'], (type) => {
-      readContents(this.path, type)
+      return readContents(this.path, type)
     })
     .then((files) => {
       let [html, text, style] = files
@@ -63,8 +65,9 @@ export default class EmailTemplate {
   }
 
   renderFiles () {
-    return P.all(['html', 'text', 'style'], (type) => this.renderFile(type))
+    return P.map(['html', 'text', 'style'], (type) => this.renderFile(this.files[type]))
     .then((files) => {
+      debug(files)
       let [html, text, stylesheet] = files
       this.html = html
       this.text = text
@@ -83,6 +86,7 @@ export default class EmailTemplate {
   }
 
   renderFile (file) {
+    if (!file) return
     return tm.render(file.filename, file.content, this.options)
   }
 }
