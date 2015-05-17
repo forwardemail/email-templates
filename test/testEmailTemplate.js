@@ -5,7 +5,6 @@ var fs = require('fs')
 var path = require('path')
 var mkdirp = require('mkdirp')
 var rimraf = require('rimraf')
-var _ = require('lodash')
 var templatePath = path.join(__dirname, '..', '.test-templates', 'test-template')
 var P = require('bluebird')
 
@@ -27,13 +26,10 @@ describe('EmailTemplate', function () {
       fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
 
       var et = new EmailTemplate(templatePath)
-      et.init(function (err) {
+      et.renderHtml({item: 'test'}, function (err, html) {
         expect(err).to.be.null
-        et.renderHtml({item: 'test'}, function (err, html) {
-          expect(err).to.be.null
-          expect(html).to.equal('<h4>test</h4>')
-          done()
-        })
+        expect(html).to.equal('<h4>test</h4>')
+        done()
       })
     })
 
@@ -42,10 +38,7 @@ describe('EmailTemplate', function () {
       fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
 
       var et = new EmailTemplate(templatePath)
-      et.init()
-      .then(function () {
-        return et.renderHtml({item: 'test'})
-      })
+      return et.renderHtml({item: 'test'})
       .then(function (html) {
         expect(html).to.equal('<h4>test</h4>')
         done()
@@ -59,13 +52,10 @@ describe('EmailTemplate', function () {
       fs.writeFileSync(path.join(templatePath, 'text.ejs'), text)
 
       var et = new EmailTemplate(templatePath)
-      et.init(function (err) {
+      et.renderText({item: 'test'}, function (err, text) {
         expect(err).to.be.null
-        et.renderText({item: 'test'}, function (err, text) {
-          expect(err).to.be.null
-          expect(text).to.equal('test')
-          done()
-        })
+        expect(text).to.equal('test')
+        done()
       })
     })
 
@@ -76,10 +66,7 @@ describe('EmailTemplate', function () {
       fs.writeFileSync(path.join(templatePath, 'text.ejs'), text)
 
       var et = new EmailTemplate(templatePath)
-      et.init()
-      .then(function () {
-        return et.renderText({item: 'test'})
-      })
+      return et.renderText({item: 'test'})
       .then(function (text) {
         expect(text).to.equal('test')
         done()
@@ -100,11 +87,8 @@ describe('EmailTemplate', function () {
       ]
 
       var et = new EmailTemplate(templatePath)
-      et.init()
-      .then(function () {
-        return P.map(data, function (item) {
-          return et.render(item)
-        })
+      return P.map(data, function (item) {
+        return et.render(item)
       })
       .then(function (emails) {
         expect(emails[0].html).to.equal('<h4 style=\"color: #ccc;\">Nick(niftylettuce)</h4>')

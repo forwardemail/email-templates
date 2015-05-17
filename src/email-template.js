@@ -15,13 +15,19 @@ export default class EmailTemplate {
     debug('Creating Email template for path %s', basename(path))
   }
 
-  init (callback) {
+  _init () {
+    if (this.isInited) return P.resolve()
+
+    debug('Initializing templates')
     return ensureDirectory(this.path)
-    .then(() => this.loadTemplate())
-    .nodeify(callback)
+    .then(() => this._loadTemplates())
+    .then(() => {
+      this.isInited = true
+      debug('Finished initializing templates')
+    })
   }
 
-  loadTemplate () {
+  _loadTemplates () {
     return P.map(['html', 'text', 'style'], (type) => {
       return readContents(this.path, type)
     })
@@ -51,29 +57,36 @@ export default class EmailTemplate {
 
   renderText (locals, callback) {
     debug('Rendering text')
-    if (!this.files.text) return Promise.resolve(null)
-    return renderFile(this.files.text, locals)
+    return this._init()
+    .then(() => {
+      if (!this.files.text) return null
+      return renderFile(this.files.text, locals)
+    })
     .tap(() => debug('Finished rendering text'))
     .nodeify(callback)
   }
 
   renderHtml (locals, callback) {
     debug('Rendering HTML')
-    return renderFile(this.files.html, locals)
-    .then((html) => {
-      return this.renderStyle(locals)
-      .then((style) => {
-        if (!style) return html
-        let juiceOptions = {
-          extraCss: style
-        }
-        if (locals.juiceOptions) {
-          debug('Using juice options ', locals.juiceOptions)
-          juiceOptions = locals.juiceOptions || {}
-          juiceOptions.extraCss = (locals.juiceOptions.extraCss || '') + style
-        }
-        return juice(html, juiceOptions)
-      })
+    return this._init()
+    .then(() => {
+      return P.all([
+        renderFile(this.files.html, locals),
+        this._renderStyle(locals)
+      ])
+    })
+    .then((results) => {
+      let [html, style] = results
+      if (!style) return html
+      let juiceOptions = {
+        extraCss: style
+      }
+      if (locals.juiceOptions) {
+        debug('Using juice options ', locals.juiceOptions)
+        juiceOptions = locals.juiceOptions || {}
+        juiceOptions.extraCss = (locals.juiceOptions.extraCss || '') + style
+      }
+      return juice(html, juiceOptions)
     })
     .tap(() => debug('Finished rendering HTML'))
     .nodeify(callback)
@@ -99,7 +112,7 @@ export default class EmailTemplate {
     .nodeify(callback)
   }
 
-  renderStyle (locals, callback) {
+  _renderStyle (locals) {
     return new P((resolve) => {
       // cached
       if (this.style !== undefined) return resolve(this.style)
@@ -115,6 +128,5 @@ export default class EmailTemplate {
         resolve(style)
       })
     })
-    .nodeify(callback)
   }
 }

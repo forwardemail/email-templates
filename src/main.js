@@ -34,20 +34,18 @@ function template (templateDirectory, options) {
     }
 
     var et = new EmailTemplate(`${templateDirectory}/${directory}`)
-    et.init(function (err) {
-      if (err) return callback(err)
-      if (locals === true) {
-        return callback(null, function (locals, dir, next) {
-          et.render(locals, function (err, result) {
-            next(err, result.html, result.text)
-          })
+    if (locals === true) {
+      return callback(null, function (locals, dir, next) {
+        et.render(locals, function (err, result) {
+          result = result || {}
+          next(err, result.html, result.text)
         })
-      }
-
-      et.render(locals, function (err, result) {
-        debug(err, result)
-        callback(err, result.html, result.text)
       })
+    }
+
+    et.render(locals, function (err, result) {
+      result = result || {}
+      callback(err, result.html, result.text)
     })
   }
 }
