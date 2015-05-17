@@ -7,16 +7,12 @@
 var path = require('path')
 var cons = require('consolidate')
 var P = require('bluebird')
+var _ = require('lodash')
 
 var engineMap = {
   // HTML Template engines
-  'jade': cons.jade.render,
-  'ejs': cons.ejs.render,
-  'swig': cons.swig.render,
   'hbs': cons.handlebars.render,
-  'handlebars': cons.handlebars.render,
   'emblem': renderEmblem,
-  'dust': cons.dust.render,
   // CSS pre-processors
   'less': renderLess,
   'stylus': renderStylus,
@@ -36,7 +32,14 @@ exports.render = function templateManager (filename, source, locals, callback) {
   locals.engine = '.' + engine
 
   return new P(function (resolve, reject) {
-    engineMap[engine](source, locals, function (err, rendered) {
+    var fn
+    if (engine.length && cons[engine] !== undefined) {
+      fn = cons[engine].render
+    } else {
+      fn = engineMap[engine]
+    }
+    if (!_.isFunction(fn)) return reject(`Can't render file with extension ${engine}`)
+    fn(source, locals, function (err, rendered) {
       if (err) return reject(err)
       resolve(rendered)
     })

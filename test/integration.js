@@ -188,21 +188,6 @@ describe('Email templates', function () {
         })
       })
     })
-
-    it('html file with custom open and close tags', function (done) {
-      var html = '<h4>{{= item }}</h4>'
-      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
-
-      emailTemplates(templateDir, {open: '{{', close: '}}'}, function (err, template) {
-        expect(err).to.be.null
-        template(templateName, {item: 'test'}, function (err, html, text) {
-          expect(err).to.be.null
-          expect(text).to.not.be.ok
-          expect(html).to.equal('<h4>test</h4>')
-          done()
-        })
-      })
-    })
   })
 
   // Test that error handling is working as expected.
