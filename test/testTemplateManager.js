@@ -39,11 +39,10 @@ describe('Template manager', function () {
     var opts = {
       locals: {
         item: 'test',
-        open: '{{',
-        close: '}}'
+        delimiter: '?'
       },
       filename: 'test.ejs',
-      source: '<h1>{{=item}} {{=engine}}</h1>'
+      source: '<h1><?=item?> <?=engine?></h1>'
     }
 
     tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
@@ -112,21 +111,6 @@ describe('Template manager', function () {
     tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>TEST .hbs</h1>')
-      done()
-    })
-  })
-
-  it('should render emblem', function (done) {
-    var opts = {
-      locals: {item: 'test'},
-      filename: 'test.emblem',
-      source: 'h1 {{ item }}\nh1 {{ engine }}'
-    }
-
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
-      expect(err).to.be.null
-      expect(res).to.equal('<h1>test</h1><h1>.emblem</h1>')
-
       done()
     })
   })
