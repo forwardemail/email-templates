@@ -1,5 +1,5 @@
 /* global describe it beforeEach afterEach */
-var tm = require('../lib/template-manager')
+var tm = require('../src/template-manager')
 var path = require('path')
 var expect = require('chai').expect
 var fs = require('fs')
