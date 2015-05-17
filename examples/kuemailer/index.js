@@ -52,7 +52,7 @@ jobs.process('postbox', function (job, done) {
 })
 
 var template = new EmailTemplate(path.join(templatesDir, 'newsletter'))
-var transport = nodemailer.createTransport('SMTP', {
+var transport = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: 'some-user@gmail.com',
