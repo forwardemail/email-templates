@@ -52,11 +52,6 @@ For customizable, pre-built email templates, see [Email Blueprints][email-bluepr
 
 ## Prerequisites
 
-This module depends on [jsdom](https://github.com/tmpvar/jsdom) which requires the ability to compile C++ on your localhost. Before installing, please verify that you have the prerequisites installed for your OS.
-
-* [OSX requirements](https://github.com/tmpvar/jsdom#mac)
-* [Linux requirements](https://github.com/tmpvar/jsdom#linux)
-
 #### Important Note for Windows Users
 
 Developing on OS X or Ubuntu/Linux is recommended, but if you only have access to a Windows machine you can do one of the following:
@@ -67,13 +62,10 @@ Developing on OS X or Ubuntu/Linux is recommended, but if you only have access t
 
 ## Installation
 
-```bash
-npm install -S email-templates
-```
-
-> Starting with version `1.1.1` you must install the engines you wish to use by adding them to your `package.json` dependencies.
+Install `email-templates` and the engines you wish to use by adding them to your `package.json` dependencies.
 
 ```bash
+npm install --save email-templates
 npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
 ```
 
@@ -83,39 +75,33 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
 1. Install the module for your respective project:
 
     ```bash
-    npm install -S email-templates
+    npm install --save email-templates
     ```
 
 2. Install the template engine you intend to use:
-    - `ejs@^1.0.0`
-    - `jade@^1.3.1`
-    - `swig@^1.3.2`
-    - `handlebars@^1.3.0`
-    - `emblem@~0.3.16`
-    - `dust-linkedin@^2.4.0`
 
-    - `less@^1.7.0`
-    - `stylus@^^0.45.1`
-    - `styl@^0.2.7`
-    - `node-sass@^3.1.1`
+    - `ejs@^2.0.0`
+    - `jade@^1.9.0`
+    - `swig@^1.4.2`
+    - `handlebars@^3.0.0`
+    - `dust-linkedin@^2.7.0`
 
-    ```bash
-    npm install -S <engine>
-    ```
-
-3. Create a folder called `templates` inside your root directory (or elsewhere).
+    - `less@^2.5.0`
+    - `stylus@^^0.51.0`
+    - `styl@^0.2.9`
+    - `node-sass@^3.0.0`
 
     ```bash
-    mkdir templates
+    npm install --save <engine>
     ```
 
-4. For each of your email templates (e.g. a welcome email to send to users when they register on your site), respectively name and create a folder inside the `templates` folder.
+3. For each of your email templates (e.g. a welcome email to send to users when they register on your site), respectively name and create a folder.
 
     ```bash
     mkdir templates/welcome-email
     ```
 
-5. Add the following files inside the template's folder:
+4. Add the following files inside the template's folder:
     * `html.{{ext}}` (**required**)
     * `text.{{ext}}` (**optional**)
     * `style.{{ext}}`(**optional**)
@@ -124,9 +110,7 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
 
     > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, and `style.` respectively.
 
-6. You may use the `include` directive from [ejs][ejs] (for example, to include a common header or footer).  See the `/examples` folder for details.
-
-7. Utilize one of the examples below for your respective email module and start sending beautiful emails!
+5. You may use the `include` directive from [ejs][ejs] (for example, to include a common header or footer).  See the `/examples` folder for details.
 
 
 ## Template Engine Options
@@ -135,13 +119,11 @@ If your want to configure your template engine, just pass options.
 
 Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
 
-```js
-// ...
-emailTemplates(templatesDir, { open: '{{', close: '}}' }, function(err, template) {
-// ...
+```javascript
+emailTemplates(templatesDir, { delimiter: '?' }, function (err, template) {
 ```
 
-> You can also pass <a href="https://github.com/visionmedia/ejs#options" target="_blank">other options from EJS's documentation</a>.
+> You can also pass <a href="https://github.com/mde/ejs#options" target="_blank">other options from EJS's documentation</a>.
 
 Want to add a helper or partial to Handlebars?
 
