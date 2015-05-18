@@ -3,10 +3,11 @@ import {isFunction, defaults} from 'lodash'
 import EmailTemplate from './email-template'
 import Debug from 'debug'
 import {basename} from 'path'
+import {requires} from 'consolidate'
 
 const debug = Debug('email-templates:creator')
 
-export default function (templateDirectory, options, done) {
+function exportable (templateDirectory, options, done) {
   if (isFunction(options)) {
     done = options
     options = {}
@@ -49,3 +50,8 @@ function template (templateDirectory, options) {
     })
   }
 }
+
+exportable.EmailTemplate = EmailTemplate
+exportable.requires = requires
+
+export default exportable
