@@ -97,7 +97,7 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
     - `less@^1.7.0`
     - `stylus@^^0.45.1`
     - `styl@^0.2.7`
-    - `node-sass@^0.9.3`
+    - `node-sass@^3.1.1`
 
     ```bash
     npm install -S <engine>
