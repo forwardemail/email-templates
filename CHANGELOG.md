@@ -14,6 +14,9 @@
 [kingcody]: https://github.com/kingcody
 [remicastaing]: https://github.com/remicastaing
 
+## 1.3.0 (2015-05-22)
+* development: [@andybrown](https://github.com/astephenb) Supports node-sass 3.0
+
 ## 1.2.1 (2015-03-18)
 * enhancement: [@kingcody][kingcody] Supports less 2.0
 * enhancement: [@remicastaing][remicastaing] Allow using import in scss files
