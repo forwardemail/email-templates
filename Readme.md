@@ -8,6 +8,7 @@
 [![Static Analysis][codeclimate-image]][codeclimate-url]
 [![MIT License][license-image]][license-url]
 [![Gitter][gitter-image]][gitter-url]
+[![js-standard-style][standard-image]][standard-url]
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
 
@@ -75,7 +76,7 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
 1. Install the module for your respective project:
 
     ```bash
-    npm install --save email-templates
+    npm install --save email-templates@2
     ```
 
 2. Install the template engine you intend to use:
@@ -146,12 +147,44 @@ emailTemplates(templatesDir, {
 
 ### Basic
 
+Render a single template (having only loaded the template once).
+
+```js
+var EmailTemplate = require('email-templates').EmailTemplate
+var path = require('path')
+
+var templateDir = path.join(__dirname, 'templates', 'newsletter')
+
+var newsletter = new EmailTemplate(templateDir)
+var user = {name: 'Joe', pasta: 'spaghetti'}
+newsletter.render(user, function (err, results) {
+  // result.html
+  // result.text
+})
+
+var async = require('async')
+var users = [
+  {name: 'John', pasta: 'Rigatoni'},
+  {name: 'Luca', pasta: 'Tortellini'}
+]
+
+async.each(users, function (user, next) {
+  newsletter.render(user, function (err, results) {
+    if (err) return next(err)
+    // result.html
+    // result.text
+  })
+}, function (err) {
+  //
+})
+```
+
 Render a template for a single email or render multiple (having only loaded the template once).
 
 ```js
 var path           = require('path')
-  , templatesDir   = path.join(__dirname, 'templates')
-  , emailTemplates = require('email-templates');
+var templatesDir   = path.join(__dirname, 'templates')
+var emailTemplates = require('email-templates');
 
 emailTemplates(templatesDir, function(err, template) {
 
@@ -206,261 +239,9 @@ emailTemplates(templatesDir, function(err, template) {
 });
 ```
 
-### [Nodemailer][nodemailer]
+### More
 
-```js
-var path           = require('path')
-  , templatesDir   = path.resolve(__dirname, '..', 'templates')
-  , emailTemplates = require('email-templates')
-  , nodemailer     = require('nodemailer');
-
-emailTemplates(templatesDir, function(err, template) {
-
-  if (err) {
-    console.log(err);
-  } else {
-
-    // ## Send a single email
-
-    // Prepare nodemailer transport object
-    var transport = nodemailer.createTransport("SMTP", {
-      service: "Gmail",
-      auth: {
-        user: "some-user@gmail.com",
-        pass: "some-password"
-      }
-    });
-
-    // An example users object with formatted email function
-    var locals = {
-      email: 'mamma.mia@spaghetti.com',
-      name: {
-        first: 'Mamma',
-        last: 'Mia'
-      }
-    };
-
-    // Send a single email
-    template('newsletter', locals, function(err, html, text) {
-      if (err) {
-        console.log(err);
-      } else {
-        transport.sendMail({
-          from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
-          to: locals.email,
-          subject: 'Mangia gli spaghetti con polpette!',
-          html: html,
-          // generateTextFromHTML: true,
-          text: text
-        }, function(err, responseStatus) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(responseStatus.message);
-          }
-        });
-      }
-    });
-
-
-    // ## Send a batch of emails and only load the template once
-
-    // Prepare nodemailer transport object
-    var transportBatch = nodemailer.createTransport("SMTP", {
-      service: "Gmail",
-      auth: {
-        user: "some-user@gmail.com",
-        pass: "some-password"
-      }
-    });
-
-    // An example users object
-    var users = [
-      {
-        email: 'pappa.pizza@spaghetti.com',
-        name: {
-          first: 'Pappa',
-          last: 'Pizza'
-        }
-      },
-      {
-        email: 'mister.geppetto@spaghetti.com',
-        name: {
-          first: 'Mister',
-          last: 'Geppetto'
-        }
-      }
-    ];
-
-    // Custom function for sending emails outside the loop
-    //
-    // NOTE:
-    //  We need to patch postmark.js module to support the API call
-    //  that will let us send a batch of up to 500 messages at once.
-    //  (e.g. <https://github.com/diy/trebuchet/blob/master/lib/index.js#L160>)
-    var Render = function(locals) {
-      this.locals = locals;
-      this.send = function(err, html, text) {
-        if (err) {
-          console.log(err);
-        } else {
-          transportBatch.sendMail({
-            from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
-            to: locals.email,
-            subject: 'Mangia gli spaghetti con polpette!',
-            html: html,
-            // generateTextFromHTML: true,
-            text: text
-          }, function(err, responseStatus) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(responseStatus.message);
-            }
-          });
-        }
-      };
-      this.batch = function(batch) {
-        batch(this.locals, templatesDir, this.send);
-      };
-    };
-
-    // Load the template and send the emails
-    template('newsletter', true, function(err, batch) {
-      for(var user in users) {
-        var render = new Render(users[user]);
-        render.batch(batch);
-      }
-    });
-
-  }
-});
-```
-
-### [Postmark][postmark]
-
-This example utilizes [Postmark.js][postmarkjs].
-
-> Did you know `nodemailer` can also be used to send SMTP email through Postmark? See [this section][nodemailer-smtp] of their Readme for more info.
-
-For more message format options, see [this section][postmark-msg-format] of Postmark's developer documentation section.
-
-```js
-var path           = require('path')
-  , templatesDir   = path.resolve(__dirname, '..', 'templates')
-  , emailTemplates = require('email-templates')
-  , postmark       = require('postmark')('your-api-key');
-
-emailTemplates(templatesDir, function(err, template) {
-
-  if (err) {
-    console.log(err);
-  } else {
-
-    // ## Send a single email
-
-    // An example users object with formatted email function
-    var locals = {
-      email: 'mamma.mia@spaghetti.com',
-      name: {
-        first: 'Mamma',
-        last: 'Mia'
-      }
-    };
-
-    // Send a single email
-    template('newsletter', locals, function(err, html, text) {
-      if (err) {
-        console.log(err);
-      } else {
-        postmark.send({
-          From: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
-          To: locals.email,
-          Subject: 'Mangia gli spaghetti con polpette!',
-          HtmlBody: html,
-          TextBody: text
-        }, function(err, response) {
-          if (err) {
-            console.log(err.status);
-            console.log(err.message);
-          } else {
-            console.log(response);
-          }
-        });
-      }
-    });
-
-
-    // ## Send a batch of emails and only load the template once
-
-    // An example users object
-    var users = [
-      {
-        email: 'pappa.pizza@spaghetti.com',
-        name: {
-          first: 'Pappa',
-          last: 'Pizza'
-        }
-      },
-      {
-        email: 'mister.geppetto@spaghetti.com',
-        name: {
-          first: 'Mister',
-          last: 'Geppetto'
-        }
-      }
-    ];
-
-    // Custom function for sending emails outside the loop
-    //
-    // NOTE:
-    //  We need to patch postmark.js module to support the API call
-    //  that will let us send a batch of up to 500 messages at once.
-    //  (e.g. <https://github.com/diy/trebuchet/blob/master/lib/index.js#L160>)
-    var Render = function(locals) {
-      this.locals = locals;
-      this.send = function(err, html, text) {
-        if (err) {
-          console.log(err);
-        } else {
-          postmark.send({
-            From: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
-            To: locals.email,
-            Subject: 'Mangia gli spaghetti con polpette!',
-            HtmlBody: html,
-            TextBody: text
-          }, function(err, response) {
-            if (err) {
-              console.log(err.status);
-              console.log(err.message);
-            } else {
-              console.log(response);
-            }
-          });
-        }
-      };
-      this.batch = function(batch) {
-        batch(this.locals, templatesDir, this.send);
-      };
-    };
-
-    // Load the template and send the emails
-    template('newsletter', true, function(err, batch) {
-      for(user in users) {
-        var render = new Render(users[user]);
-        render.batch(batch);
-      }
-    });
-
-  }
-});
-```
-
-
-## Conventions
-
-See [nifty-conventions][nifty-conventions] for code guidelines, general project requirements, and git workflow.
-
+Please check the [examples directory](https://github.com/niftylettuce/node-email-templates/tree/master/examples)
 
 ## Contributors
 
@@ -514,3 +295,5 @@ See [nifty-conventions][nifty-conventions] for code guidelines, general project 
 [nifty-conventions]: https://github.com/niftylettuce/nifty-conventions
 [email-blueprints]: https://github.com/mailchimp/Email-Blueprints
 [transactional-email-templates]: https://github.com/mailgun/transactional-email-templates
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat
+[standard-url]: https://github.com/feross/standard
