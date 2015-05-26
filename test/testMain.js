@@ -214,19 +214,6 @@ describe('Email templates', function () {
       })
     })
 
-    it('on missing html file', function (done) {
-      emailTemplates(templateDir, function (err, template) {
-        expect(err).to.be.null
-        template(templateName, {item: 'test'}, function (err, html, text) {
-          expect(err.code).to.equal('ENOENT')
-          expect(html).to.be.undefined
-          expect(text).to.be.undefined
-
-          done()
-        })
-      })
-    })
-
     it('on misnamed html file', function (done) {
       fs.writeFileSync(path.join(templateDir, templateName, 'html-custom-filename.ejs'), '')
       emailTemplates(templateDir, function (err, template) {
@@ -240,17 +227,47 @@ describe('Email templates', function () {
       })
     })
 
-    it('on empty html file', function (done) {
-      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), '')
+    it('should render only text', function(done) {
+      var text = '<%= item%>';
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), text);
+
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text) {
+          expect(err).to.be.null;
+          expect(text).to.equal('test');
+          expect(html).to.not.be.ok;
+          done();
+        })
+      })
+    });
+
+    it('on missing html and text file', function (done) {
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text) {
+          expect(err.code).to.equal('ENOENT')
+          expect(html).to.be.undefined
+          expect(text).to.be.undefined
+
+          done()
+        })
+      })
+    })
+
+    it('on empty html and text file', function(done) {
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), '');
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), '');
+
       emailTemplates(templateDir, function (err, template) {
         expect(err).to.be.null
         template(templateName, {item: 'test'}, function (err, html, text) {
           expect(html).to.be.undefined
           expect(text).to.be.undefined
-          expect(err.message).to.contain('not found or empty')
+          expect(err.message).to.contain('both empty in path');
           done()
         })
       })
-    })
+    });
   })
 })

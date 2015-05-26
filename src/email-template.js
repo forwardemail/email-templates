@@ -33,13 +33,17 @@ export default class EmailTemplate {
     })
     .then((files) => {
       let [html, text, style] = files
-      if (!html) {
-        let err = new Error(`HTML file not found or empty in path ${this.dirname}`)
-        err.code = 'ENOENT'
-        throw err
+
+      if (!html && !text) {
+        let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`);
+        err.code = 'ENOENT';
+        throw err;
       }
-      this.files.html = html
-      debug('Found HTML file %s in %s', basename(html.filename), this.dirname)
+
+      if (html) {
+        debug('Found HTML file %s in %s', basename(html.filename), this.dirname);
+      }
+      this.files.html = html;
 
       if (text) {
         debug('Found text %s file in %s', basename(text.filename), this.dirname)
