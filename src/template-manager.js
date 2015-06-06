@@ -30,12 +30,15 @@ exports.render = function templateManager (filename, source, locals, callback) {
   var engine = extname(filename).slice(1)
   locals.filename = filename
   locals.engine = '.' + engine
+  locals.templatePath = dirname(filename)
 
   return new P(function (resolve, reject) {
     var fn
     if (engine.length && cons[engine] !== undefined) {
+      // use consolidate.js if it supports this engine
       fn = cons[engine].render
     } else {
+      // or use the function defined in the engineMap
       fn = engineMap[engine]
     }
     if (!isFunction(fn)) return reject(`Can't render file with extension ${engine}`)
@@ -51,6 +54,7 @@ exports.render = function templateManager (filename, source, locals, callback) {
 function renderEmblem (source, locals, cb) {
   const emblem = require('emblem')
   const handlebars = require('handlebars')
+  console.warn('Please migrate your templates to other engine. Email Templates will stop supporting emblem on the next version')
 
   var template = emblem.compile(handlebars, source)
   cb(null, template(locals))
@@ -93,7 +97,8 @@ function renderSass (source, locals, cb) {
   locals.includePaths = [locals.templatePath]
 
   sass.render(locals, function (err, data) {
-    cb(err, data.css.toString())
+    if (err) return cb(err)
+    cb(null, data.css.toString())
   })
 }
 
