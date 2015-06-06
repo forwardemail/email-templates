@@ -99,6 +99,26 @@ describe('EmailTemplate', function () {
       })
     })
 
+    it('html with style element and juiceOptions', function (done) {
+      var html = '<style> h4 { color: red; }</style><h4><%= item %></h4>'
+      var css = 'h4 { color: blue; }'
+
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'style.ejs'), css)
+
+      var et = new EmailTemplate(templatePath, {
+        juiceOptions: { removeStyleTags: false }
+      })
+
+      et.render({ item: 'test' })
+      .then(function (results) {
+        expect(results.html).to.equal(
+          '<style> h4 { color: red; }</style><h4 style=\"color: blue;\">test</h4>')
+        done()
+      })
+      .catch(done)
+    })
+
   })
 
 })
