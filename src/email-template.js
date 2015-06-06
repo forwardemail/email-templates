@@ -8,7 +8,7 @@ import {ensureDirectory, readContents, renderFile} from './util'
 const debug = Debug('email-templates:email-template')
 
 export default class EmailTemplate {
-  constructor (path, options = {juiceOptions: {}}) {
+  constructor (path, options = {}) {
     this.files = {}
     this.path = path
     this.dirname = basename(path)
@@ -36,15 +36,15 @@ export default class EmailTemplate {
       let [html, text, style] = files
 
       if (!html && !text) {
-        let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`);
-        err.code = 'ENOENT';
-        throw err;
+        let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`)
+        err.code = 'ENOENT'
+        throw err
       }
 
       if (html) {
-        debug('Found HTML file %s in %s', basename(html.filename), this.dirname);
+        debug('Found HTML file %s in %s', basename(html.filename), this.dirname)
       }
-      this.files.html = html;
+      this.files.html = html
 
       if (text) {
         debug('Found text %s file in %s', basename(text.filename), this.dirname)

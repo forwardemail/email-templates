@@ -227,20 +227,20 @@ describe('Email templates', function () {
       })
     })
 
-    it('should render only text', function(done) {
-      var text = '<%= item%>';
-      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), text);
+    it('should render only text', function (done) {
+      var text = '<%= item%>'
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), text)
 
       emailTemplates(templateDir, function (err, template) {
         expect(err).to.be.null
         template(templateName, {item: 'test'}, function (err, html, text) {
-          expect(err).to.be.null;
-          expect(text).to.equal('test');
-          expect(html).to.not.be.ok;
-          done();
+          expect(err).to.be.null
+          expect(text).to.equal('test')
+          expect(html).to.not.be.ok
+          done()
         })
       })
-    });
+    })
 
     it('on missing html and text file', function (done) {
       emailTemplates(templateDir, function (err, template) {
@@ -255,19 +255,19 @@ describe('Email templates', function () {
       })
     })
 
-    it('on empty html and text file', function(done) {
-      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), '');
-      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), '');
+    it('on empty html and text file', function (done) {
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), '')
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), '')
 
       emailTemplates(templateDir, function (err, template) {
         expect(err).to.be.null
         template(templateName, {item: 'test'}, function (err, html, text) {
           expect(html).to.be.undefined
           expect(text).to.be.undefined
-          expect(err.message).to.contain('both empty in path');
+          expect(err.message).to.contain('both empty in path')
           done()
         })
       })
-    });
+    })
   })
 })

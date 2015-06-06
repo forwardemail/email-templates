@@ -13,7 +13,7 @@ Handlebars.registerPartial('name',
   '{{ capitalize name.first }} {{ capitalize name.last }}'
 )
 
-var template = new EmailTemplate(templateDir, {})
+var template = new EmailTemplate(templateDir)
 var locals = {
   email: 'mamma.mia@spaghetti.com',
   name: {first: 'Mamma', last: 'Mia'}

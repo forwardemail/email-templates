@@ -1,5 +1,5 @@
 import {ensureDirectory} from './util'
-import {isFunction, defaults} from 'lodash'
+import {isFunction} from 'lodash'
 import EmailTemplate from './email-template'
 import Debug from 'debug'
 import {basename} from 'path'
