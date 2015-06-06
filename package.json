@@ -52,7 +52,7 @@
   "scripts": {
     "prepublish": "npm run compile && npm prune",
     "compile": "babel src --modules common --out-dir lib",
-    "watch": "babel src --watch --modules common --out-dir lib",
+    "watch": "babel src --watch --modules common --out-dir lib --source-maps true",
     "test": "mocha",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly"
