@@ -8,10 +8,11 @@ import {ensureDirectory, readContents, renderFile} from './util'
 const debug = Debug('email-templates:email-template')
 
 export default class EmailTemplate {
-  constructor (path, options) {
+  constructor (path, options = {juiceOptions: {}}) {
     this.files = {}
     this.path = path
     this.dirname = basename(path)
+    this.options = options
     debug('Creating Email template for path %s', basename(path))
   }
 
@@ -85,10 +86,10 @@ export default class EmailTemplate {
       let juiceOptions = {
         extraCss: style
       }
-      if (locals.juiceOptions) {
-        debug('Using juice options ', locals.juiceOptions)
-        juiceOptions = locals.juiceOptions || {}
-        juiceOptions.extraCss = (locals.juiceOptions.extraCss || '') + style
+      if (this.options.juiceOptions) {
+        debug('Using juice options ', this.options.juiceOptions)
+        juiceOptions = this.options.juiceOptions || {}
+        juiceOptions.extraCss = (this.options.juiceOptions.extraCss || '') + style
       }
       return juice(html, juiceOptions)
     })

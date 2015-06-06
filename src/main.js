@@ -29,12 +29,11 @@ function template (templateDirectory, options) {
       callback = locals
       locals = {}
     }
-    locals = defaults(locals, options)
     if (directory == null) {
       return callback(new Error('templateName was not defined'))
     }
 
-    var et = new EmailTemplate(`${templateDirectory}/${directory}`)
+    var et = new EmailTemplate(`${templateDirectory}/${directory}`, options)
     if (locals === true) {
       return callback(null, function (locals, dir, next) {
         et.render(locals, function (err, result) {
