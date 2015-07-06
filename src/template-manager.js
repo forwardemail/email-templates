@@ -10,7 +10,7 @@ import P from 'bluebird'
 
 var engineMap = {
   // HTML Template engines
-  'hbs': renderHbs,
+  'hbs': cons.handlebars.render,
   'emblem': renderEmblem,
   // CSS pre-processors
   'less': renderLess,
@@ -107,16 +107,6 @@ function renderSass (source, locals) {
     })
   })
 }
-
-function renderHbs (source, locals) {
-  return new P(function (done, reject) {
-    cons.handlebars.render(source, locals, function (err, rendered) {
-      if (err) return reject(err)
-      done(rendered)
-    })
-  })
-}
-
 // Default wrapper for handling standard CSS and empty source.
 function renderDefault (source) {
   return P.resolve(source)
