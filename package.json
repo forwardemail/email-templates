@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "bluebird": "^2.9.25",
-    "consolidate": "^0.12.0",
+    "consolidate": "^0.13.0",
     "debug": "^2.2.0",
     "glob": "^5.0.0",
     "juice": "^1.0.0",
@@ -68,7 +68,7 @@
   "devDependencies": {
     "async": "^0.9.0",
     "babel": "^5.4.3",
-    "chai": "^2.0.0",
+    "chai": "^3.0.0",
     "dustjs-linkedin": "^2.4.0",
     "ejs": "^2.3.0",
     "handlebars": "^3.0.0",
