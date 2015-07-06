@@ -82,14 +82,13 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
 2. Install the template engine you intend to use:
 
     - `ejs@^2.0.0`
-    - `jade@^1.9.0`
-    - `swig@^1.4.2`
+    - `jade@^1.0.0`
+    - `swig@^1.0.0`
     - `handlebars@^3.0.0`
-    - `dust-linkedin@^2.7.0`
-
-    - `less@^2.5.0`
-    - `stylus@^^0.51.0`
-    - `styl@^0.2.9`
+    - `dust-linkedin@^2.0.0`
+    - `less@^2.0.0`
+    - `stylus@^0.51.0`
+    - `styl@^0.2.0`
     - `node-sass@^3.0.0`
 
     ```bash
@@ -121,27 +120,31 @@ If your want to configure your template engine, just pass options.
 Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
 
 ```javascript
-emailTemplates(templatesDir, { delimiter: '?' }, function (err, template) {
+new EmailTemplate(templateDir, { delimiter: '?' })
 ```
 
-> You can also pass <a href="https://github.com/mde/ejs#options" target="_blank">other options from EJS's documentation</a>.
+> You can also directly modify the template engine
 
-Want to add a helper or partial to Handlebars?
-
-```js
+```javascript
 // ...
-emailTemplates(templatesDir, {
-  helpers: {
-    uppercase: function(context) {
-      return context.toUpperCase()
-    }
-  }, partials: {
-    // ...
-  }
+Handlebars.registerPartial('name', '{{name.first}} {{name.last}}')
+Handlebars.registerHelper('capitalize', function (context) {
+  return context.toUpperCase()
 })
+new EmailTemplate(templateDir)
 // ...
 ```
 
+You can also pass a `juiceOptions` object to configure the output from [juice][juice]
+
+```javascript
+new EmailTemplate(templateDir, {juiceOptions: {
+  preserveMediaQueries: false,
+  removeStyleTags: false
+}})
+```
+
+You can check all the options in [juice's documentation](https://github.com/automattic/juice#options)
 
 ## Examples
 
@@ -149,7 +152,7 @@ emailTemplates(templatesDir, {
 
 Render a single template (having only loaded the template once).
 
-```js
+```javascript
 var EmailTemplate = require('email-templates').EmailTemplate
 var path = require('path')
 
@@ -179,64 +182,42 @@ async.each(users, function (user, next) {
 })
 ```
 
-Render a template for a single email or render multiple (having only loaded the template once).
+Render a template for a single email or render multiple (having only loaded the template once) using Promises.
 
 ```js
 var path           = require('path')
-var templatesDir   = path.join(__dirname, 'templates')
-var emailTemplates = require('email-templates');
+var templateDir   = path.join(__dirname, 'templates', 'pasta-dinner')
+var EmailTemplate = require('email-templates').EmailTemplate
 
-emailTemplates(templatesDir, function(err, template) {
-
-  // Render a single email with one template
-  var locals = { pasta: 'Spaghetti' };
-
-  template('pasta-dinner', locals, function(err, html, text) {
-    // ...
-  });
-
-  // Render multiple emails with one template
-  var locals = [
-    { pasta: 'Spaghetti' },
-    { pasta: 'Rigatoni' }
-  ];
-
-  var Render = function(locals) {
-    this.locals = locals;
-    this.send = function(err, html, text) {
-      // ...
-    };
-    this.batch = function(batch) {
-      batch(this.locals, templatesDir, this.send);
-    };
-  };
-
-  // An example users object
-  var users = [
-    {
-      email: 'pappa.pizza@spaghetti.com',
-      name: {
-        first: 'Pappa',
-        last: 'Pizza'
-      }
-    },
-    {
-      email: 'mister.geppetto@spaghetti.com',
-      name: {
-        first: 'Mister',
-        last: 'Geppetto'
-      }
+var template = new EmailTemplate(templateDir)
+var users = [
+  {
+    email: 'pappa.pizza@spaghetti.com',
+    name: {
+      first: 'Pappa',
+      last: 'Pizza'
     }
-  ];
-
-  template('pasta-dinner', true, function(err, batch) {
-    for(var user in users) {
-      var render = new Render(users[user]);
-      render.batch(batch);
+  },
+  {
+    email: 'mister.geppetto@spaghetti.com',
+    name: {
+      first: 'Mister',
+      last: 'Geppetto'
     }
-  });
+  }
+]
 
-});
+var templates = users.map(function (user) {
+  return template.render(user)
+})
+
+Promise.all(templates)
+  .then(function (results) {
+    console.log(results[0].html)
+    console.log(results[0].text)
+    console.log(results[1].html)
+    console.log(results[1].text)
+  })
 ```
 
 ### More
