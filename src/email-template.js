@@ -83,15 +83,10 @@ export default class EmailTemplate {
     .then((results) => {
       let [html, style] = results
       if (!style) return html
-      let juiceOptions = {
-        extraCss: style
-      }
       if (this.options.juiceOptions) {
         debug('Using juice options ', this.options.juiceOptions)
-        juiceOptions = this.options.juiceOptions || {}
-        juiceOptions.extraCss = (this.options.juiceOptions.extraCss || '') + style
       }
-      return juice(html, juiceOptions)
+      return juice.inlineContent(html, style, this.options.juiceOptions || {})
     })
     .tap(() => debug('Finished rendering HTML'))
     .nodeify(callback)
