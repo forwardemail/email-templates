@@ -51,9 +51,9 @@
   "main": "lib/main.js",
   "scripts": {
     "prepublish": "npm run compile && npm prune",
-    "compile": "babel src --modules common --out-dir lib",
-    "watch": "babel src --watch --modules common --out-dir lib --source-maps true",
-    "test": "mocha",
+    "compile": "node_modules/.bin/babel src --modules common --out-dir lib",
+    "watch": "node_modules/.bin/babel src --watch --modules common --out-dir lib --source-maps true",
+    "test": "node_modules/.bin/standard && node_modules/.bin/mocha",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly"
   },
@@ -84,9 +84,16 @@
     "rimraf": "^2.2.8",
     "sinon": "^1.10.2",
     "sinon-chai": "^2.7.0",
+    "standard": "^4.5.2",
     "styl": "^0.2.7",
     "stylus": "^0.51.1",
     "swig": "^1.3.2"
+  },
+  "standard": {
+    "ignore": [
+      "lib",
+      "examples"
+    ]
   },
   "license": "MIT",
   "bugs": {
