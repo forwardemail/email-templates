@@ -7,11 +7,10 @@
 import {extname, dirname, basename} from 'path'
 import cons from 'consolidate'
 import P from 'bluebird'
-import {isFunction} from 'lodash'
 
 var engineMap = {
   // HTML Template engines
-  'hbs': cons.handlebars.render,
+  'hbs': renderHbs,
   'emblem': renderEmblem,
   // CSS pre-processors
   'less': renderLess,
@@ -24,85 +23,101 @@ var engineMap = {
   '': renderDefault
 }
 
-exports.render = function templateManager (filename, source, locals, callback) {
-  if (!source) return null
-
-  var engine = extname(filename).slice(1)
-  locals.filename = filename
-  locals.engine = '.' + engine
-  locals.templatePath = dirname(filename)
+export function render (file, locals = {}, callback) {
+  let {filename, content} = file
 
   return new P(function (resolve, reject) {
-    var fn
+    if (!content) return reject('No content in template')
+    if (!filename) return reject('Filename is null')
+    let engine = extname(filename).slice(1)
+
+    locals.filename = filename
+    locals.engine = '.' + engine
+    locals.templatePath = dirname(filename)
+
     if (engine.length && cons[engine] !== undefined) {
       // use consolidate.js if it supports this engine
-      fn = cons[engine].render
+      return cons[engine].render(content, locals, function (err, rendered) {
+        if (err) return reject(err)
+        resolve(rendered)
+      })
     } else {
       // or use the function defined in the engineMap
-      fn = engineMap[engine]
+      var fn = engineMap[engine]
+      return resolve(fn(content, locals))
     }
-    if (!isFunction(fn)) return reject(`Can't render file with extension ${engine}`)
-    fn(source, locals, function (err, rendered) {
-      if (err) return reject(err)
-      resolve(rendered)
-    })
+    return reject(`Can't render file with extension ${engine}`)
   })
   .nodeify(callback)
 }
 
 // Deprecated. This engine is deprecated since v2.0
-function renderEmblem (source, locals, cb) {
+function renderEmblem (source, locals) {
   const emblem = require('emblem')
   const handlebars = require('handlebars')
   console.warn('Please migrate your templates to other engine. Email Templates will stop supporting emblem on the next version')
 
   var template = emblem.compile(handlebars, source)
-  cb(null, template(locals))
+  return P.resolve(template(locals))
 }
 
 // CSS pre-processors
-function renderLess (source, locals, cb) {
+function renderLess (source, locals) {
   const less = require('less')
   var dir = dirname(locals.filename)
   var base = basename(locals.filename)
 
-  less.render(source, {
-    paths: [dir],
-    filename: base
-  }, function (err, output) {
-    if (err) { return cb(err) }
-    cb(null, output.css || output)
+  return new P(function (done, reject) {
+    less.render(source, {
+      paths: [dir],
+      filename: base
+    }, function (err, output) {
+      if (err) return reject(err)
+      done(output.css || output)
+    })
   })
 }
 
-function renderStylus (source, locals, cb) {
+function renderStylus (source, locals) {
   const stylus = require('stylus')
 
   // Render stylus synchronously as it does not appear to handle asynchronous
   // calls properly when an error is generated.
-  var css = stylus.render(source, locals)
-  cb(null, css)
+  const css = stylus.render(source, locals)
+  return P.resolve(css)
 }
 
-function renderStyl (source, locals, cb) {
+function renderStyl (source, locals) {
   const styl = require('styl')
 
-  cb(null, styl(source, locals).toString())
+  const css = styl(source, locals).toString()
+  return P.resolve(css)
 }
 
-function renderSass (source, locals, cb) {
+function renderSass (source, locals) {
   const sass = require('node-sass')
 
   locals.data = source
   locals.includePaths = [locals.templatePath]
 
-  sass.render(locals, function (err, data) {
-    if (err) return cb(err)
-    cb(null, data.css.toString())
+  return new P(function (done, reject) {
+    sass.render(locals, function (err, data) {
+      if (err) return reject(err)
+      done(data.css.toString())
+    })
+  })
+}
+
+function renderHbs (source, locals) {
+  return new P(function (done, reject) {
+    cons.handlebars.render(source, locals, function (err, rendered) {
+      if (err) return reject(err)
+      done(rendered)
+    })
   })
 }
 
 // Default wrapper for handling standard CSS and empty source.
-function renderDefault (source, locals, cb) {
-  cb(null, source)
+function renderDefault (source) {
+  return P.resolve(source)
 }

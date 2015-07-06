@@ -21,13 +21,13 @@ describe('Template manager', function () {
 
   // Tests
   it('should render ejs', function (done) {
-    var opts = {
-      locals: {item: 'test'},
+    var file = {
       filename: 'test.ejs',
-      source: '<h1><%= item%> <%= engine%></h1>'
+      content: '<h1><%= item%> <%= engine%></h1>'
     }
+    var locals = {item: 'test'}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>test .ejs</h1>')
 
@@ -36,16 +36,16 @@ describe('Template manager', function () {
   })
 
   it('should render ejs with custom opening and closing tags', function (done) {
-    var opts = {
-      locals: {
-        item: 'test',
-        delimiter: '?'
-      },
+    var file = {
       filename: 'test.ejs',
-      source: '<h1><?=item?> <?=engine?></h1>'
+      content: '<h1><?=item?> <?=engine?></h1>'
+    }
+    var locals = {
+      item: 'test',
+      delimiter: '?'
     }
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>test .ejs</h1>')
       done()
@@ -53,13 +53,13 @@ describe('Template manager', function () {
   })
 
   it('should render jade', function (done) {
-    var opts = {
-      locals: {item: 'test'},
+    var file = {
       filename: 'test.jade',
-      source: 'h1= item\nh1= engine'
+      content: 'h1= item\nh1= engine'
     }
+    var locals = {item: 'test'}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>test</h1><h1>.jade</h1>')
 
@@ -68,13 +68,13 @@ describe('Template manager', function () {
   })
 
   it('should render swig', function (done) {
-    var opts = {
-      locals: {item: 'test'},
+    var file = {
       filename: 'test.swig',
-      source: '<h1>{{ item }} {{ engine }}</h1>'
+      content: '<h1>{{ item }} {{ engine }}</h1>'
     }
+    var locals = {item: 'test'}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>test .swig</h1>')
 
@@ -83,13 +83,13 @@ describe('Template manager', function () {
   })
 
   it('should render handlebars', function (done) {
-    var opts = {
-      locals: {item: 'test'},
+    var file = {
       filename: 'test.handlebars',
-      source: '<h1>{{ item }} {{ engine }}</h1>'
+      content: '<h1>{{ item }} {{ engine }}</h1>'
     }
+    var locals = {item: 'test'}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>test .handlebars</h1>')
 
@@ -98,17 +98,18 @@ describe('Template manager', function () {
   })
 
   it('should render handlebars with helpers', function (done) {
-    var opts = {
-      locals: {
-        item: 'test',
-        helpers: {
-          uppercase: function (context) {return context.toUpperCase()}
-        }
-      },
+    var file = {
       filename: 'test.hbs',
-      source: '<h1>{{uppercase item}} {{engine}}</h1>'
+      content: '<h1>{{uppercase item}} {{engine}}</h1>'
     }
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    var locals = {
+      item: 'test',
+      helpers: {
+        uppercase: function (context) {return context.toUpperCase()}
+      }
+    }
+    tm.render(file, locals, function (err, res) {
+      if (err) console.error(err.stack)
       expect(err).to.be.null
       expect(res).to.equal('<h1>TEST .hbs</h1>')
       done()
@@ -116,13 +117,13 @@ describe('Template manager', function () {
   })
 
   it('should render dust', function (done) {
-    var opts = {
-      locals: {item: 'test'},
+    var file = {
       filename: 'test.dust',
-      source: '<h1>{item}\n</h1><h1>{engine}</h1>'
+      content: '<h1>{item}\n</h1><h1>{engine}</h1>'
     }
+    var locals = {item: 'test'}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('<h1>test</h1><h1>.dust</h1>')
 
@@ -131,13 +132,13 @@ describe('Template manager', function () {
   })
 
   it('should render less', function (done) {
-    var opts = {
-      locals: {},
+    var file = {
       filename: 'test.less',
-      source: '.class{ width: (1 + 1) }'
+      content: '.class{ width: (1 + 1) }'
     }
+    var locals = {}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('.class {\n  width: 2;\n}\n')
 
@@ -153,13 +154,12 @@ describe('Template manager', function () {
     fs.writeFileSync(testMainLessFile, '@import "includes.less";')
     fs.writeFileSync(testIncludesFile, '.body { color: #333}')
 
-    var opts = {
-      locals: {},
+    var file = {
       filename: testMainLessFile,
-      source: fs.readFileSync(testMainLessFile).toString()
+      content: fs.readFileSync(testMainLessFile).toString()
     }
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, {}, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('.body {\n  color: #333333;\n}\n')
 
@@ -168,10 +168,11 @@ describe('Template manager', function () {
   })
 
   it('should render stylus', function (done) {
-    var opts = {locals: {}}
-    opts.filename = 'test.stylus'
-    opts.source = 'body\n  width: 2px\n'
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    var file = {
+      filename: 'test.stylus',
+      content: 'body\n  width: 2px\n'
+    }
+    tm.render(file, {}, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('body {\n  width: 2px;\n}\n')
       done()
@@ -179,13 +180,13 @@ describe('Template manager', function () {
   })
 
   it('should render styl', function (done) {
-    var opts = {
-      locals: {whitespace: true},
+    var file = {
       filename: 'test.styl',
-      source: 'body\n  color: blue'
+      content: 'body\n  color: blue'
     }
+    var locals = {whitespace: true}
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, locals, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('body {\n  color: blue;\n}')
       done()
@@ -193,13 +194,12 @@ describe('Template manager', function () {
   })
 
   it('should render sass', function (done) {
-    var opts = {
-      locals: {},
+    var file = {
       filename: 'test.sass',
-      source: '$gray: #ccc;body {color: $gray}'
+      content: '$gray: #ccc;body {color: $gray}'
     }
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, {}, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('body {\n  color: #ccc; }\n')
 
@@ -208,13 +208,12 @@ describe('Template manager', function () {
   })
 
   it('should render css', function (done) {
-    var opts = {
-      locals: {},
+    var file = {
       filename: 'test.css',
-      source: 'body { color: #ccc; }'
+      content: 'body { color: #ccc; }'
     }
 
-    tm.render(opts.filename, opts.source, opts.locals, function (err, res) {
+    tm.render(file, {}, function (err, res) {
       expect(err).to.be.null
       expect(res).to.equal('body { color: #ccc; }')
 

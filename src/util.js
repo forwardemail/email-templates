@@ -1,7 +1,7 @@
 import P from 'bluebird'
 import {readFile, stat} from 'fs'
 import glob from 'glob'
-import tm from './template-manager'
+import {render} from './template-manager'
 
 const readFileP = P.promisify(readFile)
 const globP = P.promisify(glob)
@@ -35,6 +35,6 @@ export function readContents (path, type) {
 
 export function renderFile (file, options) {
   if (!file) return Promise.resolve(null)
-  return tm.render(file.filename, file.content, options)
+  return render(file, options)
 }
 
