@@ -3,130 +3,94 @@
 
 // ## Example with [Nodemailer](https://github.com/andris9/Nodemailer)
 
-var path           = require('path')
-  , templatesDir   = path.resolve(__dirname, '..', 'templates')
-  , emailTemplates = require('../../')
-  , nodemailer     = require('nodemailer');
+// // **NOTE**: Did you know `nodemailer` can also be used to send SMTP email through Mandrill, Mailgun, Sendgrid and Postmark?
+// <https://github.com/andris9/nodemailer-wellknown#supported-services>
 
-emailTemplates(templatesDir, function(err, template) {
+var path = require('path')
+var EmailTemplate = require('../../').EmailTemplate
+var nodemailer = require('nodemailer')
+var wellknown = require('nodemailer-wellknown')
+var async = require('async')
 
-  if (err) {
-    console.log(err);
-  } else {
-
-    // ## Send a single email
-
-    // Prepare nodemailer transport object
-    var transport = nodemailer.createTransport("SMTP", {
-      service: "Gmail",
-      auth: {
-        user: "some-user@gmail.com",
-        pass: "some-password"
-      }
-    });
-
-    // An example users object with formatted email function
-    var locals = {
-      email: 'mamma.mia@spaghetti.com',
-      name: {
-        first: 'Mamma',
-        last: 'Mia'
-      }
-    };
-
-    // Send a single email
-    template('newsletter', locals, function(err, html, text) {
-      if (err) {
-        console.log(err);
-      } else {
-        transport.sendMail({
-          from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
-          to: locals.email,
-          subject: 'Mangia gli spaghetti con polpette!',
-          html: html,
-          // generateTextFromHTML: true,
-          text: text
-        }, function(err, responseStatus) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(responseStatus.message);
-          }
-        });
-      }
-    });
-
-
-    // ## Send a batch of emails and only load the template once
-
-    // Prepare nodemailer transport object
-    var transportBatch = nodemailer.createTransport("SMTP", {
-      service: "Gmail",
-      auth: {
-        user: "some-user@gmail.com",
-        pass: "some-password"
-      }
-    });
-
-    // An example users object
-    var users = [
-      {
-        email: 'pappa.pizza@spaghetti.com',
-        name: {
-          first: 'Pappa',
-          last: 'Pizza'
-        }
-      },
-      {
-        email: 'mister.geppetto@spaghetti.com',
-        name: {
-          first: 'Mister',
-          last: 'Geppetto'
-        }
-      }
-    ];
-
-    // Custom function for sending emails outside the loop
-    //
-    // NOTE:
-    //  We need to patch postmark.js module to support the API call
-    //  that will let us send a batch of up to 500 messages at once.
-    //  (e.g. <https://github.com/diy/trebuchet/blob/master/lib/index.js#L160>)
-    var Render = function(locals) {
-      this.locals = locals;
-      this.send = function(err, html, text) {
-        if (err) {
-          console.log(err);
-        } else {
-          transportBatch.sendMail({
-            from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
-            to: locals.email,
-            subject: 'Mangia gli spaghetti con polpette!',
-            html: html,
-            // generateTextFromHTML: true,
-            text: text
-          }, function(err, responseStatus) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(responseStatus.message);
-            }
-          });
-        }
-      };
-      this.batch = function(batch) {
-        batch(this.locals, templatesDir, this.send);
-      };
-    };
-
-    // Load the template and send the emails
-    template('newsletter', true, function(err, batch) {
-      for(var user in users) {
-        var render = new Render(users[user]);
-        render.batch(batch);
-      }
-    });
-
+var templatesDir = path.resolve(__dirname, '..', 'templates')
+var template = new EmailTemplate(path.join(templatesDir, 'newsletter'))
+// Prepare nodemailer transport object
+var transport = nodemailer.createTransport({
+  service: 'sendgrid',
+  auth: {
+    user: 'some-user@gmail.com',
+    pass: 'some-password'
   }
-});
+})
 
+// An example users object with formatted email function
+var locals = {
+  email: 'mamma.mia@spaghetti.com',
+  name: {
+    first: 'Mamma',
+    last: 'Mia'
+  }
+}
+
+// Send a single email
+template.render(locals, function (err, results) {
+  if (err) {
+    return console.error(err)
+  }
+
+  transport.sendMail({
+    from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
+    to: locals.email,
+    subject: 'Mangia gli spaghetti con polpette!',
+    html: results.html,
+    text: results.text
+  }, function (err, responseStatus) {
+    if (err) {
+      return console.error(err)
+    }
+    console.log(responseStatus.message)
+  })
+})
+
+// ## Send a batch of emails and only load the template once
+
+var users = [
+  {
+    email: 'pappa.pizza@spaghetti.com',
+    name: {
+      first: 'Pappa',
+      last: 'Pizza'
+    }
+  },
+  {
+    email: 'mister.geppetto@spaghetti.com',
+    name: {
+      first: 'Mister',
+      last: 'Geppetto'
+    }
+  }
+]
+
+// Send 10 mails at once
+async.mapLimit(users, 10, function (item, next) {
+  template.render(item, function (err, results) {
+    if (err) return next(err)
+    transport.sendMail({
+      from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
+      to: item.email,
+      subject: 'Mangia gli spaghetti con polpette!',
+      html: results.html,
+      text: results.text
+    }, function (err, responseStatus) {
+      if (err) {
+        return next(err)
+      }
+      next(null, responseStatus.message)
+    })
+  })
+}, function (err) {
+  if (err) {
+    console.error(err)
+  }
+  console.log('Succesfully sent %d messages', users.length)
+})

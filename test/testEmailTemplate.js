@@ -1,0 +1,124 @@
+/* global describe it beforeEach afterEach */
+var EmailTemplate = require('../src/email-template')
+var expect = require('chai').expect
+var fs = require('fs')
+var path = require('path')
+var mkdirp = require('mkdirp')
+var rimraf = require('rimraf')
+var templatePath = path.join(__dirname, '..', '.test-templates', 'test-template')
+var P = require('bluebird')
+
+describe('EmailTemplate', function () {
+  // Setup test environment.
+  beforeEach(function (done) {
+    // Setup the template directory structure.
+    mkdirp(templatePath, done)
+  })
+
+  afterEach(function (done) {
+    // Destroy the template directory structure.
+    rimraf(templatePath, done)
+  })
+
+  describe('should render', function () {
+    it('html file', function (done) {
+      var html = '<h4><%= item%></h4>'
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+
+      var et = new EmailTemplate(templatePath)
+      et.renderHtml({item: 'test'}, function (err, html) {
+        expect(err).to.be.null
+        expect(html).to.equal('<h4>test</h4>')
+        done()
+      })
+    })
+
+    it('html file with promises', function (done) {
+      var html = '<h4><%= item%></h4>'
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+
+      var et = new EmailTemplate(templatePath)
+      return et.renderHtml({item: 'test'})
+      .then(function (html) {
+        expect(html).to.equal('<h4>test</h4>')
+        done()
+      })
+    })
+
+    it('text file', function (done) {
+      var html = '<h4><%= item%></h4>'
+      var text = '<%= item%>'
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'text.ejs'), text)
+
+      var et = new EmailTemplate(templatePath)
+      et.renderText({item: 'test'}, function (err, text) {
+        expect(err).to.be.null
+        expect(text).to.equal('test')
+        done()
+      })
+    })
+
+    it('text file with promises', function (done) {
+      var html = '<h4><%= item%></h4>'
+      var text = '<%= item%>'
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'text.ejs'), text)
+
+      var et = new EmailTemplate(templatePath)
+      return et.renderText({item: 'test'})
+      .then(function (text) {
+        expect(text).to.equal('test')
+        done()
+      })
+    })
+
+    it('batch templates', function (done) {
+      var html = '<h4><%= name%>(<%= screenName %>)</h4>'
+      var text = '<%= screenName%>'
+      var css = 'h4 { color: #ccc }'
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'text.ejs'), text)
+      fs.writeFileSync(path.join(templatePath, 'style.ejs'), css)
+
+      var data = [
+        {name: 'Nick', screenName: 'niftylettuce'},
+        {name: 'Jeduan', screenName: 'jeduan'}
+      ]
+
+      var et = new EmailTemplate(templatePath)
+      return P.map(data, function (item) {
+        return et.render(item)
+      })
+      .then(function (emails) {
+        expect(emails[0].html).to.equal('<h4 style=\"color: #ccc;\">Nick(niftylettuce)</h4>')
+        expect(emails[0].text).to.equal('niftylettuce')
+        expect(emails[1].html).to.equal('<h4 style=\"color: #ccc;\">Jeduan(jeduan)</h4>')
+        expect(emails[1].text).to.equal('jeduan')
+        done()
+      })
+    })
+
+    it('html with style element and juiceOptions', function (done) {
+      var html = '<style> h4 { color: red; }</style><h4><%= item %></h4>'
+      var css = 'h4 { color: blue; }'
+
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'style.ejs'), css)
+
+      var et = new EmailTemplate(templatePath, {
+        juiceOptions: { removeStyleTags: false }
+      })
+
+      et.render({ item: 'test' })
+      .then(function (results) {
+        expect(results.html).to.equal(
+          '<style> h4 { color: red; }</style><h4 style=\"color: blue;\">test</h4>')
+        done()
+      })
+      .catch(done)
+    })
+
+  })
+
+})

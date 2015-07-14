@@ -1,0 +1,4 @@
+--bail
+--compilers js:babel/register
+--require ./test/support/should
+--reporter spec
