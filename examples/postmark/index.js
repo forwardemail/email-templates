@@ -30,7 +30,7 @@ var locals = {
 var template = new EmailTemplate(path.join(templatesDir, 'newsletter'))
 
 // Send a single email
-template(locals, function (err, results) {
+template.render(locals, function (err, results) {
   if (err) {
     return console.error(err)
   }
