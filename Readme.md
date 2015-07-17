@@ -23,8 +23,6 @@ Node.js NPM package for rendering beautiful emails with your template engine and
 * [EJS Custom Tags](#ejs-custom-tags)
 * [Examples](#examples)
     * [Basic](#basic)
-    * [Nodemailer](#nodemailer)
-    * [Postmark](#postmark)
 * [Changelog](#changelog)
 * [Contributors](#contributors)
 * [License](#license)
