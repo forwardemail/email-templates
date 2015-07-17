@@ -29,7 +29,6 @@ export default class EmailTemplate {
   }
 
   _loadTemplates () {
-    if (typeof this.path === 'object') {}
     return P.map(['html', 'text', 'style'], (type) => {
       return readContents(this.path, type)
     })
