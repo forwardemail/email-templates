@@ -34,12 +34,7 @@ For customizable, pre-built email templates, see [Email Blueprints][email-bluepr
 
 #### Supported Template Engines
 
-* [ejs][ejs]
-* [jade][jade]
-* [swig][swig]
-* [handlebars][handlebars]
-* [emblem][emblem]
-* [dust-linkedin][dust-linkedin]
+node-email-templates uses [consolidate.js][consolidate], and therefore supports a vast array of template modules. Please see [consolidate.js][consolidate] for the impressive full list.
 
 #### Supported CSS Pre-processors
 
@@ -65,7 +60,8 @@ Install `email-templates` and the engines you wish to use by adding them to your
 
 ```bash
 npm install --save email-templates
-npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
+# See https://www.npmjs.com/package/consolidate for a full list of available template engines
+npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin] 
 ```
 
 
@@ -81,13 +77,15 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
 
     - `ejs@^2.0.0`
     - `jade@^1.0.0`
-    - `swig@^1.0.0`
+    - `nunjucks@^1.0.0`
     - `handlebars@^3.0.0`
     - `dust-linkedin@^2.0.0`
     - `less@^2.0.0`
     - `stylus@^0.51.0`
     - `styl@^0.2.0`
     - `node-sass@^3.0.0`
+    
+    - See https://www.npmjs.com/package/consolidate for a full list
 
     ```bash
     npm install --save <engine>
@@ -104,7 +102,7 @@ npm install -S [ejs|jade|swig|handlebars|emblem|dust-linkedin]
     * `text.{{ext}}` (**optional**)
     * `style.{{ext}}`(**optional**)
 
-    > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.jade`, `.swig`) to use for the value of `{{ext}}` above.**
+    > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.jade`, `.nunjucks`) to use for the value of `{{ext}}` above.**
 
     > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, and `style.` respectively.
 
@@ -246,11 +244,7 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 [postmarkjs]: https://github.com/voodootikigod/postmark.js
 [nodemailer-smtp]: https://github.com/andris9/Nodemailer#well-known-services-for-smtp
 [postmark-msg-format]: http://developer.postmarkapp.com/developer-build.html#message-format
-[jade]: https://github.com/visionmedia/jade
-[swig]: https://github.com/paularmstrong/swig
-[handlebars]: https://github.com/wycats/handlebars.js
-[emblem]: https://github.com/machty/emblem.js
-[dust-linkedin]: https://github.com/linkedin/dustjs
+[consolidate]: https://www.npmjs.com/package/consolidate
 [less]: http://lesscss.org/
 [sass]: http://sass-lang.com/
 [stylus]: http://learnboost.github.io/stylus/
