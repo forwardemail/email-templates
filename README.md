@@ -98,13 +98,14 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
     ```
 
 4. Add the following files inside the template's folder:
-    * `html.{{ext}}` (**required**)
-    * `text.{{ext}}` (**optional**)
-    * `style.{{ext}}`(**optional**)
+    * `html.{{ext}}` (**required**) - for html format of email
+    * `text.{{ext}}` (**optional**) - for text format of email
+    * `style.{{ext}}`(**optional**) - styles for html format
+    * `subject.{{ext}}`(**optional**) - for subject of email
 
     > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.jade`, `.nunjucks`) to use for the value of `{{ext}}` above.**
 
-    > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, and `style.` respectively.
+    > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, `style.`, and `subject.` respectively.
 
 5. You may use the `include` directive from [ejs][ejs] (for example, to include a common header or footer).  See the `/examples` folder for details.
 
@@ -172,6 +173,7 @@ async.each(users, function (user, next) {
     if (err) return next(err)
     // result.html
     // result.text
+    // result.subject
   })
 }, function (err) {
   //
@@ -211,8 +213,10 @@ Promise.all(templates)
   .then(function (results) {
     console.log(results[0].html)
     console.log(results[0].text)
+    console.log(results[0].subject)
     console.log(results[1].html)
     console.log(results[1].text)
+    console.log(results[1].subject)
   })
 ```
 
