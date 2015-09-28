@@ -152,7 +152,7 @@ describe('Template manager', function () {
 
     // Write out some test LESS files.
     fs.writeFileSync(testMainLessFile, '@import "includes.less";')
-    fs.writeFileSync(testIncludesFile, '.body { color: #333}')
+    fs.writeFileSync(testIncludesFile, '.body { color: #333333}')
 
     var file = {
       filename: testMainLessFile,
