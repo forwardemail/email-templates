@@ -129,7 +129,7 @@ describe('Email templates', function () {
 
     it('html(jade) with inline CSS(less)', function (done) {
       var html = 'h4= item'
-      var css = '@color: #ccc; h4 { color: @color }'
+      var css = '@color: #cccccc; h4 { color: @color }'
       fs.writeFileSync(path.join(templateDir, templateName, 'html.jade'), html)
       fs.writeFileSync(path.join(templateDir, templateName, 'style.less'), css)
 
