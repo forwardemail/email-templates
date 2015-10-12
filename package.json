@@ -1,9 +1,13 @@
 {
-  "name": "email-templates",
+  "name": "email-templates-v2",
   "description": "Node.js module for rendering beautiful emails with ejs, jade, swig, hbs, or handlebars templates and email-friendly inline CSS using juice.",
-  "version": "2.0.1",
-  "author": "Nick Baugh <niftylettuce@gmail.com>",
+  "version": "2.0.2",
+  "author": "Shailendra Sharma <shailendra.sharma@gmail.com>",
   "contributors": [
+    {
+      "name": "Shailendra Sharma",
+      "email": "shailendra.sharma@gmail.com"
+    },
     {
       "name": "Nick Baugh",
       "email": "niftylettuce@gmail.com"
@@ -38,12 +42,16 @@
     "email-templates",
     "juice",
     "inline",
-    "css"
+    "css",
+    "subject template",
+    "html template",
+    "text template",
+    "v2"
   ],
-  "homepage": "https://github.com/niftylettuce/node-email-templates",
+  "homepage": "https://github.com/snow01/node-email-templates-v2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/niftylettuce/node-email-templates.git"
+    "url": "https://github.com/snow01/node-email-templates-v2.git"
   },
   "engines": {
     "node": ">= 0.10"
@@ -97,6 +105,6 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/niftylettuce/node-email-templates/issues/new"
+    "url": "https://github.com/snow01/node-email-templates-v2/issues/new"
   }
 }
