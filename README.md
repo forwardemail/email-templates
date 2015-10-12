@@ -12,8 +12,11 @@
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
 
-> Enjoy this package?  Check out [eskimo][eskimo] and [express-cdn][express-cdn], and follow [@niftylettuce](http://twitter.com/niftylettuce)!
+> Enjoy this package? Follow [@yeliahs](https://twitter.com/yeliahs)!
 
+## Note
+
+This package is extended version of [email-templates](https://github.com/niftylettuce/node-email-templates). v2 adds support for templating subjects.
 
 ## Index
 
@@ -34,7 +37,7 @@ For customizable, pre-built email templates, see [Email Blueprints][email-bluepr
 
 #### Supported Template Engines
 
-node-email-templates uses [consolidate.js][consolidate], and therefore supports a vast array of template modules. Please see [consolidate.js][consolidate] for the impressive full list.
+email-templates-v2 uses [consolidate.js][consolidate], and therefore supports a vast array of template modules. Please see [consolidate.js][consolidate] for the impressive full list.
 
 #### Supported CSS Pre-processors
 
@@ -56,10 +59,10 @@ Developing on OS X or Ubuntu/Linux is recommended, but if you only have access t
 
 ## Installation
 
-Install `email-templates` and the engines you wish to use by adding them to your `package.json` dependencies.
+Install `email-templates-v2` and the engines you wish to use by adding them to your `package.json` dependencies.
 
 ```bash
-npm install --save email-templates
+npm install --save email-templates-v2
 # See https://www.npmjs.com/package/consolidate for a full list of available template engines
 npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin] 
 ```
@@ -70,7 +73,7 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
 1. Install the module for your respective project:
 
     ```bash
-    npm install --save email-templates@2
+    npm install --save email-templates-v2@2
     ```
 
 2. Install the template engine you intend to use:
@@ -222,7 +225,7 @@ Promise.all(templates)
 
 ### More
 
-Please check the [examples directory](https://github.com/niftylettuce/node-email-templates/tree/master/examples)
+Please check the [examples directory](https://github.com/snow01/node-email-templates-v2/tree/master/examples)
 
 ## Contributors
 
@@ -232,6 +235,7 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 * Jason Sims <sims.jrobert@gmail.com>
 * Miguel Mota <hello@miguelmota.com>
 * Jeduan Cornejo <jeduan@gmail.com>
+* Shailendra Sharma <shailendra.sharma@gmail.com>
 
 > Full list of contributors can be found on the [GitHub Contributor Graph][gh-graph]
 
