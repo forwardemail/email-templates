@@ -16,7 +16,7 @@ Node.js NPM package for rendering beautiful emails with your template engine and
 
 ## Note
 
-This package is extended version of [email-templates](https://github.com/niftylettuce/node-email-templates). v2 adds support for templating subjects.
+This package (v2) is extended version of [email-templates](https://github.com/niftylettuce/node-email-templates). v2 adds support for templating subjects.
 
 ## Index
 
@@ -260,17 +260,17 @@ Please check the [examples directory](https://github.com/snow01/node-email-templ
 [express-cdn]: https://github.com/niftylettuce/express-cdn
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
-[gh-graph]: https://github.com/niftylettuce/node-email-templates/graphs/contributors
-[npm-image]: http://img.shields.io/npm/v/email-templates.svg?style=flat
-[npm-url]: https://npmjs.org/package/email-templates
-[npm-downloads]: http://img.shields.io/npm/dm/email-templates.svg?style=flat
-[travis-url]: http://travis-ci.org/niftylettuce/node-email-templates
-[travis-image]: http://img.shields.io/travis/niftylettuce/node-email-templates.svg?style=flat
-[codeclimate-image]: http://img.shields.io/codeclimate/github/niftylettuce/node-email-templates.svg?style=flat
-[codeclimate-url]: https://codeclimate.com/github/niftylettuce/node-email-templates?branch=master
-[coveralls-image]: https://img.shields.io/coveralls/niftylettuce/node-email-templates.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/niftylettuce/node-email-templates?branch=master
-[gitter-url]: https://gitter.im/niftylettuce/node-email-templates
+[gh-graph]: https://github.com/snow01/node-email-templates-v2/graphs/contributors
+[npm-image]: http://img.shields.io/npm/v/email-templates-v2.svg?style=flat
+[npm-url]: https://npmjs.org/package/email-templates-v2
+[npm-downloads]: http://img.shields.io/npm/dm/email-templates-v2.svg?style=flat
+[travis-url]: http://travis-ci.org/snow01/node-email-templates-v2
+[travis-image]: http://img.shields.io/travis/snow01/node-email-templates-v2.svg?style=flat
+[codeclimate-image]: http://img.shields.io/codeclimate/github/snow01/node-email-templates-v2.svg?style=flat
+[codeclimate-url]: https://codeclimate.com/github/snow01/node-email-templates-v2?branch=master
+[coveralls-image]: https://img.shields.io/coveralls/snow01/node-email-templates-v2.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/snow01/node-email-templates-v2?branch=master
+[gitter-url]: https://gitter.im/snow01/node-email-templates-v2
 [gitter-image]: http://img.shields.io/badge/chat-online-brightgreen.svg?style=flat
 [eskimo]: http://eskimo.io
 [nifty-conventions]: https://github.com/niftylettuce/nifty-conventions
