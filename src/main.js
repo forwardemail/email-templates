@@ -38,14 +38,14 @@ function template (templateDirectory, options) {
       return callback(null, function (locals, dir, next) {
         et.render(locals, function (err, result) {
           result = result || {}
-          next(err, result.html, result.text)
+          next(err, result.html, result.text, result.subject)
         })
       })
     }
 
     et.render(locals, function (err, result) {
       result = result || {}
-      callback(err, result.html, result.text)
+      callback(err, result.html, result.text, result.subject)
     })
   }
 }

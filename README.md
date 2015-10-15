@@ -12,8 +12,11 @@
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
 
-> Enjoy this package?  Check out [eskimo][eskimo] and [express-cdn][express-cdn], and follow [@niftylettuce](http://twitter.com/niftylettuce)!
+> Enjoy this package? Follow [@yeliahs](https://twitter.com/yeliahs)!
 
+## Note
+
+This package (v2) is extended version of [email-templates](https://github.com/niftylettuce/node-email-templates). v2 adds support for templating subjects.
 
 ## Index
 
@@ -34,7 +37,7 @@ For customizable, pre-built email templates, see [Email Blueprints][email-bluepr
 
 #### Supported Template Engines
 
-node-email-templates uses [consolidate.js][consolidate], and therefore supports a vast array of template modules. Please see [consolidate.js][consolidate] for the impressive full list.
+email-templates-v2 uses [consolidate.js][consolidate], and therefore supports a vast array of template modules. Please see [consolidate.js][consolidate] for the impressive full list.
 
 #### Supported CSS Pre-processors
 
@@ -56,10 +59,10 @@ Developing on OS X or Ubuntu/Linux is recommended, but if you only have access t
 
 ## Installation
 
-Install `email-templates` and the engines you wish to use by adding them to your `package.json` dependencies.
+Install `email-templates-v2` and the engines you wish to use by adding them to your `package.json` dependencies.
 
 ```bash
-npm install --save email-templates
+npm install --save email-templates-v2
 # See https://www.npmjs.com/package/consolidate for a full list of available template engines
 npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin] 
 ```
@@ -70,7 +73,7 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
 1. Install the module for your respective project:
 
     ```bash
-    npm install --save email-templates@2
+    npm install --save email-templates-v2@2
     ```
 
 2. Install the template engine you intend to use:
@@ -98,13 +101,14 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
     ```
 
 4. Add the following files inside the template's folder:
-    * `html.{{ext}}` (**required**)
-    * `text.{{ext}}` (**optional**)
-    * `style.{{ext}}`(**optional**)
+    * `html.{{ext}}` (**required**) - for html format of email
+    * `text.{{ext}}` (**optional**) - for text format of email
+    * `style.{{ext}}`(**optional**) - styles for html format
+    * `subject.{{ext}}`(**optional**) - for subject of email
 
     > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.jade`, `.nunjucks`) to use for the value of `{{ext}}` above.**
 
-    > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, and `style.` respectively.
+    > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, `style.`, and `subject.` respectively.
 
 5. You may use the `include` directive from [ejs][ejs] (for example, to include a common header or footer).  See the `/examples` folder for details.
 
@@ -172,6 +176,7 @@ async.each(users, function (user, next) {
     if (err) return next(err)
     // result.html
     // result.text
+    // result.subject
   })
 }, function (err) {
   //
@@ -211,14 +216,16 @@ Promise.all(templates)
   .then(function (results) {
     console.log(results[0].html)
     console.log(results[0].text)
+    console.log(results[0].subject)
     console.log(results[1].html)
     console.log(results[1].text)
+    console.log(results[1].subject)
   })
 ```
 
 ### More
 
-Please check the [examples directory](https://github.com/niftylettuce/node-email-templates/tree/master/examples)
+Please check the [examples directory](https://github.com/snow01/node-email-templates-v2/tree/master/examples)
 
 ## Contributors
 
@@ -228,6 +235,7 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 * Jason Sims <sims.jrobert@gmail.com>
 * Miguel Mota <hello@miguelmota.com>
 * Jeduan Cornejo <jeduan@gmail.com>
+* Shailendra Sharma <shailendra.sharma@gmail.com>
 
 > Full list of contributors can be found on the [GitHub Contributor Graph][gh-graph]
 
@@ -252,17 +260,17 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 [express-cdn]: https://github.com/niftylettuce/express-cdn
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
-[gh-graph]: https://github.com/niftylettuce/node-email-templates/graphs/contributors
-[npm-image]: http://img.shields.io/npm/v/email-templates.svg?style=flat
-[npm-url]: https://npmjs.org/package/email-templates
-[npm-downloads]: http://img.shields.io/npm/dm/email-templates.svg?style=flat
-[travis-url]: http://travis-ci.org/niftylettuce/node-email-templates
-[travis-image]: http://img.shields.io/travis/niftylettuce/node-email-templates.svg?style=flat
-[codeclimate-image]: http://img.shields.io/codeclimate/github/niftylettuce/node-email-templates.svg?style=flat
-[codeclimate-url]: https://codeclimate.com/github/niftylettuce/node-email-templates?branch=master
-[coveralls-image]: https://img.shields.io/coveralls/niftylettuce/node-email-templates.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/niftylettuce/node-email-templates?branch=master
-[gitter-url]: https://gitter.im/niftylettuce/node-email-templates
+[gh-graph]: https://github.com/snow01/node-email-templates-v2/graphs/contributors
+[npm-image]: http://img.shields.io/npm/v/email-templates-v2.svg?style=flat
+[npm-url]: https://npmjs.org/package/email-templates-v2
+[npm-downloads]: http://img.shields.io/npm/dm/email-templates-v2.svg?style=flat
+[travis-url]: http://travis-ci.org/snow01/node-email-templates-v2
+[travis-image]: http://img.shields.io/travis/snow01/node-email-templates-v2.svg?style=flat
+[codeclimate-image]: http://img.shields.io/codeclimate/github/snow01/node-email-templates-v2.svg?style=flat
+[codeclimate-url]: https://codeclimate.com/github/snow01/node-email-templates-v2?branch=master
+[coveralls-image]: https://img.shields.io/coveralls/snow01/node-email-templates-v2.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/snow01/node-email-templates-v2?branch=master
+[gitter-url]: https://gitter.im/snow01/node-email-templates-v2
 [gitter-image]: http://img.shields.io/badge/chat-online-brightgreen.svg?style=flat
 [eskimo]: http://eskimo.io
 [nifty-conventions]: https://github.com/niftylettuce/nifty-conventions
