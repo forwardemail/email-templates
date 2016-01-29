@@ -34,7 +34,7 @@ export function readContents (path, type) {
 }
 
 export function renderFile (file, options) {
-  if (!file) return Promise.resolve(null)
+  if (!file) return P.resolve(null)
   return render(file, options)
 }
 
