@@ -1,4 +1,3 @@
 --bail
---compilers js:babel/register
---require ./test/support/should
+--compilers js:babel-register
 --reporter dot

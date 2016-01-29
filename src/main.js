@@ -1,11 +1,8 @@
-import {ensureDirectory} from './util'
-import {isFunction} from 'lodash'
-import EmailTemplate from './email-template'
-import Debug from 'debug'
-import {basename} from 'path'
-import {requires} from 'consolidate'
-
-const debug = Debug('email-templates:creator')
+const {ensureDirectory} = require('./util')
+const isFunction = require('lodash/isFunction')
+const EmailTemplate = require('./email-template').default
+const debug = require('debug')('email-templates:creator')
+const {basename} = require('path')
 
 function exportable (templateDirectory, options, done) {
   if (isFunction(options)) {
@@ -51,6 +48,5 @@ function template (templateDirectory, options) {
 }
 
 exportable.EmailTemplate = EmailTemplate
-exportable.requires = requires
-
-export default exportable
+exportable.requires = require('consolidate').requires
+module.exports = exportable

@@ -1,5 +1,5 @@
 /* global describe it beforeEach afterEach */
-var EmailTemplate = require('../src/email-template')
+import EmailTemplate from '../src/email-template'
 var expect = require('chai').expect
 var fs = require('fs')
 var path = require('path')

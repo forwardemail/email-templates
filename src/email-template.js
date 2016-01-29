@@ -2,7 +2,7 @@ import P from 'bluebird'
 import Debug from 'debug'
 import {basename} from 'path'
 import juice from 'juice'
-import {isFunction} from 'lodash'
+import isFunction from 'lodash/isFunction'
 import {ensureDirectory, readContents, renderFile} from './util'
 
 const debug = Debug('email-templates:email-template')
