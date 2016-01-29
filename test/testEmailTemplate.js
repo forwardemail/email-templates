@@ -118,7 +118,5 @@ describe('EmailTemplate', function () {
       })
       .catch(done)
     })
-
   })
-
 })

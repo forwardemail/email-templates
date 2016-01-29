@@ -105,7 +105,9 @@ describe('Template manager', function () {
     var locals = {
       item: 'test',
       helpers: {
-        uppercase: function (context) {return context.toUpperCase()}
+        uppercase: function (context) {
+          return context.toUpperCase()
+        }
       }
     }
     tm.render(file, locals, function (err, res) {
@@ -161,7 +163,7 @@ describe('Template manager', function () {
 
     tm.render(file, {}, function (err, res) {
       expect(err).to.be.null
-      expect(res).to.equal('.body {\n  color: #333333;\n}\n')
+      expect(res).to.equal('.body {\n  color: #333;\n}\n')
 
       done()
     })

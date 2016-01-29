@@ -139,7 +139,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.not.be.ok
           expect(html).to.equal(
-            '<h4 style=\"color: #cccccc;\">test</h4>')
+            '<h4 style=\"color: #ccc;\">test</h4>')
           done()
         })
       })
