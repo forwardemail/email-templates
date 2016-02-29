@@ -111,7 +111,7 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
 
 ## Template Engine Options
 
-If your want to configure your template engine, just pass options.
+If you want to configure your template engine, just pass options.
 
 Want to use different opening and closing tags instead of the EJS's default `<%` and `%>`?.
 
