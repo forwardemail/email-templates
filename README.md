@@ -156,7 +156,7 @@ var templateDir = path.join(__dirname, 'templates', 'newsletter')
 
 var newsletter = new EmailTemplate(templateDir)
 var user = {name: 'Joe', pasta: 'spaghetti'}
-newsletter.render(user, function (err, results) {
+newsletter.render(user, function (err, result) {
   // result.html
   // result.text
 })
@@ -168,7 +168,7 @@ var users = [
 ]
 
 async.each(users, function (user, next) {
-  newsletter.render(user, function (err, results) {
+  newsletter.render(user, function (err, result) {
     if (err) return next(err)
     // result.html
     // result.text
