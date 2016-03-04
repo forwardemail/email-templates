@@ -98,7 +98,12 @@ function renderSass (source, locals) {
   const sass = require('node-sass')
 
   locals.data = source
-  locals.includePaths = [locals.templatePath]
+
+  if (locals.includePaths) {
+    locals.includePaths = locals.includePaths.concat([locals.templatePath])
+  } else {
+    locals.includePaths = [locals.templatePath]
+  }
 
   return new P(function (done, reject) {
     sass.render(locals, function (err, data) {
