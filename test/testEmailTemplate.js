@@ -153,5 +153,24 @@ describe('EmailTemplate', function () {
         .catch(done)
       })
     })
+
+    it('should reject if the style can’t be compiled', function (done) {
+      var html = '<h4><%= item %></h4>'
+      var css = 'h4 { <%=color: blue; }'
+
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'style.ejs'), css)
+
+      var et = new EmailTemplate(templatePath, {
+        juiceOptions: { removeStyleTags: false }
+      })
+
+      et.render({ item: 'test' })
+      .then(function (results) {
+        done(new Error('Should not be reached'))
+      }, function () {
+        done()
+      })
+    })
   })
 })
