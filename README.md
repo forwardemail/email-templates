@@ -142,6 +142,14 @@ new EmailTemplate(templateDir, {juiceOptions: {
 
 You can check all the options in [juice's documentation](https://github.com/automattic/juice#options)
 
+You can add includePaths for [sass][sass] using sassOptions.
+
+```javascript
+new EmailTemplate(templateDir, {sassOptions: {
+  includePaths: ['~/someproject/sass']
+}})
+```
+
 ## Examples
 
 ### Basic

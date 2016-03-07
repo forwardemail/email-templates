@@ -4,6 +4,7 @@ var path = require('path')
 var expect = require('chai').expect
 var fs = require('fs')
 var tmpDir = path.join(__dirname, '..', '.test-templates')
+var tmpSassDir = path.join(__dirname, '..', '.test-sass')
 var mkdirp = require('mkdirp')
 var rimraf = require('rimraf')
 
@@ -11,12 +12,16 @@ describe('Template manager', function () {
   // Setup
   beforeEach(function (done) {
     // Setup a tmp directory for test files.
-    mkdirp(tmpDir, done)
+    mkdirp(tmpDir, () => {
+      mkdirp(tmpSassDir, done)
+    })
   })
 
   afterEach(function (done) {
     // Destroy all test files.
-    rimraf(tmpDir, done)
+    rimraf(tmpDir, () => {
+      rimraf(tmpSassDir, done)
+    })
   })
 
   // Tests
@@ -205,6 +210,26 @@ describe('Template manager', function () {
       expect(err).to.be.null
       expect(res).to.equal('body {\n  color: #ccc; }\n')
 
+      done()
+    })
+  })
+
+  it('should allow a custom include path for rendering sass', function (done) {
+    var testMainSassFile = path.join(tmpDir, 'main.scss')
+    var testIncludesFile = path.join(tmpSassDir, 'includes.scss')
+
+    // Write out some test SASS files.
+    fs.writeFileSync(testMainSassFile, '@import "includes.scss";')
+    fs.writeFileSync(testIncludesFile, 'body { color: #333}')
+
+    var file = {
+      filename: testMainSassFile,
+      content: fs.readFileSync(testMainSassFile).toString()
+    }
+
+    tm.render(file, {includePaths: ['.test-sass']}, function (err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('body {\n  color: #333; }\n')
       done()
     })
   })

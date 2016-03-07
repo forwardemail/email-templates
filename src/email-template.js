@@ -3,6 +3,7 @@ import Debug from 'debug'
 import {basename} from 'path'
 import juice from 'juice'
 import isFunction from 'lodash/isFunction'
+import assign from 'lodash/assign'
 import {ensureDirectory, readContents, renderFile} from './util'
 
 const debug = Debug('email-templates:email-template')
@@ -119,6 +120,10 @@ export default class EmailTemplate {
 
       // no style
       if (!this.files.style) return resolve(null)
+
+      if (this.options.sassOptions) {
+        locals = assign({}, locals, this.options.sassOptions)
+      }
 
       debug('Rendering stylesheet')
       renderFile(this.files.style, locals)

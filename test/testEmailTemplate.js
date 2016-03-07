@@ -6,6 +6,7 @@ var path = require('path')
 var mkdirp = require('mkdirp')
 var rimraf = require('rimraf')
 var templatePath = path.join(__dirname, '..', '.test-templates', 'test-template')
+var sassPath = path.join(__dirname, '..', '.test-templates', '.sass-files')
 var P = require('bluebird')
 
 describe('EmailTemplate', function () {
@@ -117,6 +118,40 @@ describe('EmailTemplate', function () {
         done()
       })
       .catch(done)
+    })
+
+    describe('when include sass from another directory', function () {
+      beforeEach(function (done) {
+        // Setup the sass directory structure.
+        mkdirp(sassPath, done)
+      })
+
+      afterEach(function (done) {
+        // Destroy the sass directory structure.
+        rimraf(sassPath, done)
+      })
+
+      it('html with the included sass directory', function (done) {
+        var html = '<h4><%= item %></h4>'
+        var includeCss = 'h4 { color: red; }'
+        var css = '@import "includes.scss"'
+
+        fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+        fs.writeFileSync(path.join(sassPath, 'includes.scss'), includeCss)
+        fs.writeFileSync(path.join(templatePath, 'style.scss'), css)
+
+        var et = new EmailTemplate(templatePath, {
+          sassOptions: { includePaths: [sassPath] }
+        })
+
+        et.render({ item: 'test' })
+        .then(function (results) {
+          expect(results.html).to.equal(
+            '<h4 style=\"color: red;\">test</h4>')
+          done()
+        })
+        .catch(done)
+      })
     })
   })
 })
