@@ -159,7 +159,7 @@ describe('Template manager', function () {
 
     // Write out some test LESS files.
     fs.writeFileSync(testMainLessFile, '@import "includes.less";')
-    fs.writeFileSync(testIncludesFile, '.body { color: #333}')
+    fs.writeFileSync(testIncludesFile, '.body { color: #333333}')
 
     var file = {
       filename: testMainLessFile,
@@ -168,7 +168,7 @@ describe('Template manager', function () {
 
     tm.render(file, {}, function (err, res) {
       expect(err).to.be.null
-      expect(res).to.equal('.body {\n  color: #333;\n}\n')
+      expect(res).to.equal('.body {\n  color: #333333;\n}\n')
 
       done()
     })

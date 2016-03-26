@@ -67,6 +67,26 @@ describe('Email templates', function () {
       })
     })
 
+    it('html, text, and subject files', function (done) {
+      var html = '<h4><%= item%></h4>'
+      var text = '<%= item%>'
+      var subject = 'Hello <%= item%>'
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), text)
+      fs.writeFileSync(path.join(templateDir, templateName, 'subject.ejs'), subject)
+
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text, subject) {
+          expect(err).to.be.null
+          expect(html).to.equal('<h4>test</h4>')
+          expect(text).to.equal('test')
+          expect(subject).to.equal('Hello test')
+          done()
+        })
+      })
+    })
+
     it('html and text files with custom names', function (done) {
       var html = '<h4><%= item%></h4>'
       var text = '<%= item%>'
@@ -79,6 +99,26 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(html).to.equal('<h4>test</h4>')
           expect(text).to.equal('test')
+          done()
+        })
+      })
+    })
+
+    it('html, text, and subject files with custom names', function (done) {
+      var html = '<h4><%= item%></h4>'
+      var text = '<%= item%>'
+      var subject = 'Hello <%= item%>'
+      fs.writeFileSync(path.join(templateDir, templateName, 'custom-filename-html.ejs'), html)
+      fs.writeFileSync(path.join(templateDir, templateName, 'custom-filename-text.ejs'), text)
+      fs.writeFileSync(path.join(templateDir, templateName, 'custom-filename-subject.ejs'), subject)
+
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text, subject) {
+          expect(err).to.be.null
+          expect(html).to.equal('<h4>test</h4>')
+          expect(text).to.equal('test')
+          expect(subject).to.equal('Hello test')
           done()
         })
       })
@@ -129,7 +169,7 @@ describe('Email templates', function () {
 
     it('html(jade) with inline CSS(less)', function (done) {
       var html = 'h4= item'
-      var css = '@color: #ccc; h4 { color: @color }'
+      var css = '@color: #cccccc; h4 { color: @color }'
       fs.writeFileSync(path.join(templateDir, templateName, 'html.jade'), html)
       fs.writeFileSync(path.join(templateDir, templateName, 'style.less'), css)
 
@@ -139,7 +179,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.not.be.ok
           expect(html).to.equal(
-            '<h4 style=\"color: #ccc;\">test</h4>')
+            '<h4 style=\"color: #cccccc;\">test</h4>')
           done()
         })
       })
@@ -255,6 +295,20 @@ describe('Email templates', function () {
       })
     })
 
+    it('on missing html, text, and subject file', function (done) {
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text, subject) {
+          expect(err.code).to.equal('ENOENT')
+          expect(html).to.be.undefined
+          expect(text).to.be.undefined
+          expect(subject).to.be.undefined
+
+          done()
+        })
+      })
+    })
+
     it('on empty html and text file', function (done) {
       fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), '')
       fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), '')
@@ -264,6 +318,23 @@ describe('Email templates', function () {
         template(templateName, {item: 'test'}, function (err, html, text) {
           expect(html).to.be.undefined
           expect(text).to.be.undefined
+          expect(err.message).to.contain('both empty in path')
+          done()
+        })
+      })
+    })
+
+    it('on empty html, text, and subject file', function (done) {
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), '')
+      fs.writeFileSync(path.join(templateDir, templateName, 'text.ejs'), '')
+      fs.writeFileSync(path.join(templateDir, templateName, 'subject.ejs'), '')
+
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text, subject) {
+          expect(html).to.be.undefined
+          expect(text).to.be.undefined
+          expect(subject).to.be.undefined
           expect(err.message).to.contain('both empty in path')
           done()
         })

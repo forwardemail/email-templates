@@ -30,11 +30,11 @@ export default class EmailTemplate {
   }
 
   _loadTemplates () {
-    return P.map(['html', 'text', 'style'], (type) => {
+    return P.map(['html', 'text', 'style', 'subject'], (type) => {
       return readContents(this.path, type)
     })
     .then((files) => {
-      let [html, text, style] = files
+      let [html, text, style, subject] = files
 
       if (!html && !text) {
         let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`)
@@ -57,6 +57,11 @@ export default class EmailTemplate {
       }
       this.files.style = style
 
+      if (subject) {
+        debug('Found subject %s in %s', basename(subject.filename), this.dirname)
+      }
+      this.files.subject = subject
+
       debug('Finished loading template')
     })
   }
@@ -69,6 +74,17 @@ export default class EmailTemplate {
       return renderFile(this.files.text, locals)
     })
     .tap(() => debug('Finished rendering text'))
+    .nodeify(callback)
+  }
+
+  renderSubject (locals, callback) {
+    debug('Rendering subject')
+    return this._init()
+    .then(() => {
+      if (!this.files.subject) return null
+      return renderFile(this.files.subject, locals)
+    })
+    .tap(() => debug('Finished rendering subject'))
     .nodeify(callback)
   }
 
@@ -102,12 +118,13 @@ export default class EmailTemplate {
 
     return P.all([
       this.renderHtml(locals),
-      this.renderText(locals)
+      this.renderText(locals),
+      this.renderSubject(locals)
     ])
     .then((rendered) => {
-      let [html, text] = rendered
+      let [html, text, subject] = rendered
       return {
-        html, text
+        html, text, subject
       }
     })
     .nodeify(callback)
