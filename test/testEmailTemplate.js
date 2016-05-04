@@ -120,6 +120,23 @@ describe('EmailTemplate', function () {
       .catch(done)
     })
 
+    it('render calls should not mutate view data', function (done) {
+      var html = '<style> h4 { color: red; }</style><h4><%= item %></h4>'
+      var css = 'h4 { color: blue; }'
+
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'style.ejs'), css)
+
+      var et = new EmailTemplate(templatePath)
+      var locals = { item: 'test' }
+      et.render(locals)
+      .then(function (results) {
+        expect(locals).to.eql({ item: 'test' })
+        done()
+      })
+      .catch(done)
+    })
+
     describe('when include sass from another directory', function () {
       beforeEach(function (done) {
         // Setup the sass directory structure.
