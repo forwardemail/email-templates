@@ -27,6 +27,10 @@
     {
       "name": "Jeduan Cornejo",
       "email": "jeduan@gmail.com"
+    },
+    {
+      "name": "Alberto Souza",
+      "email": "contato@albertosouza.net"
     }
   ],
   "keywords": [
@@ -38,6 +42,7 @@
     "email-templates",
     "juice",
     "inline",
+    "i18n",
     "css"
   ],
   "homepage": "https://github.com/niftylettuce/node-email-templates",
