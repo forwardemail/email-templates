@@ -145,12 +145,12 @@ export default class EmailTemplate {
       }
 
       debug('Rendering stylesheet')
-      resolve(renderFile(this.files.style, locals))
+      resolve(renderFile(this.files.style, locals)
       .then((style) => {
         this.style = style
         debug('Finished rendering stylesheet')
         return style
-      })
+      }))
     })
   }
 }
