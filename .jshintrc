@@ -46,5 +46,6 @@
   "strict": false,
   "white": false,
   "indent": 2,
-  "asi": true
+  "asi": true,
+  "esversion": 6
 }

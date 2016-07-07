@@ -113,6 +113,8 @@ export default class EmailTemplate {
     if (isFunction(locals)) {
       callback = locals
       locals = {}
+    } else if (locals) {
+      locals = assign({}, locals)
     }
     debug('Rendering template with locals %j', locals)
 
