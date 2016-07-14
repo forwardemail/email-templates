@@ -249,7 +249,7 @@ templates/newsletter/pt-br/html.{{ext}}
 templates/newsletter/pt-br/style.{{ext}}
 ```
 
-To render the pt-br localized version for folder structure abore, pass locale name in `.render` method
+To render the pt-br localized version for folder structure above, pass locale name in `.render` method
 
 ```javascript
 var EmailTemplate = require('email-templates').EmailTemplate
