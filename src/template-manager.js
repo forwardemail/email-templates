@@ -10,6 +10,7 @@ import P from 'bluebird'
 
 var engineMap = {
   // HTML Template engines
+  'html': renderDefault,
   'hbs': cons.handlebars.render,
   'emblem': renderEmblem,
   // CSS pre-processors
