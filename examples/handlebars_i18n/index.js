@@ -24,8 +24,6 @@ template.render(locals, 'pt-br')
   console.log('In pt-br:\n', results)
 })
 
-
-
 template.render(locals)
 .then(function (results) {
   console.log('In default en-us:\n', results)
