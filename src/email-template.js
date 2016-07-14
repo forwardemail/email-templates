@@ -100,6 +100,7 @@ export default class EmailTemplate {
     .then((results) => {
       let [html, style] = results
       if (!style) return html
+      if (this.options.disableJuice) return html
       if (this.options.juiceOptions) {
         debug('Using juice options ', this.options.juiceOptions)
       }

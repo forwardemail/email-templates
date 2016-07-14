@@ -61,7 +61,7 @@ Install `email-templates` and the engines you wish to use by adding them to your
 ```bash
 npm install --save email-templates
 # See https://www.npmjs.com/package/consolidate for a full list of available template engines
-npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin] 
+npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
 ```
 
 
@@ -84,7 +84,7 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
     - `stylus@^0.51.0`
     - `styl@^0.2.0`
     - `node-sass@^3.0.0`
-    
+
     - See https://www.npmjs.com/package/consolidate for a full list
 
     ```bash
@@ -142,6 +142,12 @@ new EmailTemplate(templateDir, {juiceOptions: {
 ```
 
 You can check all the options in [juice's documentation](https://github.com/automattic/juice#options)
+
+If you wish to disable juice, you can pass `disableJuice` as an option:
+
+```javascript
+new EmailTemplate(templateDir, { disableJuice: true })
+```
 
 You can add includePaths for [sass][sass] using sassOptions.
 

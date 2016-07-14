@@ -120,6 +120,26 @@ describe('EmailTemplate', function () {
       .catch(done)
     })
 
+    it('skip inlining if disableJuice is set to true', function (done) {
+      var html = '<style> h4 { color: red; }</style><h4><%= item %></h4>'
+      var css = 'h4 { color: blue; }'
+
+      fs.writeFileSync(path.join(templatePath, 'html.ejs'), html)
+      fs.writeFileSync(path.join(templatePath, 'style.ejs'), css)
+
+      var et = new EmailTemplate(templatePath, {
+        disableJuice: true
+      })
+
+      et.render({ item: 'test' })
+      .then(function (results) {
+        expect(results.html).to.equal(
+          '<style> h4 { color: red; }</style><h4>test</h4>')
+        done()
+      })
+      .catch(done)
+    })
+
     it('render calls should not mutate view data', function (done) {
       var html = '<style> h4 { color: red; }</style><h4><%= item %></h4>'
       var css = 'h4 { color: blue; }'
