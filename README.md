@@ -275,7 +275,7 @@ var users = [
 
 async.each(users, function (user, next) {
   // render the pt-br localized template:
-  newsletter.render(user, 'pt-br' function (err, result) {
+  newsletter.render(user, 'pt-br', function (err, result) {
     if (err) return next(err)
     // result.html
     // result.text
