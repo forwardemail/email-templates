@@ -46,6 +46,21 @@ describe('EmailTemplate', function () {
       })
     })
 
+    it('html file with localization', function (done) {
+      var localeFolder = path.join(templatePath, 'pt-br')
+      mkdirp(localeFolder, function () {
+        var html = '<h4>Titulo: <%= item%></h4>'
+        fs.writeFileSync(path.join(localeFolder, 'html.ejs'), html)
+
+        var et = new EmailTemplate(templatePath)
+        et.renderHtml({item: 'test'}, 'pt-br', function (err, html) {
+          expect(err).to.be.null
+          expect(html).to.equal('<h4>Titulo: test</h4>')
+          done()
+        })
+      })
+    })
+
     it('text file', function (done) {
       var html = '<h4><%= item%></h4>'
       var text = '<%= item%>'
@@ -74,6 +89,23 @@ describe('EmailTemplate', function () {
       })
     })
 
+    it('text file with localization', function (done) {
+      var localeFolder = path.join(templatePath, 'pt-br')
+      mkdirp(localeFolder, function () {
+        var html = '<h4>Titulo: <%= item%></h4>'
+        var text = '<%= item%>'
+        fs.writeFileSync(path.join(localeFolder, 'html.ejs'), html)
+        fs.writeFileSync(path.join(localeFolder, 'text.ejs'), text)
+
+        var et = new EmailTemplate(templatePath)
+        et.renderText({item: 'test'}, 'pt-br')
+        .then(function (text) {
+          expect(text).to.equal('test')
+          done()
+        })
+      })
+    })
+
     it('batch templates', function (done) {
       var html = '<h4><%= name%>(<%= screenName %>)</h4>'
       var text = '<%= screenName%>'
@@ -97,6 +129,35 @@ describe('EmailTemplate', function () {
         expect(emails[1].html).to.equal('<h4 style=\"color: #ccc;\">Jeduan(jeduan)</h4>')
         expect(emails[1].text).to.equal('jeduan')
         done()
+      })
+    })
+
+    it('batch localized templates', function (done) {
+      var localeFolder = path.join(templatePath, 'pt-br')
+      mkdirp(localeFolder, function () {
+        var html = '<h4>l<%= name%>(<%= screenName %>)</h4>'
+        var text = 'l<%= screenName%>'
+        var css = 'h4 { color: #ddd }'
+        fs.writeFileSync(path.join(localeFolder, 'html.ejs'), html)
+        fs.writeFileSync(path.join(localeFolder, 'text.ejs'), text)
+        fs.writeFileSync(path.join(localeFolder, 'style.ejs'), css)
+
+        var data = [
+          {name: 'Nick', screenName: 'niftylettuce'},
+          {name: 'Jeduan', screenName: 'jeduan'}
+        ]
+
+        var et = new EmailTemplate(localeFolder)
+        return P.map(data, function (item) {
+          return et.render(item)
+        })
+        .then(function (emails) {
+          expect(emails[0].html).to.equal('<h4 style=\"color: #ddd;\">lNick(niftylettuce)</h4>')
+          expect(emails[0].text).to.equal('lniftylettuce')
+          expect(emails[1].html).to.equal('<h4 style=\"color: #ddd;\">lJeduan(jeduan)</h4>')
+          expect(emails[1].text).to.equal('ljeduan')
+          done()
+        })
       })
     })
 

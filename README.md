@@ -234,6 +234,55 @@ Promise.all(templates)
   })
 ```
 
+#### Localized template
+
+Localized template folder:
+
+```
+templates/
+templates/newsletter/
+// defalt locale templates are stored in root folder and by default is en-us:
+templates/newsletter/html.{{ext}}
+templates/newsletter/style.{{ext}}
+// for add pt-br locale:
+templates/newsletter/pt-br/html.{{ext}}
+templates/newsletter/pt-br/style.{{ext}}
+```
+
+To render the pt-br localized version for folder structure above, pass locale name in `.render` method
+
+```javascript
+var EmailTemplate = require('email-templates').EmailTemplate
+var path = require('path')
+
+var templateDir = path.join(__dirname, 'templates', 'newsletter')
+
+var newsletter = new EmailTemplate(templateDir)
+var user = {name: 'Joe', pasta: 'spaghetti'}
+newsletter.render(user, function (err, result) {
+  // result.html
+  // result.text
+})
+
+var async = require('async')
+var users = [
+  {name: 'John', pasta: 'Rigatoni'},
+  {name: 'Luca', pasta: 'Tortellini'}
+]
+
+async.each(users, function (user, next) {
+  // render the pt-br localized template:
+  newsletter.render(user, 'pt-br' function (err, result) {
+    if (err) return next(err)
+    // result.html
+    // result.text
+    // result.subject
+  })
+}, function (err) {
+  //
+})
+```
+
 ### More
 
 Please check the [examples directory](https://github.com/niftylettuce/node-email-templates/tree/master/examples)
@@ -246,6 +295,7 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 * Jason Sims <sims.jrobert@gmail.com>
 * Miguel Mota <hello@miguelmota.com>
 * Jeduan Cornejo <jeduan@gmail.com>
+* Alberto Souza <contato@albertosouza.net>
 
 > Full list of contributors can be found on the [GitHub Contributor Graph][gh-graph]
 
