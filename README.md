@@ -12,7 +12,9 @@
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
 
-> Enjoy this package?  Check out [eskimo][eskimo] and [express-cdn][express-cdn], and follow [@niftylettuce](http://twitter.com/niftylettuce)!
+**NEW IN VERSION 2.4.0:** Localization support has been added!  You can now translate your emails for users!  See [Localized Template](#localized-template) below for more info!
+
+> Enjoy this package?  Build rapid startups using it with [Glazed](http://glazed.io) and follow and follow [@niftylettuce](http://twitter.com/niftylettuce)!
 
 
 ## Index
@@ -20,6 +22,7 @@ Node.js NPM package for rendering beautiful emails with your template engine and
 * [Email Templates](#email-templates)
 * [Installation](#installation)
 * [Quick Start](#quick-start)
+* [Localized Template](#localized-template)
 * [EJS Custom Tags](#ejs-custom-tags)
 * [Examples](#examples)
     * [Basic](#basic)
@@ -234,7 +237,7 @@ Promise.all(templates)
   })
 ```
 
-#### Localized template
+#### Localized Template
 
 Localized template folder:
 
