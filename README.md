@@ -1,13 +1,13 @@
 
 # Node Email Templates
 
+[![Slack Status][slack-image]][slack-url]
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![NPM downloads][npm-downloads]][npm-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
 [![Static Analysis][codeclimate-image]][codeclimate-url]
 [![MIT License][license-image]][license-url]
-[![Gitter][gitter-image]][gitter-url]
 [![js-standard-style][standard-image]][standard-url]
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
@@ -333,11 +333,9 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 [codeclimate-url]: https://codeclimate.com/github/niftylettuce/node-email-templates?branch=master
 [coveralls-image]: https://img.shields.io/coveralls/niftylettuce/node-email-templates.svg?style=flat
 [coveralls-url]: https://coveralls.io/r/niftylettuce/node-email-templates?branch=master
-[gitter-url]: https://gitter.im/niftylettuce/node-email-templates
-[gitter-image]: http://img.shields.io/badge/chat-online-brightgreen.svg?style=flat
-[eskimo]: http://eskimo.io
-[nifty-conventions]: https://github.com/niftylettuce/nifty-conventions
 [email-blueprints]: https://github.com/mailchimp/Email-Blueprints
 [transactional-email-templates]: https://github.com/mailgun/transactional-email-templates
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat
 [standard-url]: https://github.com/feross/standard
+[slack-image]: http://slack.glazed.io/badge.svg
+[slack-url]: http://slack.glazed.io
