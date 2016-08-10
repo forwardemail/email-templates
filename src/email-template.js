@@ -83,7 +83,7 @@ export default class EmailTemplate {
     return this._init(locale)
     .then(() => {
       if (!this.ltpls[locale].files.text) return null
-      return renderFile(this.ltpls[locale].files.text, locals)
+      return this._renderFile('text', locals, locale)
     })
     .tap(() => debug('Finished rendering text'))
     .nodeify(callback)
@@ -99,7 +99,7 @@ export default class EmailTemplate {
     return this._init(locale)
     .then(() => {
       if (!this.ltpls[locale].files.subject) return null
-      return renderFile(this.ltpls[locale].files.subject, locals)
+      return this._renderFile('subject', locals, locale)
     })
     .tap(() => debug('Finished rendering subject'))
     .nodeify(callback)
@@ -115,7 +115,7 @@ export default class EmailTemplate {
     return this._init(locale)
     .then(() => {
       return P.all([
-        renderFile(this.ltpls[locale].files.html, locals),
+        this._renderFile('html', locals, locale),
         this._renderStyle(locals, locale)
       ])
     })
@@ -177,12 +177,24 @@ export default class EmailTemplate {
 
       debug('Rendering stylesheet')
 
-      resolve(renderFile(this.ltpls[locale].files.style, locals)
+      resolve(this._renderFile('style', locals, locale)
       .then((style) => {
         this.ltpls[locale].style = style
         debug('Finished rendering stylesheet')
         return style
       }))
+    })
+  }
+
+  _renderFile (file, locals, locale) {
+    return new P(resolve => {
+      renderFile(this.ltpls[locale].files[file], locals)
+        .then(rendered => {
+          if (this.options.postRenderHook && isFunction(this.options.postRenderHook)) {
+            rendered = this.options.postRenderHook(rendered, file, locals, locale)
+          }
+          resolve(rendered)
+        })
     })
   }
 }
