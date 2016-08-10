@@ -73,36 +73,27 @@ export default class EmailTemplate {
     })
   }
 
-  renderText (locals, locale, callback) {
-    if (!locale || (!callback && isFunction(locale))) {
-      callback = locale
-      locale = 'en-us'
-    }
-
-    debug('Rendering text')
-    return this._init(locale)
-    .then(() => {
-      if (!this.ltpls[locale].files.text) return null
-      return renderFile(this.ltpls[locale].files.text, locals)
-    })
-    .tap(() => debug('Finished rendering text'))
-    .nodeify(callback)
-  }
-
-  renderSubject (locals, locale, callback) {
+  _render (template, locals, locale, callback) {
     if (!locale || (!callback && isFunction(locale))) {
       callback = locale // locale is optional
       locale = 'en-us'
     }
 
-    debug('Rendering subject')
+    debug(`Rendering ${template}`)
     return this._init(locale)
     .then(() => {
-      if (!this.ltpls[locale].files.subject) return null
-      return renderFile(this.ltpls[locale].files.subject, locals)
+      return this._renderFile(template, locals, locale)
     })
-    .tap(() => debug('Finished rendering subject'))
+    .tap(() => debug(`Finished rendering ${template}`))
     .nodeify(callback)
+  }
+
+  renderText (locals, locale, callback) {
+    return this._render('text', locals, locale, callback)
+  }
+
+  renderSubject (locals, locale, callback) {
+    return this._render('subject', locals, locale, callback)
   }
 
   renderHtml (locals, locale, callback) {
@@ -115,7 +106,7 @@ export default class EmailTemplate {
     return this._init(locale)
     .then(() => {
       return P.all([
-        renderFile(this.ltpls[locale].files.html, locals),
+        this._renderFile('html', locals, locale),
         this._renderStyle(locals, locale)
       ])
     })
@@ -168,21 +159,47 @@ export default class EmailTemplate {
         return resolve(this.ltpls[locale].style)
       }
 
-      // no style
-      if (!this.ltpls[locale].files.style) return resolve(null)
-
       if (this.options.sassOptions) {
         locals = assign({}, locals, this.options.sassOptions)
       }
 
       debug('Rendering stylesheet')
 
-      resolve(renderFile(this.ltpls[locale].files.style, locals)
+      resolve(this._renderFile('style', locals, locale)
       .then((style) => {
         this.ltpls[locale].style = style
         debug('Finished rendering stylesheet')
         return style
       }))
+    })
+  }
+
+  _renderFile (file, locals, locale) {
+    return new P((resolve, reject) => {
+      let preRenderHook = Promise.resolve(null)
+
+      if (this.options.preRenderHook && isFunction(this.options.preRenderHook)) {
+        preRenderHook = this.options.preRenderHook(file, this.ltpls[locale].files, locals, locale)
+      }
+
+      preRenderHook.then(preRenderResult => {
+        if (preRenderResult) {
+          this.ltpls[locale].files[file] = preRenderResult
+        }
+
+        if (!this.ltpls[locale].files[file]) return resolve(null)
+
+        renderFile(this.ltpls[locale].files[file], locals)
+          .then(rendered => {
+            let postRenderHook = Promise.resolve(rendered)
+
+            if (this.options.postRenderHook && isFunction(this.options.postRenderHook)) {
+              postRenderHook = this.options.postRenderHook(rendered, file, this.ltpls[locale].files, locals, locale)
+            }
+
+            postRenderHook.then(resolve)
+          }, reject)
+      })
     })
   }
 }
