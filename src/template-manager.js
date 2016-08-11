@@ -21,6 +21,9 @@ var engineMap = {
   'scss': renderSass,
   // Handle plain CSS also
   'css': renderDefault,
+  // Handle plain text
+  'txt': renderDefault,
+  // Handle missing extension
   '': renderDefault
 }
 
