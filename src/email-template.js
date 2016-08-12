@@ -176,7 +176,7 @@ export default class EmailTemplate {
 
   _renderFile (file, locals, locale) {
     return new P((resolve, reject) => {
-      let preRenderHook = Promise.resolve(null)
+      let preRenderHook = P.resolve(null)
 
       if (this.options.preRenderHook && isFunction(this.options.preRenderHook)) {
         preRenderHook = this.options.preRenderHook(file, this.ltpls[locale].files, locals, locale)
@@ -191,7 +191,7 @@ export default class EmailTemplate {
 
         renderFile(this.ltpls[locale].files[file], locals)
           .then(rendered => {
-            let postRenderHook = Promise.resolve(rendered)
+            let postRenderHook = P.resolve(rendered)
 
             if (this.options.postRenderHook && isFunction(this.options.postRenderHook)) {
               postRenderHook = this.options.postRenderHook(rendered, file, this.ltpls[locale].files, locals, locale)
