@@ -33,13 +33,12 @@ export function render (file, locals = {}, callback) {
   return new P(function (resolve, reject) {
     if (!content) return reject('No content in template')
     if (!filename) return reject('Filename is null')
-    let engine = ''
-    if (locals.engine) {
-      engine = locals.engine.replace('.', '')
-    } else {
-      engine = extname(filename).slice(1)
-      locals.engine = '.' + engine
+
+    let engine = extname(filename).slice(1)
+    if (locals.engines && locals.engines[engine]) {
+      engine = locals.engines[engine].replace('.', '')
     }
+    locals.engine = '.' + engine
 
     locals.filename = filename
     locals.templatePath = dirname(filename)

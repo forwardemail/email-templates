@@ -247,4 +247,34 @@ describe('Template manager', function () {
       done()
     })
   })
+
+  it('should render ejs from a .html file', function (done) {
+    var file = {
+      filename: 'test.html',
+      content: '<h1><%= item%> <%= engine%></h1>'
+    }
+    var locals = {item: 'test', engines: {html: 'ejs'}}
+
+    tm.render(file, locals, function (err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('<h1>test .ejs</h1>')
+
+      done()
+    })
+  })
+
+  it('should render css from a .cs file', function (done) {
+    var file = {
+      filename: 'test.cs',
+      content: 'body { color: #ccc; }'
+    }
+    var locals = {engines: {cs: 'css'}}
+
+    tm.render(file, locals, function (err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('body { color: #ccc; }')
+
+      done()
+    })
+  })
 })
