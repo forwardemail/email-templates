@@ -33,7 +33,7 @@ export function render (file, locals = {}, callback) {
   return new P(function (resolve, reject) {
     if (!content) return reject('No content in template')
     if (!filename) return reject('Filename is null')
-    let engine = locals.engine || extname(filename).slice(1)
+    let engine = (locals && locals.engine ? locals.engine : extname(filename).slice(1))
 
     locals.filename = filename
     locals.engine = '.' + engine
