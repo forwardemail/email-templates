@@ -47,7 +47,7 @@ export function render (file, locals = {}, callback) {
       })
     } else {
       // or use the function defined in the engineMap
-      var fn = engineMap[engine]
+      var fn = engineMap[engine] || renderDefault
       return resolve(fn(content, locals))
     }
     return reject(`Can't render file with extension ${engine}`)
