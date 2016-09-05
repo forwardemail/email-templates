@@ -33,9 +33,15 @@ export function render (file, locals = {}, callback) {
   return new P(function (resolve, reject) {
     if (!content) return reject('No content in template')
     if (!filename) return reject('Filename is null')
+    let engine = ''
+    if (locals.engine) {
+      engine = locals.engine.replace('.', '')
+    } else {
+      engine = extname(filename).slice(1)
+      locals.engine = '.' + engine
+    }
 
     locals.filename = filename
-    locals.engine = '.' + engine
     locals.templatePath = dirname(filename)
 
     if (engine.length && cons[engine] !== undefined) {
@@ -46,7 +52,7 @@ export function render (file, locals = {}, callback) {
       })
     } else {
       // or use the function defined in the engineMap
-      var fn = engineMap[engine] || renderDefault
+      var fn = engineMap[engine]
       return resolve(fn(content, locals))
     }
     return reject(`Can't render file with extension ${engine}`)
