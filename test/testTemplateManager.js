@@ -214,6 +214,26 @@ describe('Template manager', function () {
     })
   })
 
+  it('should allow a custom data option for rendering sass', function (done) {
+    var testMainSassFile = path.join(tmpDir, 'main.scss')
+    var testIncludesFile = path.join(tmpSassDir, 'includes.scss')
+
+    // Write out some test SASS files.
+    fs.writeFileSync(testMainSassFile, '@import "includes.scss";')
+    fs.writeFileSync(testIncludesFile, 'body { color: $myColor}')
+
+    var file = {
+      filename: testMainSassFile,
+      content: fs.readFileSync(testMainSassFile).toString()
+    }
+
+    tm.render(file, {includePaths: ['.test-sass'], data: '$myColor: #eee;'}, function (err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('body {\n  color: #eee; }\n')
+      done()
+    })
+  })
+
   it('should allow a custom include path for rendering sass', function (done) {
     var testMainSassFile = path.join(tmpDir, 'main.scss')
     var testIncludesFile = path.join(tmpSassDir, 'includes.scss')

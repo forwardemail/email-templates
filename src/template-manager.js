@@ -101,7 +101,11 @@ function renderStyl (source, locals) {
 function renderSass (source, locals) {
   const sass = require('node-sass')
 
-  locals.data = source
+  if (locals.data) {
+    locals.data = `${locals.data}; ${source}`
+  } else {
+    locals.data = source
+  }
 
   if (locals.includePaths) {
     locals.includePaths = locals.includePaths.concat([locals.templatePath])
