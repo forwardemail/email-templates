@@ -337,5 +337,5 @@ Please check the [examples directory](https://github.com/niftylettuce/node-email
 [transactional-email-templates]: https://github.com/mailgun/transactional-email-templates
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat
 [standard-url]: https://github.com/feross/standard
-[slack-image]: http://slack.glazed.io/badge.svg
-[slack-url]: http://slack.glazed.io
+[slack-image]: http://slack.crocodilejs.com/badge.svg
+[slack-url]: http://slack.crocodilejs.com
