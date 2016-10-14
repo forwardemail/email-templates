@@ -124,6 +124,27 @@ describe('Email templates', function () {
       })
     })
 
+    it('html with style element', function (done) {
+      var html = '<style> h4 { color: red; }</style><h4><%= item%></h4>'
+
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.ejs'), html)
+
+      var defaults = {
+        juiceOptions: { removeStyleTags: true }
+      }
+
+      emailTemplates(templateDir, defaults, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, { item: 'test' }, function (err, html, text) {
+          expect(err).to.be.null
+          expect(text).to.not.be.ok
+          expect(html).to.equal(
+            '<h4 style=\"color: red;\">test</h4>')
+          done()
+        })
+      })
+    })
+
     it('html with style element and juiceOptions', function (done) {
       var html = '<style> h4 { color: red; }</style><h4><%= item%></h4>'
       var css = 'h4 { color: blue; }'
