@@ -12,6 +12,7 @@ var engineMap = {
   // HTML Template engines
   'html': renderDefault,
   'hbs': cons.handlebars.render,
+  'njk': cons.nunjucks.render,
   'emblem': renderEmblem,
   // CSS pre-processors
   'less': renderLess,
