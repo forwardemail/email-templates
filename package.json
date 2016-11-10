@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "bluebird": "^3.0.0",
-    "consolidate": "niftylettuce/consolidate.js",
+    "consolidate": "^0.14.1",
     "debug": "^2.2.0",
     "glob": "^6.0.0",
     "juice": "^2.0.0",
