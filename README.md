@@ -181,8 +181,20 @@ newsletter.render(user, function (err, result) {
 
 var async = require('async')
 var users = [
-  {name: 'John', pasta: 'Rigatoni'},
-  {name: 'Luca', pasta: 'Tortellini'}
+  {
+    email: 'pappa.pizza@spaghetti.com',
+    name: {
+      first: 'Pappa',
+      last: 'Pizza'
+    }
+  },
+  {
+    email: 'mister.geppetto@spaghetti.com',
+    name: {
+      first: 'Mister',
+      last: 'Geppetto'
+    }
+  }
 ]
 
 async.each(users, function (user, next) {
@@ -206,20 +218,8 @@ var EmailTemplate = require('email-templates').EmailTemplate
 
 var template = new EmailTemplate(templateDir)
 var users = [
-  {
-    email: 'pappa.pizza@spaghetti.com',
-    name: {
-      first: 'Pappa',
-      last: 'Pizza'
-    }
-  },
-  {
-    email: 'mister.geppetto@spaghetti.com',
-    name: {
-      first: 'Mister',
-      last: 'Geppetto'
-    }
-  }
+  {name: 'John', pasta: 'Rigatoni'},
+  {name: 'Luca', pasta: 'Tortellini'}
 ]
 
 var templates = users.map(function (user) {
