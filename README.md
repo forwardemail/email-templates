@@ -269,8 +269,20 @@ newsletter.render(user, function (err, result) {
 
 var async = require('async')
 var users = [
-  {name: 'John', pasta: 'Rigatoni'},
-  {name: 'Luca', pasta: 'Tortellini'}
+  {
+    email: 'pappa.pizza@spaghetti.com',
+    name: {
+      first: 'Pappa',
+      last: 'Pizza'
+    }
+  },
+  {
+    email: 'mister.geppetto@spaghetti.com',
+    name: {
+      first: 'Mister',
+      last: 'Geppetto'
+    }
+  }
 ]
 
 async.each(users, function (user, next) {
