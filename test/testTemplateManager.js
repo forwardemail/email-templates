@@ -72,6 +72,21 @@ describe('Template manager', function () {
     })
   })
 
+  it('should render pug', function (done) {
+    var file = {
+      filename: 'test.pug',
+      content: 'h1= item\nh1= engine'
+    }
+    var locals = {item: 'test'}
+
+    tm.render(file, locals, function (err, res) {
+      expect(err).to.be.null
+      expect(res).to.equal('<h1>test</h1><h1>.pug</h1>')
+
+      done()
+    })
+  })
+
   it('should render swig', function (done) {
     var file = {
       filename: 'test.swig',
