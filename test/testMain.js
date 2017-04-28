@@ -185,6 +185,24 @@ describe('Email templates', function () {
       })
     })
 
+    it('html(pug) with inline CSS(less)', function (done) {
+      var html = 'h4= item'
+      var css = '@color: #cccccc; h4 { color: @color }'
+      fs.writeFileSync(path.join(templateDir, templateName, 'html.pug'), html)
+      fs.writeFileSync(path.join(templateDir, templateName, 'style.less'), css)
+
+      emailTemplates(templateDir, function (err, template) {
+        expect(err).to.be.null
+        template(templateName, {item: 'test'}, function (err, html, text) {
+          expect(err).to.be.null
+          expect(text).to.not.be.ok
+          expect(html).to.equal(
+            '<h4 style=\"color: #cccccc;\">test</h4>')
+          done()
+        })
+      })
+    })
+
     it('html with inline CSS and text file with custom names', function (done) {
       var html = '<h4><%= item%></h4>'
       var text = '<%= item%>'

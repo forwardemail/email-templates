@@ -64,7 +64,7 @@ Install `email-templates` and the engines you wish to use by adding them to your
 ```bash
 npm install --save email-templates
 # See https://www.npmjs.com/package/consolidate for a full list of available template engines
-npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
+npm install -S [ejs|pug|nunjucks|handlebars|emblem|dust-linkedin|jade]
 ```
 
 
@@ -106,7 +106,7 @@ npm install -S [ejs|jade|nunjucks|handlebars|emblem|dust-linkedin]
     * `style.{{ext}}`(**optional**) - styles for html format
     * `subject.{{ext}}`(**optional**) - for subject of email
 
-    > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.jade`, `.nunjucks`) to use for the value of `{{ext}}` above.**
+    > **See [supported template engines](#supported-template-engines) for possible template engine extensions (e.g. `.ejs`, `.pug`, `.jade`, `.nunjucks`) to use for the value of `{{ext}}` above.**
 
     > You may prefix any file name with anything you like to help you identify the files more easily in your IDE.  The only requirement is that the filename contains `html.`, `text.`, `style.`, and `subject.` respectively.
 
