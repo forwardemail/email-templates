@@ -67,7 +67,7 @@
     "consolidate": "^0.14.2",
     "debug": "^2.2.0",
     "glob": "^6.0.0",
-    "juice": "^2.0.0",
+    "juice": "^4.1.0",
     "lodash": "^4.0.1"
   },
   "devDependencies": {
