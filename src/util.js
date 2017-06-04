@@ -2,6 +2,7 @@ import P from 'bluebird'
 import {readFile, stat} from 'fs'
 import glob from 'glob'
 import {render} from './template-manager'
+import {render2} from './template-manager2'
 import {join} from 'path'
 
 const readFileP = P.promisify(readFile)
@@ -90,5 +91,10 @@ export function readContents (path, type) {
 export function renderFile (file, options) {
   if (!file) return P.resolve(null)
   return render(file, options)
+}
+
+export function renderUserFile (file, options) {
+  if (!file) return P.resolve(null)
+  return render2(file, options)
 }
 

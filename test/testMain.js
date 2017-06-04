@@ -141,7 +141,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.not.be.ok
           expect(html).to.equal(
-            '<style> h4 { color: red; }</style><h4 style=\"color: blue;\">test</h4>')
+            '<style> h4 { color: red; }</style><h4 style="color: blue;">test</h4>')
           done()
         })
       })
@@ -161,7 +161,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.equal('test')
           expect(html).to.equal(
-            '<h4 style=\"color: #ccc;\">test</h4>')
+            '<h4 style="color: #ccc;">test</h4>')
           done()
         })
       })
@@ -179,7 +179,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.not.be.ok
           expect(html).to.equal(
-            '<h4 style=\"color: #cccccc;\">test</h4>')
+            '<h4 style="color: #cccccc;">test</h4>')
           done()
         })
       })
@@ -197,7 +197,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.not.be.ok
           expect(html).to.equal(
-            '<h4 style=\"color: #cccccc;\">test</h4>')
+            '<h4 style="color: #cccccc;">test</h4>')
           done()
         })
       })
@@ -217,7 +217,7 @@ describe('Email templates', function () {
           expect(err).to.be.null
           expect(text).to.equal('test')
           expect(html).to.equal(
-            '<h4 style=\"color: #ccc;\">test</h4>')
+            '<h4 style="color: #ccc;">test</h4>')
           done()
         })
       })
@@ -240,7 +240,7 @@ describe('Email templates', function () {
             expect(err).to.be.null
             expect(text).to.equal('test')
             expect(html).to.equal(
-              '<h4 style=\"color: #ccc;\">test</h4>')
+              '<h4 style="color: #ccc;">test</h4>')
             done()
           })
         })

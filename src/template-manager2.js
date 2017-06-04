@@ -4,7 +4,7 @@
  * @author: [@jasonsims]('https://github.com/jasonsims')
  */
 
-import {extname, dirname, basename} from 'path'
+import {dirname, basename} from 'path'
 import cons from 'consolidate'
 import P from 'bluebird'
 
@@ -28,17 +28,11 @@ var engineMap = {
   '': renderDefault
 }
 
-export function render (file, locals = {}, callback) {
-  let {filename, content} = file
+export function render2 (template, locals = {}, callback) {
+  let {engine, content} = template
 
   return new P(function (resolve, reject) {
     if (!content) return reject('No content in template')
-    if (!filename) return reject('Filename is null')
-    let engine = extname(filename).slice(1)
-
-    locals.filename = filename
-    locals.engine = '.' + engine
-    locals.templatePath = dirname(filename)
 
     if (engine.length && cons[engine] !== undefined) {
       // use consolidate.js if it supports this engine
