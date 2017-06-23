@@ -79,7 +79,7 @@ npm install -S [ejs|pug|nunjucks|handlebars|emblem|dust-linkedin|jade]
 2. Install the template engine you intend to use:
 
     - `ejs@^2.0.0`
-    - `jade@^1.0.0`
+    - `pug@^2.0.0-beta.12`
     - `nunjucks@^1.0.0`
     - `handlebars@^3.0.0`
     - `dust-linkedin@^2.0.0`
