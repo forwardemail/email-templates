@@ -37,11 +37,11 @@ export default class EmailTemplate {
   }
 
   _loadTemplates (p, locale) {
-    return P.map(['html', 'text', 'style', 'subject'], (type) => {
+    return P.map(['html', 'text', 'style', 'subject', 'deeplink'], (type) => {
       return readContents(p, type)
     })
     .then((files) => {
-      let [html, text, style, subject] = files
+      let [html, text, style, subject, deeplink] = files
 
       if (!html && !text) {
         let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`)
@@ -68,6 +68,11 @@ export default class EmailTemplate {
         debug('Found subject %s in %s', basename(subject.filename), this.dirname)
       }
       this.ltpls[locale].files.subject = subject
+      
+      if (deeplink) {
+        debug('Found deeplink %s in %s', basename(deeplink.filename), this.dirname)
+      }
+      this.ltpls[locale].files.deeplink = deeplink
 
       debug('Finished loading template')
     })
@@ -102,6 +107,22 @@ export default class EmailTemplate {
       return renderFile(this.ltpls[locale].files.subject, locals)
     })
     .tap(() => debug('Finished rendering subject'))
+    .nodeify(callback)
+  }
+  
+  renderDeeplink (locals, locale, callback) {
+    if (!locale || (!callback && isFunction(locale))) {
+      callback = locale // locale is optional
+      locale = 'en-us'
+    }
+
+    debug('Rendering deeplink')
+    return this._init(locale)
+    .then(() => {
+      if (!this.ltpls[locale].files.deeplink) return null
+      return renderFile(this.ltpls[locale].files.deeplink, locals)
+    })
+    .tap(() => debug('Finished rendering deeplink'))
     .nodeify(callback)
   }
 
@@ -150,12 +171,13 @@ export default class EmailTemplate {
     return P.all([
       this.renderHtml(locals, locale),
       this.renderText(locals, locale),
-      this.renderSubject(locals, locale)
+      this.renderSubject(locals, locale),
+      this.renderDeeplink(locals, locale)
     ])
     .then((rendered) => {
-      let [html, text, subject] = rendered
+      let [html, text, subject, deeplink] = rendered
       return {
-        html, text, subject
+        html, text, subject, deeplink
       }
     })
     .nodeify(callback)
