@@ -12,7 +12,7 @@
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
 
-> **UPDATE**: (August 18th, 2017) For v3.x we are planning a major rewrite with Promises, cleaner API, and simpler usage.  Follow [@niftylettuce](https://twitter.com/niftylettuce) on Twitter or send an email to <niftylettuce+email-template@gmail.com> to get subscribed to get notified of its release.
+> **UPDATE**: (August 18th, 2017) For v3.x we are planning a major rewrite with Promises, cleaner API, and simpler usage.  Follow [@niftylettuce](https://twitter.com/niftylettuce) on Twitter or send an email to <niftylettuce+email-template@gmail.com> to get subscribed to get notified of its release. You can also submit your feature requests and view the current wishlist at <https://github.com/ladjs/node-email-templates/issues/234>.
 
 ## Index
 
