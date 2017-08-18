@@ -12,10 +12,7 @@
 
 Node.js NPM package for rendering beautiful emails with your template engine and CSS pre-processor of choice coupled with email-friendly inline CSS using [juice][juice].
 
-**NEW IN VERSION 2.4.0:** Localization support has been added!  You can now translate your emails for users!  See [Localized Template](#localized-template) below for more info!
-
-> Enjoy this package?  Build rapid startups using it with [Glazed](http://glazed.io) and follow and follow [@niftylettuce](http://twitter.com/niftylettuce)!
-
+> **UPDATE**: (August 18th, 2017) For v3.x we are planning a major rewrite with Promises, cleaner API, and simpler usage.  Follow [@niftylettuce](https://twitter.com/niftylettuce) on Twitter or send an email to <niftylettuce+email-template@gmail.com> to get subscribed to get notified of its release.
 
 ## Index
 
