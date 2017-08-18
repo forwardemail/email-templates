@@ -35,14 +35,14 @@ function template (templateDirectory, options) {
       return callback(null, function (locals, dir, next) {
         et.render(locals, function (err, result) {
           result = result || {}
-          next(err, result.html, result.text, result.subject)
+          next(err, result.html, result.text, result.subject, result.deeplink)
         })
       })
     }
 
     et.render(locals, function (err, result) {
       result = result || {}
-      callback(err, result.html, result.text, result.subject)
+      callback(err, result.html, result.text, result.subject, result.deeplink)
     })
   }
 }
