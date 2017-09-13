@@ -1,6 +1,8 @@
 
 # Node Email Templates
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/niftylettuce/node-email-templates.svg)](https://greenkeeper.io/)
+
 [![Slack Status][slack-image]][slack-url]
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
