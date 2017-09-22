@@ -47,19 +47,24 @@ yarn add email-templates pug
 
 ### Basic
 
+> You can swap the `transport` option with a [Nodemailer transport][nodemailer-transport] configuration object or transport instance. We highly recommend using [Postmark][] for your transport (it's the default in [Lad][]).
+
 ```js
 const Email = require('email-templates');
 
 const email = new Email({
   message: {
     from: 'niftylettuce@gmail.com'
+  },
+  transport: {
+    jsonTransport: true
   }
 });
 
 email.send({
   template: 'mars',
   message: {
-    to: 'elon@tesla.com'
+    to: 'elon@spacex.com'
   },
   locals: {
     name: 'Elon'
@@ -84,7 +89,7 @@ And the contents of the `pug` files are:
 
 ```pug
 p Hi #{name},
-p Welcome to Mars, it's a red planet.
+p Welcome to Mars, the red planet.
 ```
 
 > `subject.pug`:
@@ -104,13 +109,16 @@ const email = new Email({
   message: {
     from: 'niftylettuce@gmail.com'
   },
+  transport: {
+    jsonTransport: true
+  },
   i18n: {} // <------ HERE
 });
 
 email.send({
   template: 'mars',
   message: {
-    to: 'elon@tesla.com'
+    to: 'elon@spacex.com'
   },
   locals: {
     name: 'Elon'
@@ -124,7 +132,7 @@ Then slightly modify your templates to use localization functions.
 
 ```pug
 p= t(`Hi ${name},`)
-p= t('Welcome to Mars, it's a red planet.')
+p= t('Welcome to Mars, the red planet.')
 ```
 
 > `subject.pug`:
@@ -137,7 +145,7 @@ Note that if you use [Lad][], you have a built-in filter called `translate`:
 
 ```pug
 p: :translate(locale) Hi #{name}
-p: :translate(locale) Welcome to Mars, it's a red planet.
+p: :translate(locale) Welcome to Mars, the red planet.
 ```
 
 
@@ -228,3 +236,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [i18n]: https://github.com/ladjs/i18n#options
 
 [fa]: http://fontawesome.io/
+
+[nodemailer-transport]: https://nodemailer.com/transports/
+
+[postmark]: https://postmarkapp.com/
