@@ -1,0 +1,126 @@
+{
+  "name": "email-templates",
+  "description":
+    "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more!",
+  "version": "3.0.0",
+  "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
+  "bugs": {
+    "url": "https://github.com/niftylettuce/email-templates/issues",
+    "email": "niftylettuce@gmail.com"
+  },
+  "contributors": [
+    "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
+  ],
+  "dependencies": {
+    "@ladjs/i18n": "^0.0.1",
+    "auto-bind": "^1.1.0",
+    "consolidate": "^0.14.5",
+    "debug": "^3.0.1",
+    "fs-extra": "^4.0.2",
+    "get-paths": "^0.0.1",
+    "html-to-text": "^3.3.0",
+    "juice": "^4.1.1",
+    "juice-resources-promise": "^0.0.1",
+    "lodash": "^4.17.4",
+    "lodash.defaultsdeep": "^4.6.0",
+    "lodash.isempty": "^4.4.0",
+    "lodash.isfunction": "^3.0.8",
+    "lodash.isobject": "^3.0.2",
+    "lodash.isstring": "^4.0.1",
+    "lodash.merge": "^4.6.0",
+    "nodemailer": "^4.1.0",
+    "nodemailer-base64-to-s3": "^0.0.2",
+    "opn": "^5.1.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "codecov": "^2.3.0",
+    "cross-env": "^5.0.5",
+    "eslint": "^4.5.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.4",
+    "nyc": "^11.1.0",
+    "prettier": "^1.6.1",
+    "pug": "^2.0.0-rc.4",
+    "remark-cli": "^4.0.0",
+    "remark-preset-github": "^0.0.6",
+    "xo": "^0.19.0"
+  },
+  "engines": {
+    "node": ">=8.3"
+  },
+  "homepage": "https://github.com/niftylettuce/email-templates",
+  "keywords": [
+    "email",
+    "lad",
+    "lass",
+    "koa",
+    "pug",
+    "consolidate",
+    "template",
+    "templates",
+    "engine",
+    "postmark",
+    "sendgrid",
+    "mailchimp",
+    "mandrill",
+    "transport",
+    "nodemailer",
+    "moonmail",
+    "mailgun"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "*.{js,jsx,mjs,ts,tsx,css,less,scss,json,graphql}": [
+      "prettier --write --single-quote --trailing-comma none",
+      "git add"
+    ],
+    "*.md": ["remark . -qfo", "git add"]
+  },
+  "main": "index.js",
+  "remarkConfig": {
+    "plugins": ["preset-github"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niftylettuce/email-templates"
+  },
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "lint": "xo && remark . -qfo",
+    "precommit": "lint-staged && npm test",
+    "test": "npm run lint && npm run test-coverage",
+    "test-coverage": "cross-env NODE_ENV=test nyc ava"
+  },
+  "xo": {
+    "extends": "prettier",
+    "plugins": ["prettier"],
+    "parserOptions": {
+      "sourceType": "script"
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "bracketSpacing": true,
+          "trailingComma": "none"
+        }
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 80,
+          "ignoreUrls": true
+        }
+      ],
+      "capitalized-comments": "off",
+      "camelcase": "off",
+      "no-warning-comments": "off"
+    },
+    "space": true
+  }
+}
