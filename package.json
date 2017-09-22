@@ -1,7 +1,8 @@
 {
   "name": "email-templates",
-  "description": "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more!",
-  "version": "3.0.1",
+  "description":
+    "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more!",
+  "version": "3.0.2",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
   "bugs": {
     "url": "https://github.com/niftylettuce/email-templates/issues",
@@ -77,16 +78,11 @@
       "prettier --write --single-quote --trailing-comma none",
       "git add"
     ],
-    "*.md": [
-      "remark . -qfo",
-      "git add"
-    ]
+    "*.md": ["remark . -qfo", "git add"]
   },
   "main": "index.js",
   "remarkConfig": {
-    "plugins": [
-      "preset-github"
-    ]
+    "plugins": ["preset-github"]
   },
   "repository": {
     "type": "git",
@@ -101,9 +97,7 @@
   },
   "xo": {
     "extends": "prettier",
-    "plugins": [
-      "prettier"
-    ],
+    "plugins": ["prettier"],
     "parserOptions": {
       "sourceType": "script"
     },
