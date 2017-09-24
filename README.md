@@ -7,7 +7,7 @@
 [![made with lass](https://img.shields.io/badge/made_with-lass-95CC28.svg)](https://lass.js.org)
 [![license](https://img.shields.io/github/license/niftylettuce/email-templates.svg)](LICENSE)
 
-> Create, preview, and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more!
+> Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
 > **NEW**: v3.0.0 is released! See the [2.x branch][2-x-branch] documentation if you're using an older version
 
@@ -15,12 +15,17 @@
 ## Table of Contents
 
 * [Install](#install)
+* [Preview](#preview)
 * [Usage](#usage)
   * [Basic](#basic)
+  * [Cache Pug Templates](#cache-pug-templates)
   * [Localization](#localization)
+  * [Custom Text Template](#custom-text-template)
+  * [Custom Template Engine (e.g. EJS)](#custom-template-engine-eg-ejs)
+  * [Custom Default Message Options](#custom-default-message-options)
+  * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
 * [Options](#options)
 * [Plugins](#plugins)
-* [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
 * [Tip](#tip)
 * [Contributors](#contributors)
 * [License](#license)
@@ -41,6 +46,15 @@ npm install email-templates pug
 ```sh
 yarn add email-templates pug
 ```
+
+
+## Preview
+
+We've added [preview-email][] by default to this package!
+
+This means that (by default) in the development environment (e.g. `NODE_ENV=development`) your emails will be rendered to the tmp directory for you and automatically opened in the browser.
+
+<a target="_blank" href="https://github.com/niftylettuce/preview-email/blob/master/demo.png">View the demo</a>
 
 
 ## Usage
@@ -98,6 +112,62 @@ p Welcome to Mars, the red planet.
 = `Hi ${name}, welcome to Mars`
 ```
 
+### Cache Pug Templates
+
+We strongly suggest to follow this example and pre-cache your templates with [cache-pug-templates][] (if you're using the default [Pug][] template engine).
+
+If you do not do this, then your Pug templates will re-compile and re-cache every time you deploy new code and restart your app.
+
+1. Ensure you have [Redis][] (v4.x+) installed:
+
+   * Mac: `brew install redis && brew services start redis`
+   * Ubuntu:
+
+     ```sh
+     sudo add-apt-repository -y ppa:chris-lea/redis-server
+     sudo apt-get update
+     sudo apt-get -y install redis-server
+     ```
+
+2. Install the packages:
+
+   [npm][]:
+
+   ```sh
+   npm install cache-pug-templates redis
+   ```
+
+   [yarn][]:
+
+   ```sh
+   yarn add cache-pug-templates redis
+   ```
+
+3. Configure it to read and cache your entire email templates directory:
+
+   ```js
+   const path = require('path');
+   const cachePugTemplates = require('cache-pug-templates');
+   const redis = require('redis');
+   const Email = require('email-templates');
+
+   const redisClient = redis.createClient();
+   const email = new Email({
+     message: {
+       from: 'niftylettuce@gmail.com'
+     },
+     transport: {
+       jsonTransport: true
+     }
+   });
+
+   cachePugTemplates(redisClient, email.config.views.root);
+
+   // ...
+   ```
+
+4. For more configuration options see [cache-pug-templates][].
+
 ### Localization
 
 All you need to do is simply pass an [i18n][] configuration object as `config.i18n` (or an empty one as this example shows to use defaults).
@@ -148,25 +218,107 @@ p: :translate(locale) Hi #{name}
 p: :translate(locale) Welcome to Mars, the red planet.
 ```
 
+### Custom Text Template
 
-## Options
+> By default we use `html-to-text` to generate a plaintext version and attach it as `message.text`.
 
-For a list of all available options and defaults [view the configuration object](index.js).
+If you'd like to customize the text body, you can pass `message.text` or set `config.htmlToText: false` (doing so will automatically lookup a `text` template file just like it normally would for `html` and `subject`).
 
+```js
+const Email = require('email-templates');
 
-## Plugins
+const email = new Email({
+  message: {
+    from: 'niftylettuce@gmail.com'
+  },
+  transport: {
+    jsonTransport: true
+  },
+  htmlToText: false // <----- HERE
+});
 
-You can use any [nodemailer][] plugin. Simply pass an existing transport instance as `config.transport`.
+email.send({
+  template: 'mars',
+  message: {
+    to: 'elon@spacex.com'
+  },
+  locals: {
+    name: 'Elon'
+  }
+}).then(console.log).catch(console.error);
+```
 
-By default we include [nodemailer-base64-to-s3][] which you can enable via `options.base64ToS3`.
+> `text.pug`:
 
-We highly recommend to add to your default `config.locals` the following:
+```pug
+| Hi #{name},
+| Welcome to Mars, the red planet.
+```
 
-* [custom-fonts-in-emails][] - render any font in emails as an image w/retina support (no more Photoshop or Sketch exports!)
-* [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
+### Custom Template Engine (e.g. EJS)
 
+1. Install your desired template engine (e.g. [EJS][])
 
-## Custom Rendering (e.g. from a MongoDB database)
+   [npm][]:
+
+   ```sh
+   npm install ejs
+   ```
+
+   [yarn][]:
+
+   ```sh
+   yarn add ejs
+   ```
+
+2. Set the extension in options and send an email
+
+   ```js
+   const Email = require('email-templates');
+
+   const email = new Email({
+     message: {
+       from: 'niftylettuce@gmail.com'
+     },
+     transport: {
+       jsonTransport: true
+     },
+     views: {
+       options: {
+         extension: 'ejs' // <---- HERE
+       }
+     }
+   });
+   ```
+
+### Custom Default Message Options
+
+You can configure your Email instance to have default message options, such as a default "From", an unsubscribe header, etc.
+
+For a list of all available message options and fields see [the Nodemailer mesage reference](https://nodemailer.com/message/).
+
+> Here's an example showing how to set a default custom header and a list unsubscribe header:
+
+```js
+const Email = require('email-templates');
+
+const email = new Email({
+  message: {
+    from: 'niftylettuce@gmail.com',
+    headers: {
+      'X-Some-Custom-Thing': 'Some-Value'
+    },
+    list: {
+      unsubscribe: 'https://niftylettuce.com/unsubscribe'
+    }
+  },
+  transport: {
+    jsonTransport: true
+  }
+});
+```
+
+### Custom Rendering (e.g. from a MongoDB database)
 
 You can pass a custom `config.render` function which accepts two arguments `view` and `locals` and must return a `Promise`.
 
@@ -190,6 +342,23 @@ const email = new Email({
   }
 });
 ```
+
+
+## Options
+
+For a list of all available options and defaults [view the configuration object](index.js).
+
+
+## Plugins
+
+You can use any [nodemailer][] plugin. Simply pass an existing transport instance as `config.transport`.
+
+You should add the [nodemailer-base64-to-s3][] plugin to convert base64 inline images to actual images stored on Amazon S3 and Cloudfront.
+
+We also highly recommend to add to your default `config.locals` the following:
+
+* [custom-fonts-in-emails][] - render any font in emails as an image w/retina support (no more Photoshop or Sketch exports!)
+* [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
 
 
 ## Tip
@@ -240,3 +409,11 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [nodemailer-transport]: https://nodemailer.com/transports/
 
 [postmark]: https://postmarkapp.com/
+
+[ejs]: http://ejs.co/
+
+[cache-pug-templates]: https://github.com/ladjs/cache-pug-templates
+
+[redis]: https://redis.io/
+
+[preview-email]: https://github.com/niftylettuce/preview-email

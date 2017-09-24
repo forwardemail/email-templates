@@ -1,14 +1,10 @@
-const os = require('os');
 const path = require('path');
 const debug = require('debug')('email-templates');
 const fs = require('fs-extra');
-const uuid = require('uuid');
 const htmlToText = require('html-to-text');
-const opn = require('opn');
 const I18N = require('@ladjs/i18n');
 const autoBind = require('auto-bind');
 const nodemailer = require('nodemailer');
-const base64ToS3 = require('nodemailer-base64-to-s3');
 const consolidate = require('consolidate');
 const isFunction = require('lodash.isfunction');
 const isObject = require('lodash.isobject');
@@ -16,14 +12,10 @@ const isEmpty = require('lodash.isempty');
 const isString = require('lodash.isstring');
 const defaultsDeep = require('lodash.defaultsdeep');
 const merge = require('lodash.merge');
+const previewEmail = require('preview-email');
 
 const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
-
-// TODO: recommend lad in email-templates
-// TODO: update lad readme to show it uses email-templates v3
-// TODO: redis caching
-// TODO: upgrade web-resource-inliner once <https://github.com/jrit/web-resource-inliner/pull/31> is released
 
 class Email {
   constructor(config = {}) {
@@ -48,7 +40,7 @@ class Email {
         // <https://nodemailer.com/message/>
         message: {},
         send: !['development', 'test'].includes(process.env.NODE_ENV),
-        open: process.env.NODE_ENV === 'development',
+        preview: process.env.NODE_ENV === 'development',
         // <https://github.com/ladjs/i18n>
         // set to an object to configure and enable it
         i18n: false,
@@ -69,9 +61,7 @@ class Email {
         // pass a transport configuration object or a transport instance
         // (e.g. an instance is created via `nodemailer.createTransport`)
         // <https://nodemailer.com/transports/>
-        transport: {},
-        // <https://github.com/ladjs/nodemailer-base64-to-s3
-        base64ToS3: {}
+        transport: {}
       },
       config
     );
@@ -83,9 +73,6 @@ class Email {
 
     if (!isFunction(this.config.transport.sendMail))
       this.config.transport = nodemailer.createTransport(this.config.transport);
-
-    if (isObject(this.config.base64ToS3) && !isEmpty(this.config.base64ToS3))
-      this.config.transport.use('compile', base64ToS3(this.config.base64ToS3));
 
     debug('transformed config %O', this.config);
 
@@ -192,21 +179,9 @@ class Email {
             this.config.juiceResources
           );
 
-        // TODO: rewrite this so we have a npm package doing this
-        // <https://github.com/ryanb/letter_opener/blob/master/lib/letter_opener/templates/default.html.erb>
-        // <https://github.com/jugglinmike/srcdoc-polyfill>
-        // <https://github.com/davidcornu/mail-preview>
-        if (this.config.open && message.html) {
-          debug('opening in browser');
-          const id = uuid.v4();
-          const tmpHtmlPath = `${os.tmpdir()}/${id}.html`;
-          await fs.writeFile(tmpHtmlPath, message.html);
-          await opn(tmpHtmlPath, { wait: false });
-          if (message.text) {
-            const tmpTxtPath = `${os.tmpdir()}/${id}.txt`;
-            await fs.writeFile(tmpTxtPath, message.text);
-            await opn(tmpTxtPath, { wait: false });
-          }
+        if (this.config.preview) {
+          debug('using `preview-email` to preview email');
+          await previewEmail(message);
         }
 
         if (!this.config.send) {
