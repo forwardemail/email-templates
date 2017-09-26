@@ -295,7 +295,7 @@ email.send({
 
 You can configure your Email instance to have default message options, such as a default "From", an unsubscribe header, etc.
 
-For a list of all available message options and fields see [the Nodemailer mesage reference](https://nodemailer.com/message/).
+For a list of all available message options and fields see [the Nodemailer message reference](https://nodemailer.com/message/).
 
 > Here's an example showing how to set a default custom header and a list unsubscribe header:
 
