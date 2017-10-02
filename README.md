@@ -129,17 +129,16 @@ If this asset is in another folder, then you will need to modify the default opt
 const email = new Email({
   // <https://github.com/Automattic/juice>
   juice: true,
-  webResources: {
+  juiceResources: {
     preserveImportant: true,
-
-    // default path is `build/`:
-    relativeTo: path.resolve('build')
-
-    //
-    // but you might want to change it to something like:
-    // relativeTo: path.join(__dirname, '..', 'assets')
-    //
-
+    webResources: {
+      // default path is `build/`:
+      relativeTo: path.resolve('build')
+      //
+      // but you might want to change it to something like:
+      // relativeTo: path.join(__dirname, '..', 'assets')
+      //
+    }
   }
 });
 ```
