@@ -18,6 +18,7 @@
 * [Preview](#preview)
 * [Usage](#usage)
   * [Basic](#basic)
+  * [Automatic Inline CSS via Stylesheets](#automatic-inline-css-via-stylesheets)
   * [Cache Pug Templates](#cache-pug-templates)
   * [Localization](#localization)
   * [Custom Text Template](#custom-text-template)
@@ -110,6 +111,37 @@ p Welcome to Mars, the red planet.
 
 ```pug
 = `Hi ${name}, welcome to Mars`
+```
+
+### Automatic Inline CSS via Stylesheets
+
+Simply include the path or URL to the stylesheet in your template's `<head>`:
+
+```pug
+link(rel="stylesheet", href="/css/app.css", data-inline)
+```
+
+This will look for the file `/css/app.css` in the `build/` folder.
+
+If this asset is in another folder, then you will need to modify the default options when creating an `Email` instance:
+
+```js
+const email = new Email({
+  // <https://github.com/Automattic/juice>
+  juice: true,
+  webResources: {
+    preserveImportant: true,
+
+    // default path is `build/`:
+    relativeTo: path.resolve('build')
+
+    //
+    // but you might want to change it to something like:
+    // relativeTo: path.join(__dirname, '..', 'assets')
+    //
+
+  }
+});
 ```
 
 ### Cache Pug Templates
