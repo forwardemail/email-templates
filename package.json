@@ -17,7 +17,7 @@
     "consolidate": "^0.14.5",
     "debug": "^3.0.1",
     "fs-extra": "^4.0.2",
-    "get-paths": "^0.0.1",
+    "get-paths": "^0.0.2",
     "html-to-text": "^3.3.0",
     "juice": "https://github.com/niftylettuce/juice",
     "juice-resources-promise": "^0.0.1",
