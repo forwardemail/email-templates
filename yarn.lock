@@ -3013,9 +3013,9 @@ juice-resources-promise@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/juice-resources-promise/-/juice-resources-promise-0.0.1.tgz#14a91706340356671de7bac55b1bba51c3f90043"
 
-"juice@https://github.com/niftylettuce/juice":
-  version "4.1.1"
-  resolved "https://github.com/niftylettuce/juice#a870804e515275399af07526f6e26ac882db3bcb"
+juice@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/juice/-/juice-4.1.2.tgz#8f74ef6780bc338fc096e7775f9e65115aabaf88"
   dependencies:
     cheerio "^0.22.0"
     commander "2.9.0"
@@ -3023,7 +3023,7 @@ juice-resources-promise@^0.0.1:
     deep-extend "^0.5.0"
     mensch "^0.3.3"
     slick "1.12.2"
-    web-resource-inliner jrit/web-resource-inliner
+    web-resource-inliner "^4.2.0"
 
 kind-of@^3.0.2:
   version "3.2.2"
@@ -3638,8 +3638,8 @@ node-pre-gyp@^0.6.36:
     tar-pack "^3.4.0"
 
 nodemailer@^4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.1.1.tgz#e84a65b423e5ca2b65b81ff39bb9aee71c3dc718"
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.1.2.tgz#82e1fb61ddc7272fe4f34c5ba6adaa99faa8b635"
 
 nopt@^4.0.1:
   version "4.0.1"
@@ -4096,8 +4096,8 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
 prettier@^1.6.1:
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.3.tgz#8e6974725273914b1c47439959dd3d3ba53664b6"
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.4.tgz#5e8624ae9363c80f95ec644584ecdf55d74f93fa"
 
 pretty-format@^21.2.1:
   version "21.2.1"
@@ -4451,7 +4451,7 @@ remark-heading-gap@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/remark-heading-gap/-/remark-heading-gap-3.0.0.tgz#f52ac47a27995ef3248a59eb7544b5620b4736a6"
 
-remark-license@niftylettuce/remark-license:
+"remark-license@github:niftylettuce/remark-license":
   version "4.0.1"
   resolved "https://codeload.github.com/niftylettuce/remark-license/tar.gz/17ecb8f64f8f6082414d14f9267a12764e6ddbfb"
   dependencies:
@@ -6094,9 +6094,9 @@ watchr@~2.4.13:
     taskgroup "^4.2.0"
     typechecker "^2.0.8"
 
-web-resource-inliner@jrit/web-resource-inliner:
-  version "4.1.1"
-  resolved "https://codeload.github.com/jrit/web-resource-inliner/tar.gz/053db1bea7a7a12baa3c1224e5c99e26451ff19d"
+web-resource-inliner@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/web-resource-inliner/-/web-resource-inliner-4.2.0.tgz#a0e65f4bb8d2085bd80c184290f29772aa0c697e"
   dependencies:
     async "^2.1.2"
     chalk "^1.1.3"
