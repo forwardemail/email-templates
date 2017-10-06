@@ -4,6 +4,22 @@ const nodemailer = require('nodemailer');
 
 const Email = require('../');
 
+test('deep merges config', t => {
+  const email = new Email({
+    transport: { jsonTransport: true },
+    juiceResources: {
+      preserveImportant: false,
+      webResources: {
+        images: false
+      }
+    }
+  });
+  t.is(
+    email.config.juiceResources.webResources.relativeTo,
+    path.resolve('build')
+  );
+});
+
 test('throws error without transport', t => {
   const error = t.throws(() => new Email());
   t.is(
