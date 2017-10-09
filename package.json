@@ -48,7 +48,7 @@
     "xo": "^0.19.0"
   },
   "engines": {
-    "node": ">=8.3"
+    "node": ">=7.6.0"
   },
   "homepage": "https://github.com/niftylettuce/email-templates",
   "keywords": [
