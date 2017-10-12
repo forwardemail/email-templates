@@ -27,6 +27,7 @@
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
 * [Options](#options)
 * [Plugins](#plugins)
+* [V3 Breaking Changes](#v3-breaking-changes)
 * [Tip](#tip)
 * [Contributors](#contributors)
 * [License](#license)
@@ -59,6 +60,8 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 
 
 ## Usage
+
+> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.
 
 ### Basic
 
@@ -390,6 +393,43 @@ We also highly recommend to add to your default `config.locals` the following:
 
 * [custom-fonts-in-emails][] - render any font in emails as an image w/retina support (no more Photoshop or Sketch exports!)
 * [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
+
+
+## V3 Breaking Changes
+
+> If you are upgrading from v2 or prior to v3, please note that the following breaking API changes occurred:
+
+1. Instead of calling `const newsletter = new EmailTemplate(...args)`, you now call `const email = new Email(options)`.
+
+   * The arguments you pass to the constructor have changed as well.
+   * Previously you'd pass `new EmailTemplate(templateDir, options)`.  Now you will need to pass simply one object with a configuration as an argument to the constructor.
+   * If your `templateDir` path is `path.resolve('emails')` (basically `./emails` folder) then you do not need to pass it at all since it is the default per the [configuration object](https://github.com/niftylettuce/email-templates/blob/master/index.js).
+   * The previous value for `templateDir` can be used as such:
+
+   ```diff
+   -const newsletter = new EmailTemplate(templateDir);
+   +const email = new Email({
+   +  views: { root: templateDir }
+   +});
+   ```
+
+2. Instead of calling `newsletter.render(locals, callback)` you now call `email.render(locals)`.  The return value of `email.render` when invoked is a `Promise` and does not accept a callback function.
+
+   ```diff
+   -newsletter.render({}, (err, result) => {
+   -  if (err) return console.error(err);
+   -  console.log(result);
+   -});
+   +email.render({}).then(console.log).catch(console.error);
+   ```
+
+3. Localized template directories are no longer supported.  We now support i18n translations out of the box.  See [Localization](#localization) for more info.
+
+4. The `options.juiceOptions` option has been changed to `options.juiceResources`.
+
+5. The `options.disableJuice` option has been changed to `options.juice` and the Boolean should be negated.  The default value for `options.juice` is `true`, therefore if you want to disable juice you will need to pass `options.juice = false`.
+
+6. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
 
 
 ## Tip
