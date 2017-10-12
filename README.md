@@ -9,7 +9,7 @@
 
 > Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
-> **NEW**: v3.0.0 is released! See the [2.x branch][2-x-branch] documentation if you're using an older version
+> **NEW**: v3.x is released; see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
 
 
 ## Table of Contents
@@ -425,11 +425,7 @@ We also highly recommend to add to your default `config.locals` the following:
 
 3. Localized template directories are no longer supported.  We now support i18n translations out of the box.  See [Localization](#localization) for more info.
 
-4. The `options.juiceOptions` option has been changed to `options.juiceResources`.
-
-5. The `options.disableJuice` option has been changed to `options.juice` and the Boolean should be negated.  The default value for `options.juice` is `true`, therefore if you want to disable juice you will need to pass `options.juice = false`.
-
-6. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
+4. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
 
 
 ## Tip

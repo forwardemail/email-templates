@@ -20,6 +20,17 @@ const juiceResources = require('juice-resources-promise');
 class Email {
   constructor(config = {}) {
     debug('config passed %O', config);
+
+    // 2.x backwards compatible support
+    if (config.juiceOptions) {
+      config.juiceResources = config.juiceOptions;
+      delete config.juiceOptions;
+    }
+    if (config.disableJuice) {
+      config.juice = false;
+      delete config.disableJuice;
+    }
+
     this.config = merge(
       {
         views: {
