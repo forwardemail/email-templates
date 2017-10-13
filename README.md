@@ -66,6 +66,8 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 ### Basic
 
 > You can swap the `transport` option with a [Nodemailer transport][nodemailer-transport] configuration object or transport instance. We highly recommend using [Postmark][] for your transport (it's the default in [Lad][]).
+>
+> If you want to send emails in `development` or `test` environments, set `options.send` to `true`.
 
 ```js
 const Email = require('email-templates');
@@ -74,6 +76,8 @@ const email = new Email({
   message: {
     from: 'niftylettuce@gmail.com'
   },
+  // uncomment below to send emails in development/test env:
+  // send: true
   transport: {
     jsonTransport: true
   }
@@ -426,6 +430,10 @@ We also highly recommend to add to your default `config.locals` the following:
 3. Localized template directories are no longer supported.  We now support i18n translations out of the box.  See [Localization](#localization) for more info.
 
 4. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
+
+5. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](index.js).
+
+6. If you wish to send emails in development or test environment (disabled by default), set `options.send` to `true`.
 
 
 ## Tip
