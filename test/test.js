@@ -72,6 +72,41 @@ test('send email', async t => {
   t.true(typeof res === 'object');
 });
 
+test('send two emails with two different locals', async t => {
+  const email = new Email({
+    views: {
+      root: path.join(__dirname, 'fixtures', 'emails')
+    },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    }
+  });
+  let res = await email.send({
+    template: 'test',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce1' }
+  });
+  t.is(JSON.parse(res.message).subject, 'Test email for niftylettuce1');
+  res = await email.send({
+    template: 'test',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce2' }
+  });
+  t.is(JSON.parse(res.message).subject, 'Test email for niftylettuce2');
+  t.pass();
+});
+
 test('send email with locals.user.last_locale', async t => {
   const email = new Email({
     views: {

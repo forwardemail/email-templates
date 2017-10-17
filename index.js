@@ -134,8 +134,8 @@ class Email {
 
     let { template, message, locals } = options;
 
-    message = defaultsDeep(this.config.message, message);
-    locals = defaultsDeep(this.config.views.locals, locals);
+    message = defaultsDeep({}, this.config.message, message);
+    locals = defaultsDeep({}, this.config.views.locals, locals);
 
     debug('template %s', template);
     debug('message %O', message);
