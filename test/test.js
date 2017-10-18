@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const test = require('ava');
 const nodemailer = require('nodemailer');
 
@@ -93,7 +94,8 @@ test('send two emails with two different locals', async t => {
     },
     locals: { name: 'niftylettuce1' }
   });
-  t.is(JSON.parse(res.message).subject, 'Test email for niftylettuce1');
+  res.message = JSON.parse(res.message);
+  t.is(res.message.subject, 'Test email for niftylettuce1');
   res = await email.send({
     template: 'test',
     message: {
@@ -103,8 +105,36 @@ test('send two emails with two different locals', async t => {
     },
     locals: { name: 'niftylettuce2' }
   });
-  t.is(JSON.parse(res.message).subject, 'Test email for niftylettuce2');
+  res.message = JSON.parse(res.message);
+  t.is(res.message.subject, 'Test email for niftylettuce2');
   t.pass();
+});
+
+test('send email with attachment', async t => {
+  const filePath = path.join(__dirname, 'fixtures', 'filename.png');
+  const email = new Email({
+    views: {
+      root: path.join(__dirname, 'fixtures', 'emails')
+    },
+    transport: {
+      jsonTransport: true
+    }
+  });
+  const attachments = [
+    {
+      filename: 'filename.png',
+      path: filePath,
+      content: fs.createReadStream(filePath),
+      cid: 'EmbeddedImageCid'
+    }
+  ];
+  const res = await email.send({
+    message: {
+      from: 'niftylettuce+from@gmail.com',
+      attachments
+    }
+  });
+  t.true(Array.isArray(JSON.parse(res.message).attachments));
 });
 
 test('send email with locals.user.last_locale', async t => {

@@ -10,6 +10,7 @@ const isFunction = require('lodash.isfunction');
 const isObject = require('lodash.isobject');
 const isEmpty = require('lodash.isempty');
 const isString = require('lodash.isstring');
+const omit = require('lodash.omit');
 const defaultsDeep = require('lodash.defaultsdeep');
 const merge = require('lodash.merge');
 const previewEmail = require('preview-email');
@@ -134,8 +135,17 @@ class Email {
 
     let { template, message, locals } = options;
 
-    message = defaultsDeep({}, this.config.message, message);
+    const attachments =
+      message.attachments || this.config.message.attachments || [];
+
+    message = defaultsDeep(
+      {},
+      omit(this.config.message, 'attachments'),
+      omit(message, 'attachments')
+    );
     locals = defaultsDeep({}, this.config.views.locals, locals);
+
+    if (attachments) message.attachments = attachments;
 
     debug('template %s', template);
     debug('message %O', message);
