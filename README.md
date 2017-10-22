@@ -9,7 +9,7 @@
 
 > Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
-> **NEW**: v3.x is released (you'll need Node v7.6.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
+> **NEW**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
 
 
 ## Table of Contents
@@ -61,7 +61,7 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 
 ## Usage
 
-> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v7.6.0+ now for Promises and async/await support.
+> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v6.4.0+ now for Promises and async/await support.
 
 ### Basic
 
@@ -415,7 +415,7 @@ We also highly recommend to add to your default `config.locals` the following:
 
 > If you are upgrading from v2 or prior to v3, please note that the following breaking API changes occurred:
 
-1. You need to have Node v7.6.0+ (since we use features like async/await and Promises).  We recommend using [nvm](https://github.com/creationix/nvm) to manage your Node versions.
+1. You need to have Node v6.4.0+, we recommend using [nvm](https://github.com/creationix/nvm) to manage your Node versions.
 
 2. Instead of calling `const newsletter = new EmailTemplate(...args)`, you now call `const email = new Email(options)`.
 
