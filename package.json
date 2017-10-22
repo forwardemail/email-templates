@@ -2,7 +2,7 @@
   "name": "email-templates",
   "description":
     "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with Lad.",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
   "bugs": {
     "url": "https://github.com/niftylettuce/email-templates/issues",
@@ -83,6 +83,7 @@
     "*.md": ["remark . -qfo", "git add"]
   },
   "main": "lib/index.js",
+  "files": ["lib", "locales"],
   "remarkConfig": {
     "plugins": ["preset-github"]
   },
