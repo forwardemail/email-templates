@@ -91,6 +91,12 @@ class Email {
     autoBind(this);
   }
 
+  // shorthand use of `juiceResources` with the config
+  // (mainly for custom renders like from a database)
+  juiceResources(html) {
+    return juiceResources(html, this.config.juiceResources);
+  }
+
   // promise version of consolidate's render
   // inspired by koa-views and re-uses the same config
   // <https://github.com/queckezz/koa-views>
@@ -114,7 +120,13 @@ class Email {
           // TODO: convert this to a promise based version
           render(filePath, locals, (err, res) => {
             if (err) return reject(err);
-            resolve(res);
+            // transform the html with juice using remote paths
+            // google now supports media queries
+            // https://developers.google.com/gmail/design/reference/supported_css
+            if (!this.config.juice) return resolve(res);
+            this.juiceResources(res)
+              .then(resolve)
+              .catch(reject);
           });
         }
       } catch (err) {
@@ -189,15 +201,6 @@ class Email {
           message.text = htmlToText.fromString(
             message.html,
             this.config.htmlToText
-          );
-
-        // transform the html with juice using remote paths
-        // google now supports media queries
-        // https://developers.google.com/gmail/design/reference/supported_css
-        if (this.config.juice && message.html)
-          message.html = await juiceResources(
-            message.html,
-            this.config.juiceResources
           );
 
         if (this.config.preview) {

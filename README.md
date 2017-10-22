@@ -139,11 +139,19 @@ const email = new Email({
   juiceResources: {
     preserveImportant: true,
     webResources: {
-      // default path is `build/`:
+      //
+      // this is the relative directory to your CSS/image assets
+      // and its default path is `build/`:
+      //
+      // e.g. if you have the following in the `<head`> of your template:
+      // `<link rel="stylesheet" style="style.css" data-inline" />`
+      // then this assumes that the file `build/style.css` exists
+      //
       relativeTo: path.resolve('build')
       //
       // but you might want to change it to something like:
       // relativeTo: path.join(__dirname, '..', 'assets')
+      // (so that you can re-use CSS/images that are used in your web-app)
       //
     }
   }
@@ -360,6 +368,8 @@ const email = new Email({
 
 You can pass a custom `config.render` function which accepts two arguments `view` and `locals` and must return a `Promise`.
 
+Note that if you specify a custom `config.render`, you should have it use `email.juiceResources` before returning the final HTML.  The example below shows how to do this.
+
 If you wanted to read a stored EJS template from MongoDB, you could do something like:
 
 ```js
@@ -374,7 +384,9 @@ const email = new Email({
       db.templates.findOne({ view }, (err, template) => {
         if (err) return reject(err);
         if (!template) return reject(new Error('Template not found'));
-        resolve(ejs.render(template, locals));
+        let html = ejs.render(template, locals);
+        html = await email.juiceResources(html);
+        resolve(html);
       });
     });
   }
@@ -418,6 +430,8 @@ We also highly recommend to add to your default `config.locals` the following:
    +  views: { root: templateDir }
    +});
    ```
+
+   * Note that if you are inlining CSS, you should also make sure that the option for `juiceResources.webResources.relativeTo` is accurate.
 
 3. Instead of calling `newsletter.render(locals, callback)` you now call `email.render(locals)`.  The return value of `email.render` when invoked is a `Promise` and does not accept a callback function.
 

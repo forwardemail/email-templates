@@ -2,8 +2,11 @@ const path = require('path');
 const fs = require('fs');
 const test = require('ava');
 const nodemailer = require('nodemailer');
+const cheerio = require('cheerio');
 
 const Email = require('../');
+
+const root = path.join(__dirname, 'fixtures', 'emails');
 
 test('deep merges config', t => {
   const email = new Email({
@@ -51,14 +54,17 @@ test('allows custom nodemailer transport instances', t => {
 
 test('send email', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     message: {
       from: 'niftylettuce+from@gmail.com'
     },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     }
   });
   const res = await email.send({
@@ -75,14 +81,17 @@ test('send email', async t => {
 
 test('send two emails with two different locals', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     message: {
       from: 'niftylettuce+from@gmail.com'
     },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     }
   });
   let res = await email.send({
@@ -113,11 +122,14 @@ test('send two emails with two different locals', async t => {
 test('send email with attachment', async t => {
   const filePath = path.join(__dirname, 'fixtures', 'filename.png');
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     }
   });
   const attachments = [
@@ -139,11 +151,14 @@ test('send email with attachment', async t => {
 
 test('send email with locals.user.last_locale', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     },
     i18n: {}
   });
@@ -164,11 +179,14 @@ test('send email with locals.user.last_locale', async t => {
 
 test('send email with locals.locale', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     },
     i18n: {}
   });
@@ -187,11 +205,14 @@ test('send email with locals.locale', async t => {
 
 test('throws error with missing template', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     }
   });
   const error = await t.throws(
@@ -210,14 +231,17 @@ test('throws error with missing template', async t => {
 
 test('send email and open in browser', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     message: {
       from: 'niftylettuce+from@gmail.com'
     },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     },
     open: true
   });
@@ -235,14 +259,17 @@ test('send email and open in browser', async t => {
 
 test('send email with html to text disabled', async t => {
   const email = new Email({
-    views: {
-      root: path.join(__dirname, 'fixtures', 'emails')
-    },
+    views: { root },
     message: {
       from: 'niftylettuce+from@gmail.com'
     },
     transport: {
       jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
     },
     htmlToText: false
   });
@@ -256,4 +283,57 @@ test('send email with html to text disabled', async t => {
     locals: { name: 'niftylettuce' }
   });
   t.true(typeof res === 'object');
+});
+
+test('inline css with juice using render', async t => {
+  const root = path.join(__dirname, 'fixtures', 'emails');
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const html = await email.render('test/html', {
+    name: 'niftylettuce'
+  });
+  const $ = cheerio.load(html);
+  const color = $('p').css('color');
+  t.is(color, 'red');
+});
+
+test('inline css with juice using send', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'test',
+    message: {
+      to: 'niftylettuce+to@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(typeof res === 'object');
+  const message = JSON.parse(res.message);
+  const $ = cheerio.load(message.html);
+  const color = $('p').css('color');
+  t.is(color, 'red');
 });
