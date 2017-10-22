@@ -396,7 +396,7 @@ const email = new Email({
 
 ## Options
 
-For a list of all available options and defaults [view the configuration object](index.js).
+For a list of all available options and defaults [view the configuration object](src/index.js).
 
 
 ## Plugins
@@ -421,7 +421,7 @@ We also highly recommend to add to your default `config.locals` the following:
 
    * The arguments you pass to the constructor have changed as well.
    * Previously you'd pass `new EmailTemplate(templateDir, options)`.  Now you will need to pass simply one object with a configuration as an argument to the constructor.
-   * If your `templateDir` path is `path.resolve('emails')` (basically `./emails` folder) then you do not need to pass it at all since it is the default per the [configuration object](https://github.com/niftylettuce/email-templates/blob/master/index.js).
+   * If your `templateDir` path is `path.resolve('emails')` (basically `./emails` folder) then you do not need to pass it at all since it is the default per the [configuration object](src/index.js).
    * The previous value for `templateDir` can be used as such:
 
    ```diff
@@ -447,7 +447,7 @@ We also highly recommend to add to your default `config.locals` the following:
 
 5. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
 
-6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](index.js).
+6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](src/index.js).
 
 7. If you wish to send emails in development or test environment (disabled by default), set `options.send` to `true`.
 

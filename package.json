@@ -12,7 +12,7 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^0.0.3",
+    "@ladjs/i18n": "^0.0.5",
     "auto-bind": "^1.1.0",
     "consolidate": "^0.14.5",
     "debug": "^3.1.0",
@@ -30,10 +30,12 @@
     "lodash.merge": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "nodemailer": "^4.1.3",
-    "preview-email": "^0.0.3"
+    "preview-email": "^0.0.5"
   },
   "devDependencies": {
     "ava": "^0.22.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "cheerio": "^1.0.0-rc.2",
     "codecov": "^2.3.0",
     "cross-env": "^5.0.5",
@@ -50,7 +52,7 @@
     "xo": "^0.19.0"
   },
   "engines": {
-    "node": ">=7.6.0"
+    "node": ">=6.4.0"
   },
   "homepage": "https://github.com/niftylettuce/email-templates",
   "keywords": [
@@ -80,7 +82,7 @@
     ],
     "*.md": ["remark . -qfo", "git add"]
   },
-  "main": "index.js",
+  "main": "lib/index.js",
   "remarkConfig": {
     "plugins": ["preset-github"]
   },
@@ -92,8 +94,10 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "xo && remark . -qfo",
     "precommit": "lint-staged && npm test",
-    "test": "npm run lint && npm run test-coverage",
-    "test-coverage": "cross-env NODE_ENV=test nyc ava"
+    "test": "npm run build && npm run lint && npm run test-coverage",
+    "test-coverage": "cross-env NODE_ENV=test nyc ava",
+    "build": "node_modules/.bin/babel src --out-dir lib",
+    "watch": "node_modules/.bin/babel src --watch --out-dir lib"
   },
   "xo": {
     "extends": "prettier",
