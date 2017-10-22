@@ -61,7 +61,7 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 
 ## Usage
 
-> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v6.4.0+ now for Promises and async/await support.
+> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v6.4.0+ now.
 
 ### Basic
 
