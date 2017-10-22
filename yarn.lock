@@ -44,15 +44,15 @@
   dependencies:
     arrify "^1.0.1"
 
-"@ladjs/i18n@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@ladjs/i18n/-/i18n-0.0.2.tgz#445766eb126fca43294110f901a498b629393ede"
+"@ladjs/i18n@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ladjs/i18n/-/i18n-0.0.3.tgz#775b1a5f123d5d66c80fe9323b6c5d9061b2df78"
   dependencies:
     auto-bind "^1.1.0"
     boom "^5.2.0"
     country-language "^0.1.7"
     i18n "^0.8.3"
-    i18n-locales "^0.0.1"
+    i18n-locales "^0.0.2"
     lodash.every "^4.6.0"
     lodash.isempty "^4.4.0"
     lodash.sortby "^4.7.0"
@@ -2414,9 +2414,9 @@ husky@^0.14.3:
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
 
-i18n-locales@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/i18n-locales/-/i18n-locales-0.0.1.tgz#4a9e9a505e0d4c0bb2cdbe693569a718425fee57"
+i18n-locales@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/i18n-locales/-/i18n-locales-0.0.2.tgz#12e56046f1fa260e11658f4ac62f60b363479ff9"
 
 i18n@^0.8.3:
   version "0.8.3"
@@ -3022,9 +3022,9 @@ jstransformer@1.0.0:
     is-promise "^2.0.0"
     promise "^7.0.1"
 
-juice-resources-promise@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/juice-resources-promise/-/juice-resources-promise-0.0.1.tgz#14a91706340356671de7bac55b1bba51c3f90043"
+juice-resources-promise@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/juice-resources-promise/-/juice-resources-promise-0.0.2.tgz#a371476bff7af8130ef6ef7d68eced22388009de"
 
 juice@^4.2.0:
   version "4.2.0"
