@@ -9,7 +9,7 @@
 
 > Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
-> **NEW**: v3.x is released; see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
+> **NEW**: v3.x is released (you'll need Node v7.6.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
 
 
 ## Table of Contents
@@ -61,7 +61,7 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 
 ## Usage
 
-> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.
+> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v7.6.0+ now for Promises and async/await support.
 
 ### Basic
 
@@ -403,7 +403,9 @@ We also highly recommend to add to your default `config.locals` the following:
 
 > If you are upgrading from v2 or prior to v3, please note that the following breaking API changes occurred:
 
-1. Instead of calling `const newsletter = new EmailTemplate(...args)`, you now call `const email = new Email(options)`.
+1. You need to have Node v7.6.0+ (since we use features like async/await and Promises).  We recommend using [nvm](https://github.com/creationix/nvm) to manage your Node versions.
+
+2. Instead of calling `const newsletter = new EmailTemplate(...args)`, you now call `const email = new Email(options)`.
 
    * The arguments you pass to the constructor have changed as well.
    * Previously you'd pass `new EmailTemplate(templateDir, options)`.  Now you will need to pass simply one object with a configuration as an argument to the constructor.
@@ -417,7 +419,7 @@ We also highly recommend to add to your default `config.locals` the following:
    +});
    ```
 
-2. Instead of calling `newsletter.render(locals, callback)` you now call `email.render(locals)`.  The return value of `email.render` when invoked is a `Promise` and does not accept a callback function.
+3. Instead of calling `newsletter.render(locals, callback)` you now call `email.render(locals)`.  The return value of `email.render` when invoked is a `Promise` and does not accept a callback function.
 
    ```diff
    -newsletter.render({}, (err, result) => {
@@ -427,13 +429,13 @@ We also highly recommend to add to your default `config.locals` the following:
    +email.render({}).then(console.log).catch(console.error);
    ```
 
-3. Localized template directories are no longer supported.  We now support i18n translations out of the box.  See [Localization](#localization) for more info.
+4. Localized template directories are no longer supported.  We now support i18n translations out of the box.  See [Localization](#localization) for more info.
 
-4. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
+5. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
 
-5. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](index.js).
+6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](index.js).
 
-6. If you wish to send emails in development or test environment (disabled by default), set `options.send` to `true`.
+7. If you wish to send emails in development or test environment (disabled by default), set `options.send` to `true`.
 
 
 ## Tip
