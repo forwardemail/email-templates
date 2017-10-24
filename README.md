@@ -433,14 +433,16 @@ We also highly recommend to add to your default `config.locals` the following:
 
    * Note that if you are inlining CSS, you should also make sure that the option for `juiceResources.webResources.relativeTo` is accurate.
 
-3. Instead of calling `newsletter.render(locals, callback)` you now call `email.render(locals)`.  The return value of `email.render` when invoked is a `Promise` and does not accept a callback function.
+3. Instead of calling `newsletter.render(locals, callback)` you now call `email.render(template, locals)`.  The return value of `email.render` when invoked is a `Promise` and does not accept a callback function.
+
+   > **NOTE**: `email-templates` v3 now has an `email.send` method ([see basic usage example](#basic)) which uses `nodemailer`; you should now use `email.send` instead of `email.render`!
 
    ```diff
    -newsletter.render({}, (err, result) => {
    -  if (err) return console.error(err);
    -  console.log(result);
    -});
-   +email.render({}).then(console.log).catch(console.error);
+   +email.render(template, {}).then(console.log).catch(console.error);
    ```
 
 4. Localized template directories are no longer supported.  We now support i18n translations out of the box.  See [Localization](#localization) for more info.
