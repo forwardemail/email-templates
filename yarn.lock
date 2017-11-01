@@ -4416,9 +4416,9 @@ pretty-ms@^2.0.0:
     parse-ms "^1.0.0"
     plur "^1.0.0"
 
-preview-email@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/preview-email/-/preview-email-0.0.5.tgz#e83768181bdc4632645c387bf9bfb9967e772d34"
+preview-email@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/preview-email/-/preview-email-0.0.6.tgz#c324c0b8384d9ad14d885fa0ba17195cf5bcc327"
   dependencies:
     fs-extra "^4.0.2"
     moment "^2.18.1"
