@@ -21,7 +21,6 @@
     "html-to-text": "^3.3.0",
     "juice": "^4.2.0",
     "juice-resources-promise": "^0.0.2",
-    "lodash": "^4.17.4",
     "lodash.defaultsdeep": "^4.6.0",
     "lodash.isempty": "^4.4.0",
     "lodash.isfunction": "^3.0.8",
