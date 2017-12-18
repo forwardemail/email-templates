@@ -44,18 +44,16 @@
   dependencies:
     arrify "^1.0.1"
 
-"@ladjs/i18n@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@ladjs/i18n/-/i18n-0.1.0.tgz#f07c39656e4950e3f1e8d93dd1a9cbd72dfd23aa"
+"@ladjs/i18n@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@ladjs/i18n/-/i18n-0.1.2.tgz#88bf50642331ce481820062a4619d2b504c037ce"
   dependencies:
     auto-bind "^1.1.0"
     boom "^7.1.1"
     country-language "^0.1.7"
     i18n "^0.8.3"
     i18n-locales "^0.0.2"
-    lodash.every "^4.6.0"
-    lodash.isempty "^4.4.0"
-    lodash.sortby "^4.7.0"
+    lodash "^4.17.4"
     moment "^2.18.1"
     qs "^6.5.1"
     underscore.string "^3.3.4"
@@ -1902,9 +1900,9 @@ eslint-plugin-no-use-extend-native@^0.3.2:
     is-obj-prop "^1.0.0"
     is-proto-prop "^1.0.0"
 
-eslint-plugin-prettier@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.3.1.tgz#e7a746c67e716f335274b88295a9ead9f544e44d"
+eslint-plugin-prettier@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.4.0.tgz#85cab0775c6d5e3344ef01e78d960f166fb93aae"
   dependencies:
     fast-diff "^1.1.1"
     jest-docblock "^21.0.0"
@@ -3530,10 +3528,6 @@ lodash.difference@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
 
-lodash.every@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.every/-/lodash.every-4.6.0.tgz#eb89984bebc4364279bb3aefbbd1ca19bfa6c6a7"
-
 lodash.filter@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
@@ -3605,10 +3599,6 @@ lodash.snakecase@^4.0.1:
 lodash.some@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.some/-/lodash.some-4.6.0.tgz#1bb9f314ef6b8baded13b549169b2a945eb68e4d"
-
-lodash.sortby@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
 
 lodash.unescape@^4.0.1:
   version "4.0.1"
