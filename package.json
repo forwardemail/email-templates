@@ -12,7 +12,7 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^0.1.2",
+    "@ladjs/i18n": "^0.2.0",
     "auto-bind": "^1.1.0",
     "consolidate": "^0.15.0",
     "debug": "^3.1.0",
