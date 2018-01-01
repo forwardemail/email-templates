@@ -24,12 +24,29 @@ test('deep merges config', t => {
   );
 });
 
-test('throws error without transport', t => {
-  const error = t.throws(() => new Email());
-  t.is(
-    error.message,
-    'Transport option must be a transport instance or configuration object'
-  );
+test('returns itself without transport', t => {
+  t.true(new Email() instanceof Email);
+});
+
+test('inline css with juice using render without transport', async t => {
+  const root = path.join(__dirname, 'fixtures', 'emails');
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const html = await email.render('test/html', {
+    name: 'niftylettuce'
+  });
+  const $ = cheerio.load(html);
+  const color = $('p').css('color');
+  t.is(color, 'red');
 });
 
 test('returns itself', t => {

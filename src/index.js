@@ -6,14 +6,8 @@ const I18N = require('@ladjs/i18n');
 const autoBind = require('auto-bind');
 const nodemailer = require('nodemailer');
 const consolidate = require('consolidate');
-const isFunction = require('lodash.isfunction');
-const isObject = require('lodash.isobject');
-const isEmpty = require('lodash.isempty');
-const isString = require('lodash.isstring');
-const omit = require('lodash.omit');
-const defaultsDeep = require('lodash.defaultsdeep');
-const merge = require('lodash.merge');
 const previewEmail = require('preview-email');
+const _ = require('lodash');
 
 const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
@@ -32,7 +26,7 @@ class Email {
       delete config.disableJuice;
     }
 
-    this.config = merge(
+    this.config = _.merge(
       {
         views: {
           // directory where email templates reside
@@ -78,12 +72,7 @@ class Email {
       config
     );
 
-    if (!isObject(this.config.transport) || isEmpty(this.config.transport))
-      throw new Error(
-        'Transport option must be a transport instance or configuration object'
-      );
-
-    if (!isFunction(this.config.transport.sendMail))
+    if (!_.isFunction(this.config.transport.sendMail))
       this.config.transport = nodemailer.createTransport(this.config.transport);
 
     debug('transformed config %O', this.config);
@@ -150,12 +139,12 @@ class Email {
     const attachments =
       message.attachments || this.config.message.attachments || [];
 
-    message = defaultsDeep(
+    message = _.defaultsDeep(
       {},
-      omit(this.config.message, 'attachments'),
-      omit(message, 'attachments')
+      _.omit(this.config.message, 'attachments'),
+      _.omit(message, 'attachments')
     );
-    locals = defaultsDeep({}, this.config.views.locals, locals);
+    locals = _.defaultsDeep({}, this.config.views.locals, locals);
 
     if (attachments) message.attachments = attachments;
 
@@ -165,7 +154,7 @@ class Email {
 
     return new Promise(async (resolve, reject) => {
       try {
-        if (isObject(this.config.i18n)) {
+        if (_.isObject(this.config.i18n)) {
           const i18n = new I18N(
             Object.assign({}, this.config.i18n, {
               register: locals
@@ -174,10 +163,10 @@ class Email {
 
           // support `locals.user.last_locale`
           // (e.g. for <https://lad.js.org>)
-          if (isObject(locals.user) && isString(locals.user.last_locale))
+          if (_.isObject(locals.user) && _.isString(locals.user.last_locale))
             locals.locale = locals.user.last_locale;
 
-          if (isString(locals.locale)) i18n.setLocale(locals.locale);
+          if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
         }
 
         if (!message.subject && template)
