@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 const consolidate = require('consolidate');
 const previewEmail = require('preview-email');
 const _ = require('lodash');
+const Promise = require('bluebird');
 
 const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
@@ -52,6 +53,8 @@ class Email {
         i18n: false,
         // pass a custom render function if necessary
         render: this.render.bind(this),
+        // force text-only rendering of template (disregards template folder)
+        textOnly: false,
         // <https://github.com/werk85/node-html-to-text>
         htmlToText: {
           ignoreImage: true
@@ -86,25 +89,58 @@ class Email {
     return juiceResources(html, this.config.juiceResources);
   }
 
+  // a simple helper function that gets the actual file path for the template
+  getTemplatePath(view) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const paths = await getPaths(
+          this.config.views.root,
+          view,
+          this.config.views.options.extension
+        );
+        const filePath = path.resolve(this.config.views.root, paths.rel);
+        resolve({ filePath, paths });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  // returns true or false if a template exists
+  // (uses same look-up approach as `render` function)
+  templateExists(view) {
+    return new Promise(async resolve => {
+      try {
+        const { filePath } = await this.getTemplatePath(view);
+        const stats = await fs.stat(filePath);
+        if (!stats.isFile()) throw new Error(`${filePath} was not a file`);
+        resolve(true);
+      } catch (err) {
+        debug('templateExists', err);
+        resolve(false);
+      }
+    });
+  }
+
   // promise version of consolidate's render
   // inspired by koa-views and re-uses the same config
   // <https://github.com/queckezz/koa-views>
   render(view, locals) {
     return new Promise(async (resolve, reject) => {
       try {
-        const { map, engineSource, extension } = this.config.views.options;
-        const paths = await getPaths(this.config.views.root, view, extension);
-        const filePath = path.resolve(this.config.views.root, paths.rel);
-        const suffix = paths.ext;
-        if (suffix === 'html' && !map) {
+        const { map, engineSource } = this.config.views.options;
+        const { filePath, paths } = await this.getTemplatePath(view);
+        if (paths.ext === 'html' && !map) {
           const res = await fs.readFile(filePath, 'utf8');
           resolve(res);
         } else {
-          const engineName = map && map[suffix] ? map[suffix] : suffix;
+          const engineName = map && map[paths.ext] ? map[paths.ext] : paths.ext;
           const render = engineSource[engineName];
           if (!engineName || !render)
             return reject(
-              new Error(`Engine not found for the ".${suffix}" file extension`)
+              new Error(
+                `Engine not found for the ".${paths.ext}" file extension`
+              )
             );
           // TODO: convert this to a promise based version
           render(filePath, locals, (err, res) => {
@@ -169,16 +205,37 @@ class Email {
           if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
         }
 
-        if (!message.subject && template)
+        let subjectTemplateExists = false;
+        let htmlTemplateExists = false;
+        let textTemplateExists = false;
+
+        const promises = [
+          this.templateExists(`${template}/subject`),
+          this.templateExists(`${template}/html`),
+          this.templateExists(`${template}/text`)
+        ];
+
+        if (template)
+          [
+            subjectTemplateExists,
+            htmlTemplateExists,
+            textTemplateExists
+          ] = await Promise.all(promises);
+
+        if (!message.subject && subjectTemplateExists)
           message.subject = await this.config.render(
             `${template}/subject`,
             Object.assign({}, locals, { pretty: false })
           );
 
-        if (!message.html && template)
+        if (!message.html && htmlTemplateExists)
           message.html = await this.config.render(`${template}/html`, locals);
 
-        if (!this.config.htmlToText && !message.text && template)
+        if (
+          (!htmlTemplateExists || !this.config.htmlToText) &&
+          !message.text &&
+          textTemplateExists
+        )
           message.text = await this.config.render(
             `${template}/text`,
             Object.assign({}, locals, { pretty: false })
@@ -191,6 +248,9 @@ class Email {
             message.html,
             this.config.htmlToText
           );
+
+        // if we only want a text-based version of the email
+        if (this.config.textOnly) delete message.html;
 
         if (this.config.preview) {
           debug('using `preview-email` to preview email');

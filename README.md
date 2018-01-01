@@ -10,6 +10,8 @@
 > Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
 > **NEW**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
+>
+> **UPDATE**: v3.3+ uses the [Bluebird][] library for promises since it is noticably faster than Native promises
 
 
 ## Table of Contents
@@ -21,6 +23,7 @@
   * [Automatic Inline CSS via Stylesheets](#automatic-inline-css-via-stylesheets)
   * [Cache Pug Templates](#cache-pug-templates)
   * [Localization](#localization)
+  * [Text-Only Email (no HTML)](#text-only-email-no-html)
   * [Custom Text Template](#custom-text-template)
   * [Custom Template Engine (e.g. EJS)](#custom-template-engine-eg-ejs)
   * [Custom Default Message Options](#custom-default-message-options)
@@ -265,6 +268,36 @@ Note that if you use [Lad][], you have a built-in filter called `translate`:
 ```pug
 p: :translate(locale) Hi #{name}
 p: :translate(locale) Welcome to Mars, the red planet.
+```
+
+### Text-Only Email (no HTML)
+
+If you wish to have only a text-based version of your email you can simply pass the option `textOnly: true`.
+
+Regardless if you use the `htmlToText` option or not (see next example), it will still render only a text-based version.
+
+```js
+const Email = require('email-templates');
+
+const email = new Email({
+  message: {
+    from: 'niftylettuce@gmail.com'
+  },
+  transport: {
+    jsonTransport: true
+  },
+  textOnly: true // <----- HERE
+});
+
+email.send({
+  template: 'mars',
+  message: {
+    to: 'elon@spacex.com'
+  },
+  locals: {
+    name: 'Elon'
+  }
+}).then(console.log).catch(console.error);
 ```
 
 ### Custom Text Template
@@ -513,3 +546,5 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [redis]: https://redis.io/
 
 [preview-email]: https://github.com/niftylettuce/preview-email
+
+[bluebird]: http://bluebirdjs.com

@@ -3,6 +3,7 @@ const fs = require('fs');
 const test = require('ava');
 const nodemailer = require('nodemailer');
 const cheerio = require('cheerio');
+const _ = require('lodash');
 
 const Email = require('../lib');
 
@@ -29,7 +30,6 @@ test('returns itself without transport', t => {
 });
 
 test('inline css with juice using render without transport', async t => {
-  const root = path.join(__dirname, 'fixtures', 'emails');
   const email = new Email({
     views: { root },
     message: {
@@ -93,7 +93,7 @@ test('send email', async t => {
     },
     locals: { name: 'niftylettuce' }
   });
-  t.true(typeof res === 'object');
+  t.true(_.isObject(res));
 });
 
 test('send two emails with two different locals', async t => {
@@ -191,7 +191,7 @@ test('send email with locals.user.last_locale', async t => {
       }
     }
   });
-  t.true(typeof res === 'object');
+  t.true(_.isObject(res));
 });
 
 test('send email with locals.locale', async t => {
@@ -217,10 +217,10 @@ test('send email with locals.locale', async t => {
       locale: 'en'
     }
   });
-  t.true(typeof res === 'object');
+  t.true(_.isObject(res));
 });
 
-test('throws error with missing template', async t => {
+test('throws error with missing template on render call', async t => {
   const email = new Email({
     views: { root },
     transport: {
@@ -233,45 +233,11 @@ test('throws error with missing template', async t => {
     }
   });
   const error = await t.throws(
-    email.send({
-      template: 'missing',
-      message: {
-        to: 'niftylettuce+to@gmail.com',
-        cc: 'niftylettuce+cc@gmail.com',
-        bcc: 'niftylettuce+bcc@gmail.com'
-      },
-      locals: { name: 'niftylettuce' }
+    email.render('missing', {
+      name: 'niftylettuce'
     })
   );
   t.regex(error.message, /no such file or directory/);
-});
-
-test('send email and open in browser', async t => {
-  const email = new Email({
-    views: { root },
-    message: {
-      from: 'niftylettuce+from@gmail.com'
-    },
-    transport: {
-      jsonTransport: true
-    },
-    juiceResources: {
-      webResources: {
-        relativeTo: root
-      }
-    },
-    open: true
-  });
-  const res = await email.send({
-    template: 'test',
-    message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
-    },
-    locals: { name: 'niftylettuce' }
-  });
-  t.true(typeof res === 'object');
 });
 
 test('send email with html to text disabled', async t => {
@@ -299,11 +265,10 @@ test('send email with html to text disabled', async t => {
     },
     locals: { name: 'niftylettuce' }
   });
-  t.true(typeof res === 'object');
+  t.true(_.isObject(res));
 });
 
 test('inline css with juice using render', async t => {
-  const root = path.join(__dirname, 'fixtures', 'emails');
   const email = new Email({
     views: { root },
     message: {
@@ -348,9 +313,71 @@ test('inline css with juice using send', async t => {
     },
     locals: { name: 'niftylettuce' }
   });
-  t.true(typeof res === 'object');
+  t.true(_.isObject(res));
   const message = JSON.parse(res.message);
   const $ = cheerio.load(message.html);
   const color = $('p').css('color');
   t.is(color, 'red');
+});
+
+test('render text.pug only if html.pug does not exist', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'test-text-only',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(_.isObject(res));
+  res.message = JSON.parse(res.message);
+  t.true(_.isUndefined(res.message.html));
+  t.is(res.message.text, 'Hi niftylettuce,\nThis is just a test.');
+});
+
+test('render text-only email with `textOnly` option', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    },
+    textOnly: true,
+    htmlToText: false
+  });
+  const res = await email.send({
+    template: 'test',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(_.isObject(res));
+  res.message = JSON.parse(res.message);
+  t.true(_.isUndefined(res.message.html));
+  t.is(res.message.text, 'Hi niftylettuce,\nThis is just a test.');
 });
