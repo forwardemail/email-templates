@@ -75,6 +75,9 @@ class Email {
       config
     );
 
+    // override existing method
+    this.render = this.config.render;
+
     if (!_.isFunction(this.config.transport.sendMail))
       this.config.transport = nodemailer.createTransport(this.config.transport);
 
@@ -125,7 +128,7 @@ class Email {
   // promise version of consolidate's render
   // inspired by koa-views and re-uses the same config
   // <https://github.com/queckezz/koa-views>
-  render(view, locals) {
+  render(view, locals = {}) {
     return new Promise(async (resolve, reject) => {
       try {
         const { map, engineSource } = this.config.views.options;
@@ -135,8 +138,8 @@ class Email {
           resolve(res);
         } else {
           const engineName = map && map[paths.ext] ? map[paths.ext] : paths.ext;
-          const render = engineSource[engineName];
-          if (!engineName || !render)
+          const renderFn = engineSource[engineName];
+          if (!engineName || !renderFn)
             return reject(
               new Error(
                 `Engine not found for the ".${paths.ext}" file extension`
@@ -159,7 +162,7 @@ class Email {
           }
 
           // TODO: convert this to a promise based version
-          render(filePath, locals, (err, res) => {
+          renderFn(filePath, locals, (err, res) => {
             if (err) return reject(err);
             // transform the html with juice using remote paths
             // google now supports media queries
@@ -170,6 +173,63 @@ class Email {
               .catch(reject);
           });
         }
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  renderAll(template, locals = {}, message = {}) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let subjectTemplateExists = false;
+        let htmlTemplateExists = false;
+        let textTemplateExists = false;
+
+        const promises = [
+          this.templateExists(`${template}/subject`),
+          this.templateExists(`${template}/html`),
+          this.templateExists(`${template}/text`)
+        ];
+
+        if (template)
+          [
+            subjectTemplateExists,
+            htmlTemplateExists,
+            textTemplateExists
+          ] = await Promise.all(promises);
+
+        if (!message.subject && subjectTemplateExists)
+          message.subject = await this.render(
+            `${template}/subject`,
+            Object.assign({}, locals, { pretty: false })
+          );
+
+        if (!message.html && htmlTemplateExists)
+          message.html = await this.render(`${template}/html`, locals);
+
+        if (
+          (!htmlTemplateExists || !this.config.htmlToText) &&
+          !message.text &&
+          textTemplateExists
+        )
+          message.text = await this.render(
+            `${template}/text`,
+            Object.assign({}, locals, { pretty: false })
+          );
+        else if (this.config.htmlToText && message.html)
+          // we'd use nodemailer-html-to-text plugin
+          // but we really don't need to support cid
+          // <https://github.com/andris9/nodemailer-html-to-text>
+          message.text = htmlToText.fromString(
+            message.html,
+            this.config.htmlToText
+          );
+
+        // if we only want a text-based version of the email
+        if (this.config.textOnly) delete message.html;
+
+        resolve(message);
       } catch (err) {
         reject(err);
       }
@@ -206,52 +266,11 @@ class Email {
 
     return new Promise(async (resolve, reject) => {
       try {
-        let subjectTemplateExists = false;
-        let htmlTemplateExists = false;
-        let textTemplateExists = false;
+        // get all available templates
+        const obj = await this.renderAll(template, locals, message);
 
-        const promises = [
-          this.templateExists(`${template}/subject`),
-          this.templateExists(`${template}/html`),
-          this.templateExists(`${template}/text`)
-        ];
-
-        if (template)
-          [
-            subjectTemplateExists,
-            htmlTemplateExists,
-            textTemplateExists
-          ] = await Promise.all(promises);
-
-        if (!message.subject && subjectTemplateExists)
-          message.subject = await this.config.render(
-            `${template}/subject`,
-            Object.assign({}, locals, { pretty: false })
-          );
-
-        if (!message.html && htmlTemplateExists)
-          message.html = await this.config.render(`${template}/html`, locals);
-
-        if (
-          (!htmlTemplateExists || !this.config.htmlToText) &&
-          !message.text &&
-          textTemplateExists
-        )
-          message.text = await this.config.render(
-            `${template}/text`,
-            Object.assign({}, locals, { pretty: false })
-          );
-        else if (this.config.htmlToText && message.html)
-          // we'd use nodemailer-html-to-text plugin
-          // but we really don't need to support cid
-          // <https://github.com/andris9/nodemailer-html-to-text>
-          message.text = htmlToText.fromString(
-            message.html,
-            this.config.htmlToText
-          );
-
-        // if we only want a text-based version of the email
-        if (this.config.textOnly) delete message.html;
+        // assign the object variables over to the message
+        Object.assign(message, obj);
 
         if (this.config.preview) {
           debug('using `preview-email` to preview email');

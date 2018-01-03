@@ -21,6 +21,7 @@
 * [Usage](#usage)
   * [Basic](#basic)
   * [Automatic Inline CSS via Stylesheets](#automatic-inline-css-via-stylesheets)
+  * [Render HTML and/or Text](#render-html-andor-text)
   * [Cache Pug Templates](#cache-pug-templates)
   * [Localization](#localization)
   * [Text-Only Email (no HTML)](#text-only-email-no-html)
@@ -86,15 +87,18 @@ const email = new Email({
   }
 });
 
-email.send({
-  template: 'mars',
-  message: {
-    to: 'elon@spacex.com'
-  },
-  locals: {
-    name: 'Elon'
-  }
-}).then(console.log).catch(console.error);
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
 ```
 
 The example above assumes you have the following directory structure:
@@ -159,6 +163,76 @@ const email = new Email({
     }
   }
 });
+```
+
+### Render HTML and/or Text
+
+If you don't need this module to send your email, you can still use it to render HTML and/or text templates.
+
+Simply use the `email.render(view, locals)` method we expose (it's the same method that `email.send` uses internally).
+
+> If you need to render a specific email template file (e.g. the HTML version):
+
+```js
+const Email = require('email-templates');
+
+const email = new Email();
+
+email
+  .render('mars/html', {
+    name: 'Elon'
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+The example above assumes you have the following directory structure (note that this example would only render the `html.pug` file):
+
+```sh
+.
+├── app.js
+└── emails
+    └── mars
+        ├── html.pug
+        ├── text.pug
+        └── subject.pug
+```
+
+The Promise for `email.render` resolves with a String (the HTML or text rendered).
+
+> If you need to render all available email templates you can use `email.renderAll` (this is the method that `email.send` uses).
+
+```js
+const Email = require('email-templates');
+
+const email = new Email();
+
+email
+  .renderAll('mars', {
+    name: 'Elon'
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+> If you need to render multiple, specific templates at once (but not all email templates available), then you can use `Promise.all` in combination with `email.render`:
+
+```js
+const Email = require('email-templates');
+
+const email = new Email();
+const locals = { name: 'Elon' };
+
+Promise
+  .all([
+    email.render('mars/html', locals),
+    email.render('mars/text', locals)
+  ])
+  .then(([ html, text ]) => {
+    console.log('html', html);
+    console.log('text', text);
+  })
+  .catch(console.error);
 ```
 
 ### Cache Pug Templates
@@ -234,18 +308,21 @@ const email = new Email({
   i18n: {} // <------ HERE
 });
 
-email.send({
-  template: 'mars',
-  message: {
-    to: 'elon@spacex.com'
-  },
-  locals: {
-    locale: 'en', // <------ CUSTOMIZE LOCALE HERE (defaults to `i18n.defaultLocale` - `en`)
-    // is your user french?
-    // locale: 'fr',
-    name: 'Elon'
-  }
-}).then(console.log).catch(console.error);
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      locale: 'en', // <------ CUSTOMIZE LOCALE HERE (defaults to `i18n.defaultLocale` - `en`)
+      // is your user french?
+      // locale: 'fr',
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
 ```
 
 Then slightly modify your templates to use localization functions.
@@ -289,15 +366,18 @@ const email = new Email({
   textOnly: true // <----- HERE
 });
 
-email.send({
-  template: 'mars',
-  message: {
-    to: 'elon@spacex.com'
-  },
-  locals: {
-    name: 'Elon'
-  }
-}).then(console.log).catch(console.error);
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
 ```
 
 ### Custom Text Template
@@ -319,15 +399,18 @@ const email = new Email({
   htmlToText: false // <----- HERE
 });
 
-email.send({
-  template: 'mars',
-  message: {
-    to: 'elon@spacex.com'
-  },
-  locals: {
-    name: 'Elon'
-  }
-}).then(console.log).catch(console.error);
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
 ```
 
 > `text.pug`:
