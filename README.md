@@ -20,6 +20,7 @@
 * [Preview](#preview)
 * [Usage](#usage)
   * [Basic](#basic)
+  * [Attachments](#attachments)
   * [Automatic Inline CSS via Stylesheets](#automatic-inline-css-via-stylesheets)
   * [Render HTML and/or Text](#render-html-andor-text)
   * [Cache Pug Templates](#cache-pug-templates)
@@ -125,6 +126,75 @@ p Welcome to Mars, the red planet.
 
 ```pug
 = `Hi ${name}, welcome to Mars`
+```
+
+### Attachments
+
+Please reference [Nodemailer's attachment documentation][attachments] for further reference.
+
+> If you want to set default attachments sent with every email:
+
+```js
+const Email = require('email-templates');
+
+const email = new Email({
+  message: {
+    from: 'niftylettuce@gmail.com',
+    attachments: [
+      {
+        filename: 'text1.txt',
+        content: 'hello world!'
+      }
+    ]
+  }
+});
+
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+> If you want to set attachments send individually:
+
+```js
+const Email = require('email-templates');
+
+const email = new Email({
+  message: {
+    from: 'niftylettuce@gmail.com'
+  },
+  transport: {
+    jsonTransport: true
+  }
+});
+
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com',
+      attachments: [
+        {
+          filename: 'text1.txt',
+          content: 'hello world!'
+        }
+      ]
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
 ```
 
 ### Automatic Inline CSS via Stylesheets
@@ -631,3 +701,5 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [preview-email]: https://github.com/niftylettuce/preview-email
 
 [bluebird]: http://bluebirdjs.com
+
+[attachments]: https://nodemailer.com/message/attachments/
