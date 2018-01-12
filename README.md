@@ -163,7 +163,7 @@ email
   .catch(console.error);
 ```
 
-> If you want to set attachments send individually:
+> If you want to set attachments sent individually:
 
 ```js
 const Email = require('email-templates');
@@ -660,7 +660,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com)
 
 
-## 
+##
 
 [node]: https://nodejs.org
 
