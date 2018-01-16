@@ -19,6 +19,7 @@
 * [Install](#install)
 * [Preview](#preview)
 * [Usage](#usage)
+  * [Debugging](#debugging)
   * [Basic](#basic)
   * [Attachments](#attachments)
   * [Automatic Inline CSS via Stylesheets](#automatic-inline-css-via-stylesheets)
@@ -67,6 +68,16 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 ## Usage
 
 > **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v6.4.0+ now.
+
+### Debugging
+
+If you run into any issues with configuration, files, templates, locals, etc, then you can use the `DEBUG` environment flag:
+
+```sh
+DEBUG=email-templates node app.js
+```
+
+This will output to the console all debug statements in our codebase for this package.
 
 ### Basic
 
@@ -660,7 +671,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com)
 
 
-##
+## 
 
 [node]: https://nodejs.org
 
