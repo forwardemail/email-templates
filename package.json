@@ -120,6 +120,7 @@
       "camelcase": "off",
       "no-warning-comments": "off"
     },
-    "space": true
+    "space": true,
+    "ignores": ["config.js"]
   }
 }

@@ -1,4 +1,4 @@
-# [**email-templates**](https://github.com/niftylettuce/email-templates)
+# [**Email Templates**](https://github.com/niftylettuce/email-templates)
 
 [![build status](https://img.shields.io/travis/niftylettuce/email-templates.svg)](https://travis-ci.org/niftylettuce/email-templates)
 [![code coverage](https://img.shields.io/codecov/c/github/niftylettuce/email-templates.svg)](https://codecov.io/gh/niftylettuce/email-templates)
