@@ -199,11 +199,13 @@ class Email {
             textTemplateExists
           ] = await Promise.all(promises);
 
-        if (!message.subject && subjectTemplateExists)
+        if (!message.subject && subjectTemplateExists) {
           message.subject = await this.render(
             `${template}/subject`,
             Object.assign({}, locals, { pretty: false })
           );
+          message.subject = message.subject.trim();
+        }
 
         if (!message.html && htmlTemplateExists)
           message.html = await this.render(`${template}/html`, locals);

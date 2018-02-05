@@ -27,7 +27,7 @@
     "preview-email": "^0.0.7"
   },
   "devDependencies": {
-    "ava": "^0.24.0",
+    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "cheerio": "^1.0.0-rc.2",
@@ -41,8 +41,8 @@
     "nyc": "^11.4.1",
     "prettier": "^1.10.2",
     "pug": "^2.0.0-rc.4",
-    "remark-cli": "^4.0.0",
-    "remark-preset-github": "^0.0.7",
+    "remark-cli": "^5.0.0",
+    "remark-preset-github": "^0.0.8",
     "xo": "^0.19.0"
   },
   "engines": {
