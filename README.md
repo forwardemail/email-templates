@@ -281,7 +281,7 @@ The example above assumes you have the following directory structure (note that 
 
 The Promise for `email.render` resolves with a String (the HTML or text rendered).
 
-> If you need to render all available email templates you can use `email.renderAll` (this is the method that `email.send` uses).
+> If you need to render all available template files for a given email template (e.g. `html.pug`, `text.pug`, and `subject.pug` – you can use `email.renderAll` (this is the method that `email.send` uses).
 
 ```js
 const Email = require('email-templates');
