@@ -94,6 +94,11 @@ test('send email', async t => {
     locals: { name: 'niftylettuce' }
   });
   t.true(_.isObject(res));
+  const message = JSON.parse(res.message);
+  t.true(_.has(message, 'html'));
+  t.regex(message.html, /This is just a html test/);
+  t.true(_.has(message, 'text'));
+  t.regex(message.text, /This is just a text test/);
 });
 
 test('send two emails with two different locals', async t => {
@@ -266,6 +271,11 @@ test('send email with html to text disabled', async t => {
     locals: { name: 'niftylettuce' }
   });
   t.true(_.isObject(res));
+  const message = JSON.parse(res.message);
+  t.true(_.has(message, 'html'));
+  t.regex(message.html, /This is just a html test/);
+  t.true(_.has(message, 'text'));
+  t.regex(message.text, /This is just a text test/);
 });
 
 test('inline css with juice using render', async t => {
@@ -379,5 +389,5 @@ test('render text-only email with `textOnly` option', async t => {
   t.true(_.isObject(res));
   res.message = JSON.parse(res.message);
   t.true(_.isUndefined(res.message.html));
-  t.is(res.message.text, 'Hi niftylettuce,\nThis is just a test.');
+  t.is(res.message.text, 'Hi niftylettuce,\nThis is just a text test.');
 });

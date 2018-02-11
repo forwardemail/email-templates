@@ -210,16 +210,13 @@ class Email {
         if (!message.html && htmlTemplateExists)
           message.html = await this.render(`${template}/html`, locals);
 
-        if (
-          (!htmlTemplateExists || !this.config.htmlToText) &&
-          !message.text &&
-          textTemplateExists
-        )
+        if (!message.text && textTemplateExists)
           message.text = await this.render(
             `${template}/text`,
             Object.assign({}, locals, { pretty: false })
           );
-        else if (this.config.htmlToText && message.html)
+
+        if (this.config.htmlToText && message.html && !message.text)
           // we'd use nodemailer-html-to-text plugin
           // but we really don't need to support cid
           // <https://github.com/andris9/nodemailer-html-to-text>
