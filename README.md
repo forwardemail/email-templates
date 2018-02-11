@@ -465,7 +465,7 @@ email
 
 > By default we use `html-to-text` to generate a plaintext version and attach it as `message.text`.
 
-If you'd like to customize the text body, you can pass `message.text` or set `config.htmlToText: false` (doing so will automatically lookup a `text` template file just like it normally would for `html` and `subject`).
+If you'd like to customize the text body, you can pass `message.text` or create a `text` template file just like you normally would for `html` and `subject`.
 
 ```js
 const Email = require('email-templates');
@@ -671,7 +671,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com)
 
 
-## 
+##
 
 [node]: https://nodejs.org
 
