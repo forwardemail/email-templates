@@ -467,6 +467,8 @@ email
 
 If you'd like to customize the text body, you can pass `message.text` or create a `text` template file just like you normally would for `html` and `subject`.
 
+You may also set `config.htmlToText: false` to force the usage of the `text` template file.
+
 ```js
 const Email = require('email-templates');
 
