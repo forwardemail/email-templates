@@ -35,7 +35,9 @@ class Email {
           options: {
             // default file extension for template
             extension: 'pug',
-            map: {},
+            map: {
+              hbs: 'handlebars'
+            },
             engineSource: consolidate
           },
           // locals to pass to templates for rendering
