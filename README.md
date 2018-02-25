@@ -232,7 +232,7 @@ const email = new Email({
       // and its default path is `build/`:
       //
       // e.g. if you have the following in the `<head`> of your template:
-      // `<link rel="stylesheet" style="style.css" data-inline" />`
+      // `<link rel="stylesheet" href="style.css" data-inline="data-inline">`
       // then this assumes that the file `build/style.css` exists
       //
       relativeTo: path.resolve('build')
