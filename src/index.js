@@ -13,6 +13,8 @@ const Promise = require('bluebird');
 const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
 
+const env = process.env.NODE_ENV || 'development';
+
 class Email {
   constructor(config = {}) {
     debug('config passed %O', config);
@@ -48,8 +50,8 @@ class Email {
         },
         // <https://nodemailer.com/message/>
         message: {},
-        send: !['development', 'test'].includes(process.env.NODE_ENV),
-        preview: process.env.NODE_ENV === 'development',
+        send: !['development', 'test'].includes(env),
+        preview: env === 'development',
         // <https://github.com/ladjs/i18n>
         // set to an object to configure and enable it
         i18n: false,
