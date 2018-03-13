@@ -38,7 +38,8 @@ class Email {
             // default file extension for template
             extension: 'pug',
             map: {
-              hbs: 'handlebars'
+              hbs: 'handlebars',
+              njk: 'nunjucks'
             },
             engineSource: consolidate
           },
