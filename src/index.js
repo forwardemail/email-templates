@@ -64,6 +64,7 @@ class Email {
         htmlToText: {
           ignoreImage: true
         },
+        subjectPrefix: false,
         // <https://github.com/Automattic/juice>
         juice: true,
         juiceResources: {
@@ -211,6 +212,9 @@ class Email {
           );
           message.subject = message.subject.trim();
         }
+
+        if (message.subject && this.config.subjectPrefix)
+          message.subject = this.config.subjectPrefix + message.subject;
 
         if (!message.html && htmlTemplateExists)
           message.html = await this.render(`${template}/html`, locals);

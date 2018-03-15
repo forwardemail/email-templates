@@ -101,6 +101,36 @@ test('send email', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
+test('send email with subject prefix', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    subjectPrefix: 'SUBJECTPREFIX ',
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'test',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(_.isObject(res));
+  const message = JSON.parse(res.message);
+  t.is(message.subject, 'SUBJECTPREFIX Test email for niftylettuce');
+});
+
 test('send two emails with two different locals', async t => {
   const email = new Email({
     views: { root },

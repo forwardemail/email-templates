@@ -27,6 +27,7 @@
   * [Cache Pug Templates](#cache-pug-templates)
   * [Localization](#localization)
   * [Text-Only Email (no HTML)](#text-only-email-no-html)
+  * [Prefix Subject Lines](#prefix-subject-lines)
   * [Custom Text Template](#custom-text-template)
   * [Custom Template Engine (e.g. EJS)](#custom-template-engine-eg-ejs)
   * [Custom Default Message Options](#custom-default-message-options)
@@ -459,6 +460,32 @@ email
   })
   .then(console.log)
   .catch(console.error);
+```
+
+### Prefix Subject Lines
+
+You can pass an option to prefix subject lines with a string, which is super useful for deciphering development / staging / production environment emails.
+
+For example, you could make it so on non-production environments the email is prefixed with a `[DEVELOPMENT] Some Subject Line Here`.
+
+You could do this manually by passing a `message.subject` property, however if you are storing your subject lines in templates (e.g. `subject.ejs` or `subject.pug`) then it's not as easy.
+
+Simply use the `subjectPrefix` option and set it to whatever you wish (**note you will need to append a trailing space if you wish to have a space after the prefix; see example below**):
+
+```js
+const Email = require('email-templates');
+
+const env = process.env.NODE_ENV || 'development';
+
+const email = new Email({
+  message: {
+    from: 'niftylettuce@gmail.com'
+  },
+  transport: {
+    jsonTransport: true
+  },
+  subjectPrefix: env === 'production' ? false : `[${env.toUpperCase()}] `; // <--- HERE
+});
 ```
 
 ### Custom Text Template
