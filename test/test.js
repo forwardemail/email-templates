@@ -275,6 +275,46 @@ test('throws error with missing template on render call', async t => {
   t.regex(error.message, /no such file or directory/);
 });
 
+test('send mail with custom render function and no templates', async t => {
+  const email = new Email({
+    render: view => {
+      return new Promise(async resolve => {
+        let res;
+        if (view === 'noFolder/subject') {
+          res = 'Test subject';
+        } else if (view === 'noFolder/html') {
+          res = 'Test html';
+        } else {
+          res = '';
+        }
+        resolve(await email.juiceResources(res));
+      });
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'noFolder',
+    message: {
+      to: 'niftylettuce+to@gmail.com'
+    },
+    locals: {
+      name: 'niftylettuce',
+      locale: 'en'
+    }
+  });
+  const msg = JSON.parse(res.message);
+  t.true(_.isObject(res));
+  t.is(msg.subject, 'Test subject');
+  t.is(msg.html, 'Test html');
+});
+
 test('send email with html to text disabled', async t => {
   const email = new Email({
     views: { root },

@@ -28,6 +28,9 @@ class Email {
       config.juice = false;
       delete config.disableJuice;
     }
+    if (config.render) {
+      config.customRender = true;
+    }
 
     this.config = _.merge(
       {
@@ -58,6 +61,7 @@ class Email {
         i18n: false,
         // pass a custom render function if necessary
         render: this.render.bind(this),
+        customRender: false,
         // force text-only rendering of template (disregards template folder)
         textOnly: false,
         // <https://github.com/werk85/node-html-to-text>
@@ -188,9 +192,9 @@ class Email {
   renderAll(template, locals = {}, message = {}) {
     return new Promise(async (resolve, reject) => {
       try {
-        let subjectTemplateExists = false;
-        let htmlTemplateExists = false;
-        let textTemplateExists = false;
+        let subjectTemplateExists = this.config.customRender;
+        let htmlTemplateExists = this.config.customRender;
+        let textTemplateExists = this.config.customRender;
 
         const promises = [
           this.templateExists(`${template}/subject`),
@@ -198,7 +202,7 @@ class Email {
           this.templateExists(`${template}/text`)
         ];
 
-        if (template)
+        if (template && !this.config.customRender)
           [
             subjectTemplateExists,
             htmlTemplateExists,
