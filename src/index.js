@@ -300,6 +300,7 @@ class Email {
 
         const res = await this.config.transport.sendMail(message);
         debug('message sent');
+        res.originalMessage = message;
         resolve(res);
       } catch (err) {
         reject(err);

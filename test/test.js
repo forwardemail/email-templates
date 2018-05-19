@@ -255,6 +255,22 @@ test('send email with locals.locale', async t => {
   t.true(_.isObject(res));
 });
 
+test('does not throw error with missing transport option (#293)', async t => {
+  const email = new Email({
+    views: { root },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  await t.notThrows(
+    email.render('test/html', {
+      name: 'niftylettuce'
+    })
+  );
+});
+
 test('throws error with missing template on render call', async t => {
   const email = new Email({
     views: { root },
@@ -460,6 +476,36 @@ test('render text.pug only if html.pug does not exist', async t => {
   res.message = JSON.parse(res.message);
   t.true(_.isUndefined(res.message.html));
   t.is(res.message.text, 'Hi niftylettuce,\nThis is just a test.');
+});
+
+test('preserve originalMessage in response object from sendMail', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'test-text-only',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(_.isObject(res));
+  t.true(_.isObject(res.originalMessage));
+  t.true(_.isUndefined(res.originalMessage.html));
+  t.is(res.originalMessage.text, 'Hi niftylettuce,\nThis is just a test.');
 });
 
 test('render text-only email with `textOnly` option', async t => {

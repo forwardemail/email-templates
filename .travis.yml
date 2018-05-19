@@ -3,5 +3,9 @@ node_js:
   - '6'
   - '7'
   - '8'
+  - '9'
+  - '10'
+script:
+  npm run test-coverage
 after_success:
   npm run coverage

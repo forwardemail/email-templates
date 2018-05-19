@@ -72,6 +72,8 @@ This means that (by default) in the development environment (e.g. `NODE_ENV=deve
 
 ### Debugging
 
+#### Environment Flag
+
 If you run into any issues with configuration, files, templates, locals, etc, then you can use the `DEBUG` environment flag:
 
 ```sh
@@ -79,6 +81,29 @@ DEBUG=email-templates node app.js
 ```
 
 This will output to the console all debug statements in our codebase for this package.
+
+#### Inspect Message
+
+As of v3.6.1 you can now inspect the message passed to `nodemailer.sendMail` internally.
+
+In the response object from `email.send`, you have access to `res.originalMessage`:
+
+```js
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(res => {
+    console.log('res.originalMessage', res.originalMessage)
+  });
+  .catch(console.error);
+```
 
 ### Basic
 
