@@ -9,9 +9,9 @@
 
 > Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
-> **NEW**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
+> **Still on v3.x?**: v4.x is released with one minor breaking change regarding `views.root` path; see [breaking changes below](#v4-breaking-changes).
 >
-> **UPDATE**: v3.3+ uses the [Bluebird][] library for promises since it is noticably faster than Native promises
+> **Still on v2.x?**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
 
 
 ## Table of Contents
@@ -34,6 +34,7 @@
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
 * [Options](#options)
 * [Plugins](#plugins)
+* [V4 Breaking Changes](#v4-breaking-changes)
 * [V3 Breaking Changes](#v3-breaking-changes)
 * [Tip](#tip)
 * [Contributors](#contributors)
@@ -665,6 +666,26 @@ We also highly recommend to add to your default `config.locals` the following:
 * [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
 
 
+## V4 Breaking Changes
+
+In v4.x+ the `views.root` option is now automatically set to the "emails" folder in the root of your project.
+
+We use the package [pkg-dir][] to recursively find the root folder with `package.json`, therefore if you're using a serverless environment you may need to manually fix this:
+
+```js
+const Email = require('email-templates');
+
+const email = new Email({
+  views: {
+    root: path.resolve('emails') // <--- ADD THIS HERE
+  },
+  // ...
+});
+
+// ...
+```
+
+
 ## V3 Breaking Changes
 
 > If you are upgrading from v2 or prior to v3, please note that the following breaking API changes occurred:
@@ -675,7 +696,7 @@ We also highly recommend to add to your default `config.locals` the following:
 
    * The arguments you pass to the constructor have changed as well.
    * Previously you'd pass `new EmailTemplate(templateDir, options)`.  Now you will need to pass simply one object with a configuration as an argument to the constructor.
-   * If your `templateDir` path is `path.resolve('emails')` (basically `./emails` folder) then you do not need to pass it at all since it is the default per the [configuration object](src/index.js).
+   * If your `templateDir` path is the "emails" folder in the root of your project (basically `./emails` folder) then you do not need to pass it at all since it is the default per the [configuration object](src/index.js).
    * The previous value for `templateDir` can be used as such:
 
    ```diff
@@ -725,7 +746,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com)
 
 
-## 
+##
 
 [node]: https://nodejs.org
 
@@ -768,3 +789,5 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [bluebird]: http://bluebirdjs.com
 
 [attachments]: https://nodemailer.com/message/attachments/
+
+[pkg-dir]: https://github.com/sindresorhus/pkg-dir
