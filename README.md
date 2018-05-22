@@ -9,8 +9,6 @@
 
 > Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 >
-> **Still on v3.x?**: v4.x is released with one minor breaking change regarding `views.root` path; see [breaking changes below](#v4-breaking-changes).
->
 > **Still on v2.x?**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
 
 
@@ -34,7 +32,6 @@
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
 * [Options](#options)
 * [Plugins](#plugins)
-* [V4 Breaking Changes](#v4-breaking-changes)
 * [V3 Breaking Changes](#v3-breaking-changes)
 * [Tip](#tip)
 * [Contributors](#contributors)
@@ -666,26 +663,6 @@ We also highly recommend to add to your default `config.locals` the following:
 * [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
 
 
-## V4 Breaking Changes
-
-In v4.x+ the `views.root` option is now automatically set to the "emails" folder in the root of your project.
-
-We use the package [pkg-dir][] to recursively find the root folder with `package.json`, therefore if you're using a serverless environment you may need to manually fix this:
-
-```js
-const Email = require('email-templates');
-
-const email = new Email({
-  views: {
-    root: path.resolve('emails') // <--- ADD THIS HERE
-  },
-  // ...
-});
-
-// ...
-```
-
-
 ## V3 Breaking Changes
 
 > If you are upgrading from v2 or prior to v3, please note that the following breaking API changes occurred:
@@ -787,5 +764,3 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [preview-email]: https://github.com/niftylettuce/preview-email
 
 [attachments]: https://nodemailer.com/message/attachments/
-
-[pkg-dir]: https://github.com/sindresorhus/pkg-dir

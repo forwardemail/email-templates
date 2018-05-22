@@ -24,7 +24,6 @@
     "juice-resources-promise": "^0.0.2",
     "lodash": "^4.17.10",
     "nodemailer": "^4.6.4",
-    "pkg-dir": "^2.0.0",
     "preview-email": "^0.0.7"
   },
   "devDependencies": {

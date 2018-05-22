@@ -9,13 +9,11 @@ const consolidate = require('consolidate');
 const previewEmail = require('preview-email');
 const _ = require('lodash');
 const Promise = require('bluebird');
-const pkgDir = require('pkg-dir');
 
 const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
 
 const env = process.env.NODE_ENV || 'development';
-const root = pkgDir.sync(__dirname);
 
 class Email {
   constructor(config = {}) {
@@ -38,7 +36,7 @@ class Email {
       {
         views: {
           // directory where email templates reside
-          root: path.join(root, 'emails'),
+          root: path.resolve('emails'),
           options: {
             // default file extension for template
             extension: 'pug',
