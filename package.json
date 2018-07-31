@@ -1,8 +1,7 @@
 {
   "name": "email-templates",
-  "description":
-    "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with Lad.",
-  "version": "4.0.1",
+  "description": "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with Lad.",
+  "version": "4.0.2",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
   "bugs": {
     "url": "https://github.com/niftylettuce/email-templates/issues",
@@ -48,7 +47,10 @@
   "engines": {
     "node": ">=6.4.0"
   },
-  "files": ["lib", "locales"],
+  "files": [
+    "lib",
+    "locales"
+  ],
   "homepage": "https://github.com/niftylettuce/email-templates",
   "keywords": [
     "consolidate",
@@ -75,11 +77,16 @@
       "prettier --write --single-quote --trailing-comma none",
       "git add"
     ],
-    "*.md": ["remark . -qfo", "git add"]
+    "*.md": [
+      "remark . -qfo",
+      "git add"
+    ]
   },
   "main": "lib/index.js",
   "remarkConfig": {
-    "plugins": ["preset-github"]
+    "plugins": [
+      "preset-github"
+    ]
   },
   "repository": {
     "type": "git",
@@ -98,7 +105,9 @@
   },
   "xo": {
     "extends": "prettier",
-    "plugins": ["prettier"],
+    "plugins": [
+      "prettier"
+    ],
     "parserOptions": {
       "sourceType": "script"
     },
@@ -123,6 +132,8 @@
       "no-warning-comments": "off"
     },
     "space": true,
-    "ignores": ["config.js"]
+    "ignores": [
+      "config.js"
+    ]
   }
 }
