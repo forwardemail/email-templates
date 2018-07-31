@@ -74,7 +74,8 @@ class Email {
         juiceResources: {
           preserveImportant: true,
           webResources: {
-            relativeTo: path.resolve('build')
+            relativeTo: path.resolve('build'),
+            images: false
           }
         },
         // pass a transport configuration object or a transport instance

@@ -657,6 +657,21 @@ You can use any [nodemailer][] plugin. Simply pass an existing transport instanc
 
 You should add the [nodemailer-base64-to-s3][] plugin to convert base64 inline images to actual images stored on Amazon S3 and Cloudfront.
 
+When doing so (as of v4.0.2+), you will need to adjust your `email-templates` configuration to pass `images: true` as such:
+
+```js
+const email = new Email({
+  // ...
+  juiceResources: {
+    preserveImportant: true,
+    webResources: {
+      relativeTo: path.resolve('build'),
+      images: true // <--- set this as `true`
+    }
+  }
+});
+```
+
 We also highly recommend to add to your default `config.locals` the following:
 
 * [custom-fonts-in-emails][] - render any font in emails as an image w/retina support (no more Photoshop or Sketch exports!)
