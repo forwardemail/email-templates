@@ -1,6 +1,6 @@
+const fs = require('fs');
 const path = require('path');
 const debug = require('debug')('email-templates');
-const fs = require('fs-extra');
 const htmlToText = require('html-to-text');
 const I18N = require('@ladjs/i18n');
 const autoBind = require('auto-bind');
@@ -14,6 +14,8 @@ const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
 
 const env = process.env.NODE_ENV || 'development';
+const stat = Promise.promisify(fs.stat);
+const readFile = Promise.promisify(fs.readFile);
 
 class Email {
   constructor(config = {}) {
@@ -126,7 +128,7 @@ class Email {
     return new Promise(async resolve => {
       try {
         const { filePath } = await this.getTemplatePath(view);
-        const stats = await fs.stat(filePath);
+        const stats = await stat(filePath);
         if (!stats.isFile()) throw new Error(`${filePath} was not a file`);
         resolve(true);
       } catch (err) {
@@ -145,7 +147,7 @@ class Email {
         const { map, engineSource } = this.config.views.options;
         const { filePath, paths } = await this.getTemplatePath(view);
         if (paths.ext === 'html' && !map) {
-          const res = await fs.readFile(filePath, 'utf8');
+          const res = await readFile(filePath, 'utf8');
           resolve(res);
         } else {
           const engineName = map && map[paths.ext] ? map[paths.ext] : paths.ext;
