@@ -294,17 +294,15 @@ test('throws error with missing template on render call', async t => {
 test('send mail with custom render function and no templates', async t => {
   const email = new Email({
     render: view => {
-      return new Promise(async resolve => {
-        let res;
-        if (view === 'noFolder/subject') {
-          res = 'Test subject';
-        } else if (view === 'noFolder/html') {
-          res = 'Test html';
-        } else {
-          res = '';
-        }
-        resolve(await email.juiceResources(res));
-      });
+      let res;
+      if (view === 'noFolder/subject') {
+        res = 'Test subject';
+      } else if (view === 'noFolder/html') {
+        res = 'Test html';
+      } else {
+        res = '';
+      }
+      return Promise.resolve(email.juiceResources(res));
     },
     transport: {
       jsonTransport: true

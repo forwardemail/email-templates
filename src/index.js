@@ -106,152 +106,125 @@ class Email {
   }
 
   // a simple helper function that gets the actual file path for the template
-  getTemplatePath(view) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const paths = await getPaths(
-          this.config.views.root,
-          view,
-          this.config.views.options.extension
-        );
-        const filePath = path.resolve(this.config.views.root, paths.rel);
-        resolve({ filePath, paths });
-      } catch (err) {
-        reject(err);
-      }
-    });
+  async getTemplatePath(view) {
+    const paths = await getPaths(
+      this.config.views.root,
+      view,
+      this.config.views.options.extension
+    );
+    const filePath = path.resolve(this.config.views.root, paths.rel);
+    return { filePath, paths };
   }
 
   // returns true or false if a template exists
   // (uses same look-up approach as `render` function)
-  templateExists(view) {
-    return new Promise(async resolve => {
-      try {
-        const { filePath } = await this.getTemplatePath(view);
-        const stats = await stat(filePath);
-        if (!stats.isFile()) throw new Error(`${filePath} was not a file`);
-        resolve(true);
-      } catch (err) {
-        debug('templateExists', err);
-        resolve(false);
-      }
-    });
+  async templateExists(view) {
+    try {
+      const { filePath } = await this.getTemplatePath(view);
+      const stats = await stat(filePath);
+      if (!stats.isFile()) throw new Error(`${filePath} was not a file`);
+      return true;
+    } catch (err) {
+      debug('templateExists', err);
+      return false;
+    }
   }
 
   // promise version of consolidate's render
   // inspired by koa-views and re-uses the same config
   // <https://github.com/queckezz/koa-views>
-  render(view, locals = {}) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const { map, engineSource } = this.config.views.options;
-        const { filePath, paths } = await this.getTemplatePath(view);
-        if (paths.ext === 'html' && !map) {
-          const res = await readFile(filePath, 'utf8');
-          resolve(res);
-        } else {
-          const engineName = map && map[paths.ext] ? map[paths.ext] : paths.ext;
-          const renderFn = engineSource[engineName];
-          if (!engineName || !renderFn)
-            return reject(
-              new Error(
-                `Engine not found for the ".${paths.ext}" file extension`
-              )
-            );
+  async render(view, locals = {}) {
+    const { map, engineSource } = this.config.views.options;
+    const { filePath, paths } = await this.getTemplatePath(view);
+    if (paths.ext === 'html' && !map) {
+      const res = await readFile(filePath, 'utf8');
+      return res;
+    }
+    const engineName = map && map[paths.ext] ? map[paths.ext] : paths.ext;
+    const renderFn = engineSource[engineName];
+    if (!engineName || !renderFn)
+      throw new Error(
+        `Engine not found for the ".${paths.ext}" file extension`
+      );
 
-          if (_.isObject(this.config.i18n)) {
-            const i18n = new I18N(
-              Object.assign({}, this.config.i18n, {
-                register: locals
-              })
-            );
+    if (_.isObject(this.config.i18n)) {
+      const i18n = new I18N(
+        Object.assign({}, this.config.i18n, {
+          register: locals
+        })
+      );
 
-            // support `locals.user.last_locale`
-            // (e.g. for <https://lad.js.org>)
-            if (_.isObject(locals.user) && _.isString(locals.user.last_locale))
-              locals.locale = locals.user.last_locale;
+      // support `locals.user.last_locale`
+      // (e.g. for <https://lad.js.org>)
+      if (_.isObject(locals.user) && _.isString(locals.user.last_locale))
+        locals.locale = locals.user.last_locale;
 
-            if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
-          }
+      if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
+    }
 
-          // TODO: convert this to a promise based version
-          renderFn(filePath, locals, (err, res) => {
-            if (err) return reject(err);
-            // transform the html with juice using remote paths
-            // google now supports media queries
-            // https://developers.google.com/gmail/design/reference/supported_css
-            if (!this.config.juice) return resolve(res);
-            this.juiceResources(res)
-              .then(resolve)
-              .catch(reject);
-          });
-        }
-      } catch (err) {
-        reject(err);
-      }
-    });
+    const res = await Promise.promisify(renderFn)(filePath, locals);
+    // transform the html with juice using remote paths
+    // google now supports media queries
+    // https://developers.google.com/gmail/design/reference/supported_css
+    if (!this.config.juice) return res;
+    const html = await this.juiceResources(res);
+    return html;
   }
 
-  renderAll(template, locals = {}, message = {}) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let subjectTemplateExists = this.config.customRender;
-        let htmlTemplateExists = this.config.customRender;
-        let textTemplateExists = this.config.customRender;
+  async renderAll(template, locals = {}, message = {}) {
+    let subjectTemplateExists = this.config.customRender;
+    let htmlTemplateExists = this.config.customRender;
+    let textTemplateExists = this.config.customRender;
 
-        const promises = [
-          this.templateExists(`${template}/subject`),
-          this.templateExists(`${template}/html`),
-          this.templateExists(`${template}/text`)
-        ];
+    const promises = [
+      this.templateExists(`${template}/subject`),
+      this.templateExists(`${template}/html`),
+      this.templateExists(`${template}/text`)
+    ];
 
-        if (template && !this.config.customRender)
-          [
-            subjectTemplateExists,
-            htmlTemplateExists,
-            textTemplateExists
-          ] = await Promise.all(promises);
+    if (template && !this.config.customRender)
+      [
+        subjectTemplateExists,
+        htmlTemplateExists,
+        textTemplateExists
+      ] = await Promise.all(promises);
 
-        if (!message.subject && subjectTemplateExists) {
-          message.subject = await this.render(
-            `${template}/subject`,
-            Object.assign({}, locals, { pretty: false })
-          );
-          message.subject = message.subject.trim();
-        }
+    if (!message.subject && subjectTemplateExists) {
+      message.subject = await this.render(
+        `${template}/subject`,
+        Object.assign({}, locals, { pretty: false })
+      );
+      message.subject = message.subject.trim();
+    }
 
-        if (message.subject && this.config.subjectPrefix)
-          message.subject = this.config.subjectPrefix + message.subject;
+    if (message.subject && this.config.subjectPrefix)
+      message.subject = this.config.subjectPrefix + message.subject;
 
-        if (!message.html && htmlTemplateExists)
-          message.html = await this.render(`${template}/html`, locals);
+    if (!message.html && htmlTemplateExists)
+      message.html = await this.render(`${template}/html`, locals);
 
-        if (!message.text && textTemplateExists)
-          message.text = await this.render(
-            `${template}/text`,
-            Object.assign({}, locals, { pretty: false })
-          );
+    if (!message.text && textTemplateExists)
+      message.text = await this.render(
+        `${template}/text`,
+        Object.assign({}, locals, { pretty: false })
+      );
 
-        if (this.config.htmlToText && message.html && !message.text)
-          // we'd use nodemailer-html-to-text plugin
-          // but we really don't need to support cid
-          // <https://github.com/andris9/nodemailer-html-to-text>
-          message.text = htmlToText.fromString(
-            message.html,
-            this.config.htmlToText
-          );
+    if (this.config.htmlToText && message.html && !message.text)
+      // we'd use nodemailer-html-to-text plugin
+      // but we really don't need to support cid
+      // <https://github.com/andris9/nodemailer-html-to-text>
+      message.text = htmlToText.fromString(
+        message.html,
+        this.config.htmlToText
+      );
 
-        // if we only want a text-based version of the email
-        if (this.config.textOnly) delete message.html;
+    // if we only want a text-based version of the email
+    if (this.config.textOnly) delete message.html;
 
-        resolve(message);
-      } catch (err) {
-        reject(err);
-      }
-    });
+    return message;
   }
 
-  send(options = {}) {
+  async send(options = {}) {
     options = Object.assign(
       {
         template: '',
@@ -279,36 +252,30 @@ class Email {
     debug('message %O', message);
     debug('locals (keys only): %O', Object.keys(locals));
 
-    return new Promise(async (resolve, reject) => {
-      try {
-        // get all available templates
-        const obj = await this.renderAll(template, locals, message);
+    // get all available templates
+    const obj = await this.renderAll(template, locals, message);
 
-        // assign the object variables over to the message
-        Object.assign(message, obj);
+    // assign the object variables over to the message
+    Object.assign(message, obj);
 
-        if (this.config.preview) {
-          debug('using `preview-email` to preview email');
-          await previewEmail(message);
-        }
+    if (this.config.preview) {
+      debug('using `preview-email` to preview email');
+      await previewEmail(message);
+    }
 
-        if (!this.config.send) {
-          debug('send disabled so we are ensuring JSONTransport');
-          // <https://github.com/nodemailer/nodemailer/issues/798>
-          // if (this.config.transport.name !== 'JSONTransport')
-          this.config.transport = nodemailer.createTransport({
-            jsonTransport: true
-          });
-        }
+    if (!this.config.send) {
+      debug('send disabled so we are ensuring JSONTransport');
+      // <https://github.com/nodemailer/nodemailer/issues/798>
+      // if (this.config.transport.name !== 'JSONTransport')
+      this.config.transport = nodemailer.createTransport({
+        jsonTransport: true
+      });
+    }
 
-        const res = await this.config.transport.sendMail(message);
-        debug('message sent');
-        res.originalMessage = message;
-        resolve(res);
-      } catch (err) {
-        reject(err);
-      }
-    });
+    const res = await this.config.transport.sendMail(message);
+    debug('message sent');
+    res.originalMessage = message;
+    return res;
   }
 }
 
