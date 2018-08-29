@@ -537,3 +537,33 @@ test('render text-only email with `textOnly` option', async t => {
   t.true(_.isUndefined(res.message.html));
   t.is(res.message.text, 'Hi niftylettuce,\nThis is just a text test.');
 });
+
+test('override config message via send options', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'test',
+    message: {
+      from: 'niftylettuce+from+via+send@gmail.com',
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(_.isObject(res));
+  res.message = JSON.parse(res.message);
+  t.is(res.message.from.address, 'niftylettuce+from+via+send@gmail.com');
+});

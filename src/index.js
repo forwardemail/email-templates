@@ -241,8 +241,8 @@ class Email {
 
     message = _.defaultsDeep(
       {},
-      _.omit(this.config.message, 'attachments'),
-      _.omit(message, 'attachments')
+      _.omit(message, 'attachments'),
+      _.omit(this.config.message, 'attachments')
     );
     locals = _.defaultsDeep({}, this.config.views.locals, locals);
 
