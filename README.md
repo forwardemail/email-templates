@@ -34,6 +34,7 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
 * [Options](#options)
 * [Plugins](#plugins)
+* [V5 Breaking Changes](#v5-breaking-changes)
 * [V3 Breaking Changes](#v3-breaking-changes)
 * [Tip](#tip)
 * [Contributors](#contributors)
@@ -678,6 +679,11 @@ We also highly recommend to add to your default `config.locals` the following:
 
 * [custom-fonts-in-emails][] - render any font in emails as an image w/retina support (no more Photoshop or Sketch exports!)
 * [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
+
+
+## V5 Breaking Changes
+
+In version 5.x+, we changed the order of defaults being set.  See [#313](https://github.com/niftylettuce/email-templates/issues/313) for more information.  This allows you to override message options such as `from` (even if you have a global default `from` set).
 
 
 ## V3 Breaking Changes
