@@ -11,9 +11,9 @@
 
 Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 
-> **Still on v4.x?**: v5.x is released with only one minor breaking change, see [breaking changes below](#v5-breaking-changes).
+**Still on v4.x?**: v5.x is released with only one minor breaking change, see [breaking changes below](#v5-breaking-changes).
 
-> **Still on v2.x?**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
+**Still on v2.x?**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
 
 
 ## Table of Contents
@@ -748,7 +748,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com)
 
 
-##
+## 
 
 [node]: https://nodejs.org
 
