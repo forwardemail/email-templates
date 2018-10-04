@@ -101,6 +101,48 @@ test('send email', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
+test('throws with non-existing absolute template path', async t => {
+  const email = new Email({
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const nonExistingAbsolutePath = path.join(
+    __dirname,
+    'fixtures',
+    'emails',
+    'tests'
+  );
+  const error = await t.throws(email.render(nonExistingAbsolutePath));
+  t.regex(error.message, /no such file or directory/);
+});
+
+test('sends with absolute template path', async t => {
+  const email = new Email({
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const absolutePath = path.join(__dirname, 'fixtures', 'emails', 'test');
+  const res = await email.send({ template: absolutePath });
+  t.true(_.isObject(res));
+  const message = JSON.parse(res.message);
+  t.true(_.has(message, 'html'));
+  t.regex(message.html, /This is just a html test/);
+  t.true(_.has(message, 'text'));
+  t.regex(message.text, /This is just a text test/);
+});
+
 test('send email with subject prefix', async t => {
   const email = new Email({
     views: { root },
