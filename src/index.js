@@ -106,13 +106,16 @@ class Email {
   }
 
   // a simple helper function that gets the actual file path for the template
-  async getTemplatePath(view) {
+  async getTemplatePath(template) {
+    const [root, view] = path.isAbsolute(template)
+      ? [path.dirname(template), path.basename(template)]
+      : [this.config.views.root, template];
     const paths = await getPaths(
-      this.config.views.root,
+      root,
       view,
       this.config.views.options.extension
     );
-    const filePath = path.resolve(this.config.views.root, paths.rel);
+    const filePath = path.resolve(root, paths.rel);
     return { filePath, paths };
   }
 
