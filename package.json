@@ -7,41 +7,52 @@
     "url": "https://github.com/niftylettuce/email-templates/issues",
     "email": "niftylettuce@gmail.com"
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "contributors": [
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
     "@ladjs/i18n": "^0.3.2",
     "auto-bind": "^1.2.1",
-    "bluebird": "^3.5.1",
+    "bluebird": "^3.5.2",
     "consolidate": "^0.15.1",
-    "debug": "^3.1.0",
+    "debug": "^4.0.1",
     "get-paths": "^0.0.4",
     "html-to-text": "^4.0.0",
-    "juice": "^4.3.2",
+    "juice": "^5.0.0",
     "juice-resources-promise": "^0.0.2",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "nodemailer": "^4.6.8",
     "preview-email": "^0.0.8"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.1",
+    "@babel/core": "^7.1.1",
+    "@babel/preset-env": "^7.1.0",
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
     "ava": "^0.25.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "cheerio": "^1.0.0-rc.2",
-    "codecov": "^3.0.4",
+    "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
-    "eslint": "^5.4.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.2",
+    "eslint": "^5.6.1",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-config-xo-lass": "^1.0.3",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-prettier": "^3.0.0",
+    "fixpack": "^2.3.1",
+    "husky": "^1.1.0",
+    "lint-staged": "^7.3.0",
     "nyc": "^13.0.1",
-    "prettier": "^1.14.2",
+    "prettier": "^1.14.3",
     "pug": "^2.0.3",
     "remark-cli": "^5.0.0",
-    "remark-preset-github": "^0.0.8",
-    "xo": "^0.22.0"
+    "remark-preset-github": "^0.0.9",
+    "xo": "^0.23.0"
   },
   "engines": {
     "node": ">=6.4.0"
@@ -51,6 +62,12 @@
     "locales"
   ],
   "homepage": "https://github.com/niftylettuce/email-templates",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "keywords": [
     "consolidate",
     "email",
@@ -72,16 +89,27 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "*.{js,jsx,mjs,ts,tsx,css,less,scss,json,graphql}": [
-      "prettier --write --single-quote --trailing-comma none",
-      "git add"
-    ],
-    "*.md": [
-      "remark . -qfo",
-      "git add"
-    ]
+    "linters": {
+      "*.js": [
+        "xo --fix",
+        "git add"
+      ],
+      "*.md": [
+        "remark . -qfo",
+        "git add"
+      ],
+      "package.json": [
+        "fixpack",
+        "git add"
+      ]
+    }
   },
   "main": "lib/index.js",
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "none"
+  },
   "remarkConfig": {
     "plugins": [
       "preset-github"
@@ -93,47 +121,26 @@
   },
   "scripts": {
     "ava": "cross-env NODE_ENV=test ava",
-    "build": "node_modules/.bin/babel src --out-dir lib",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "babel src --out-dir lib",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "lint": "xo && remark . -qfo",
+    "lint": "xo && remark . -qfo && eslint lib",
     "nyc": "cross-env NODE_ENV=test nyc ava",
-    "precommit": "lint-staged && npm test",
     "test": "npm run build && npm run lint && npm run ava",
-    "test-coverage": "npm run build && npm run lint && npm run nyc",
-    "watch": "node_modules/.bin/babel src --watch --out-dir lib"
+    "test-coverage": "npm run build && npm run lint && npm run nyc"
   },
   "xo": {
-    "extends": "prettier",
-    "plugins": [
-      "prettier"
-    ],
-    "parserOptions": {
-      "sourceType": "script"
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "bracketSpacing": true,
-          "trailingComma": "none"
-        }
-      ],
-      "max-len": [
-        "error",
-        {
-          "code": 80,
-          "ignoreUrls": true
-        }
-      ],
-      "capitalized-comments": "off",
-      "camelcase": "off",
-      "no-warning-comments": "off",
-      "no-use-extend-native/no-use-extend-native": "off"
-    },
+    "prettier": true,
     "space": true,
+    "extends": [
+      "xo-lass"
+    ],
     "ignores": [
       "config.js"
-    ]
+    ],
+    "rules": {
+      "no-use-extend-native/no-use-extend-native": "off"
+    }
   }
 }

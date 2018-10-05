@@ -13,7 +13,7 @@ const Promise = require('bluebird');
 const getPaths = require('get-paths');
 const juiceResources = require('juice-resources-promise');
 
-const env = process.env.NODE_ENV || 'development';
+const env = (process.env.NODE_ENV || 'development').toLowerCase();
 const stat = Promise.promisify(fs.stat);
 const readFile = Promise.promisify(fs.readFile);
 

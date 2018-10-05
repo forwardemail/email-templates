@@ -34,11 +34,13 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
   * [Custom Template Engine (e.g. EJS)](#custom-template-engine-eg-ejs)
   * [Custom Default Message Options](#custom-default-message-options)
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
+  * [Absolute Path to Templates](#absolute-path-to-templates)
 * [Options](#options)
 * [Plugins](#plugins)
 * [V5 Breaking Changes](#v5-breaking-changes)
 * [V3 Breaking Changes](#v3-breaking-changes)
 * [Tip](#tip)
+* [Related](#related)
 * [Contributors](#contributors)
 * [License](#license)
 
@@ -650,6 +652,50 @@ const email = new Email({
 });
 ```
 
+### Absolute Path to Templates
+
+As of v5.0.1+ we now support passing absolute paths to templates for rendering (per discussion in [#320](https://github.com/niftylettuce/email-templates/issues/320).
+
+For both `email.send` and `email.render`, the `template` option passed can be a relative path or absolute:
+
+> Relative example:
+
+```js
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+> Absolute example:
+
+```js
+const path = require('path');
+
+// ...
+
+email
+  .send({
+    template: path.join(__dirname, 'some', 'folder', 'mars')
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      name: 'Elon'
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
 
 ## Options
 
@@ -736,6 +782,15 @@ In version 5.x+, we changed the order of defaults being set.  See [#313](https:/
 Instead of having to configure this for yourself, you could just use [Lad][] instead.
 
 
+## Related
+
+* [lad][] - Scaffold a [Koa][] webapp and API framework for [Node.js][node]
+* [lass][] - Scaffold a modern boilerplate for [Node.js][node]
+* [cabin][] - Logging and analytics solution for [Node.js][node], [Lad][], [Koa][], and [Express][]
+* [forward-email][] - Free, encrypted, and open-source email forwarding service for custom domains
+* [lipo][] - Free image manipulation API service built on top of [Sharp][]
+
+
 ## Contributors
 
 | Name           | Website                   |
@@ -789,3 +844,17 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [preview-email]: https://github.com/niftylettuce/preview-email
 
 [attachments]: https://nodemailer.com/message/attachments/
+
+[lass]: https://lass.js.org
+
+[cabin]: https://cabinjs.com
+
+[forward-email]: https://forwardemail.net
+
+[lipo]: https://lipo.io
+
+[koa]: https://koajs.com/
+
+[sharp]: http://sharp.dimens.io/
+
+[express]: https://expressjs.com
