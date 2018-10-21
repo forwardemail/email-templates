@@ -35,6 +35,8 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
   * [Custom Default Message Options](#custom-default-message-options)
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
   * [Absolute Path to Templates](#absolute-path-to-templates)
+* [Examples](#Examples)
+  * [Example to use transport with gmail](#Example-to-use-transport-withgmail)
 * [Options](#options)
 * [Plugins](#plugins)
 * [V5 Breaking Changes](#v5-breaking-changes)
@@ -696,6 +698,49 @@ email
   .catch(console.error);
 ```
 
+## Examples
+
+## Example to use transport with gmail
+
+This example made using email-template in its latest version, in addition to this we will use nodemailer through email-template configurations.
+
+```js
+const Email = require('email-templates');
+ 
+
+exports.email = new Email({
+  send: true,
+  transport: {
+    host: 'smtp.gmail.com',
+    port: 465,
+    auth: {
+        user: 'youremail@gmail.com',
+        pass: 'xxxxxxxxx'
+    }
+  }
+});
+```
+
+To indicate to email-template that we use transports we set the parameter 'send' in true if this meter is set to false our emails will not be sent, but we can continue to preview their appearance. After this in the key 'transport' we assign the configuration values ​​of our SMTP server with which our emails will be sent.
+
+```js
+email.send({
+    template: './templates/templateName',
+    message: {
+        from: '"✉️ Subject" <name@email.com>',
+        to: 'destination@email.com',
+    },
+    locals: {
+        name: name,  // variables sended to template
+    }
+})
+.then(response => {
+  //handler success
+})
+.catch(error => {
+  //handler error
+});
+```
 
 ## Options
 
