@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const juice = require('juice');
 const debug = require('debug')('email-templates');
 const htmlToText = require('html-to-text');
 const I18N = require('@ladjs/i18n');
@@ -9,9 +10,19 @@ const consolidate = require('consolidate');
 const previewEmail = require('preview-email');
 const _ = require('lodash');
 const Promise = require('bluebird');
+const s = require('underscore.string');
 
 const getPaths = require('get-paths');
-const juiceResources = require('juice-resources-promise');
+
+// promise version of `juice.juiceResources`
+const juiceResources = (html, options) => {
+  return new Promise((resolve, reject) => {
+    juice.juiceResources(html, options, (err, html) => {
+      if (err) return reject(err);
+      resolve(html);
+    });
+  });
+};
 
 const env = (process.env.NODE_ENV || 'development').toLowerCase();
 const stat = Promise.promisify(fs.stat);
@@ -174,23 +185,23 @@ class Email {
     return html;
   }
 
+  // TODO: this needs refactored
+  // so that we render templates asynchronously
   async renderAll(template, locals = {}, message = {}) {
     let subjectTemplateExists = this.config.customRender;
     let htmlTemplateExists = this.config.customRender;
     let textTemplateExists = this.config.customRender;
-
-    const promises = [
-      this.templateExists(`${template}/subject`),
-      this.templateExists(`${template}/html`),
-      this.templateExists(`${template}/text`)
-    ];
 
     if (template && !this.config.customRender)
       [
         subjectTemplateExists,
         htmlTemplateExists,
         textTemplateExists
-      ] = await Promise.all(promises);
+      ] = await Promise.all([
+        this.templateExists(`${template}/subject`),
+        this.templateExists(`${template}/html`),
+        this.templateExists(`${template}/text`)
+      ]);
 
     if (!message.subject && subjectTemplateExists) {
       message.subject = await this.render(
@@ -223,6 +234,20 @@ class Email {
 
     // if we only want a text-based version of the email
     if (this.config.textOnly) delete message.html;
+
+    // if no subject, html, or text content exists then we should
+    // throw an error that says at least one must be found
+    // otherwise the email would be blank (defeats purpose of email-templates)
+    if (
+      s.isBlank(message.subject) &&
+      s.isBlank(message.text) &&
+      s.isBlank(message.html) &&
+      _.isArray(message.attachments) &&
+      _.isEmpty(message.attachments)
+    )
+      throw new Error(
+        `No content was passed for subject, html, text, nor attachments message props. Check that the files for the template "${template}" exist.`
+      );
 
     return message;
   }

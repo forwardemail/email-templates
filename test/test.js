@@ -143,6 +143,37 @@ test('sends with absolute template path', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
+test('send email with ejs template', async t => {
+  const email = new Email({
+    views: { root, options: { extension: 'ejs' } },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const res = await email.send({
+    template: 'test-ejs',
+    message: {
+      to: 'niftylettuce+to@gmail.com',
+      cc: 'niftylettuce+cc@gmail.com',
+      bcc: 'niftylettuce+bcc@gmail.com'
+    },
+    locals: { name: 'niftylettuce' }
+  });
+  t.true(_.isObject(res));
+  const message = JSON.parse(res.message);
+  t.is(message.subject, 'Test email for niftylettuce');
+  t.regex(message.html, /This is just a html test/);
+  t.regex(message.text, /This is just a text test/);
+});
+
 test('send email with subject prefix', async t => {
   const email = new Email({
     views: { root },
@@ -608,4 +639,73 @@ test('override config message via send options', async t => {
   t.true(_.isObject(res));
   res.message = JSON.parse(res.message);
   t.is(res.message.from.address, 'niftylettuce+from+via+send@gmail.com');
+});
+
+test('should throw an error when no tmpl passed', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const error = await t.throws(
+    email.send({ message: { to: 'niftylettuce+to@gmail.com' } })
+  );
+  t.regex(error.message, /No content was passed/);
+});
+
+test('should throw an error when tmpl dir not found', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const error = await t.throws(
+    email.send({
+      template: 'this-template-dir-does-not-exist',
+      message: { to: 'niftylettuce+to@gmail.com' }
+    })
+  );
+  t.regex(error.message, /No content was passed/);
+});
+
+test('should throw an error when tmpl dir exists but no props', async t => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'niftylettuce+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const error = await t.throws(
+    email.send({
+      template: 'this-template-dir-is-empty',
+      message: { to: 'niftylettuce+to@gmail.com' }
+    })
+  );
+  t.regex(error.message, /No content was passed/);
 });

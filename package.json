@@ -24,10 +24,10 @@
     "get-paths": "^0.0.4",
     "html-to-text": "^4.0.0",
     "juice": "^5.0.0",
-    "juice-resources-promise": "^0.0.2",
     "lodash": "^4.17.11",
     "nodemailer": "^4.6.8",
-    "preview-email": "^0.0.8"
+    "preview-email": "^0.0.8",
+    "underscore.string": "^3.3.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.1",
@@ -39,6 +39,7 @@
     "cheerio": "^1.0.0-rc.2",
     "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
+    "ejs": "^2.6.1",
     "eslint": "^5.6.1",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-xo-lass": "^1.0.3",
