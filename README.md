@@ -641,7 +641,7 @@ const email = new Email({
       // this example assumes that `template` returned
       // is an ejs-based template string
       // view = `${template}/html` or `${template}/subject` or `${template}/text`
-      db.templates.findOne({ name : view }, (err, template) => {
+      db.templates.findOne({ name: view }, (err, template) => {
         if (err) return reject(err);
         if (!template) return reject(new Error('Template not found'));
         let html = ejs.render(template, locals);
