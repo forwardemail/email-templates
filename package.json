@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
+    "aws-sdk": "^2.356.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "cheerio": "^1.0.0-rc.2",
