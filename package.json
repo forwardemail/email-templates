@@ -46,6 +46,7 @@
     "fixpack": "^2.3.1",
     "husky": "^1.1.0",
     "lint-staged": "^7.3.0",
+    "nodemailer-sendgrid": "^1.0.3",
     "nyc": "^13.0.1",
     "pug": "^2.0.3",
     "remark-cli": "^5.0.0",
