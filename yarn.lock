@@ -5821,10 +5821,10 @@ pretty-ms@^4.0.0:
   dependencies:
     parse-ms "^2.0.0"
 
-preview-email@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/preview-email/-/preview-email-0.0.9.tgz#8225473118fe82751d318a8d0663f713c398e206"
-  integrity sha512-+lHj1EQk8cS7oOKEnCVwUD3f8Mh7bDSf8E1qPhjaFmtnU44IZ1mgjpqbF0cjJxHDvJV/S5xbDJSn0R0WZY8HoQ==
+preview-email@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/preview-email/-/preview-email-0.0.10.tgz#a190d9eaf341e52c3c4f4d40a2dfcc993a9c47dd"
+  integrity sha512-qv0+3/VjlqsewDi2gQSoVcpxTrYNezoFKbkVin2fqe8qGF/Bl5aa76LhVOzYQowXgchBhDibotnMqT8UtwDVfw==
   dependencies:
     bluebird "^3.5.3"
     moment "^2.23.0"
