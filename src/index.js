@@ -288,7 +288,9 @@ class Email {
 
     if (this.config.preview) {
       debug('using `preview-email` to preview email');
-      await previewEmail(message);
+      if (_.isObject(this.config.preview))
+        await previewEmail(message, null, true, this.config.preview);
+      else await previewEmail(message);
     }
 
     if (!this.config.send) {

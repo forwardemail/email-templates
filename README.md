@@ -35,6 +35,7 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
   * [Custom Default Message Options](#custom-default-message-options)
   * [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database)
   * [Absolute Path to Templates](#absolute-path-to-templates)
+  * [Open Email Previews in Firefox](#open-email-previews-in-firefox)
 * [Options](#options)
 * [Plugins](#plugins)
 * [V5 Breaking Changes](#v5-breaking-changes)
@@ -67,6 +68,8 @@ yarn add email-templates pug
 We've added [preview-email][] by default to this package!
 
 This means that (by default) in the development environment (e.g. `NODE_ENV=development`) your emails will be rendered to the tmp directory for you and automatically opened in the browser.
+
+If you have trouble previewing emails in your browser, you can configure a `preview` option which gets passed along to [opn's options][opn-options] (e.g. `{ app: 'firefox' }`).  See the example below for [Open Email Previews in Firefox](#open-email-previews-in-firefox).
 
 <a target="_blank" href="https://github.com/niftylettuce/preview-email/blob/master/demo.png">View the demo</a>
 
@@ -697,6 +700,22 @@ email
   .catch(console.error);
 ```
 
+### Open Email Previews in Firefox
+
+The `preview` option can be a custom Object of options to pass along to [opn's options][opn-options].
+
+> Firefox example:
+
+```js
+const email = new Email({
+  // ...
+  preview: {
+    app: 'firefox',
+    wait: false
+  }
+});
+```
+
 
 ## Options
 
@@ -773,7 +792,7 @@ In version 5.x+, we changed the order of defaults being set.  See [#313](https:/
 
 5. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
 
-6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](src/index.js).
+6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](src/index.js).  Note that you can optionally pass an Object to `preview` option, which gets passed along to [opn's options][opn-options].
 
 7. If you wish to send emails in development or test environment (disabled by default), set `options.send` to `true`.
 
@@ -859,3 +878,5 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [sharp]: http://sharp.dimens.io/
 
 [express]: https://expressjs.com
+
+[opn-options]: https://github.com/sindresorhus/opn#options

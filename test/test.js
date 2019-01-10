@@ -118,7 +118,7 @@ test('throws with non-existing absolute template path', async t => {
     'emails',
     'tests'
   );
-  const error = await t.throws(email.render(nonExistingAbsolutePath));
+  const error = await t.throwsAsync(email.render(nonExistingAbsolutePath));
   t.regex(error.message, /no such file or directory/);
 });
 
@@ -337,7 +337,7 @@ test('does not throw error with missing transport option (#293)', async t => {
       }
     }
   });
-  await t.notThrows(
+  await t.notThrowsAsync(
     email.render('test/html', {
       name: 'niftylettuce'
     })
@@ -356,7 +356,7 @@ test('throws error with missing template on render call', async t => {
       }
     }
   });
-  const error = await t.throws(
+  const error = await t.throwsAsync(
     email.render('missing', {
       name: 'niftylettuce'
     })
@@ -656,7 +656,7 @@ test('should throw an error when no tmpl passed', async t => {
       }
     }
   });
-  const error = await t.throws(
+  const error = await t.throwsAsync(
     email.send({ message: { to: 'niftylettuce+to@gmail.com' } })
   );
   t.regex(error.message, /No content was passed/);
@@ -677,7 +677,7 @@ test('should throw an error when tmpl dir not found', async t => {
       }
     }
   });
-  const error = await t.throws(
+  const error = await t.throwsAsync(
     email.send({
       template: 'this-template-dir-does-not-exist',
       message: { to: 'niftylettuce+to@gmail.com' }
@@ -701,7 +701,7 @@ test('should throw an error when tmpl dir exists but no props', async t => {
       }
     }
   });
-  const error = await t.throws(
+  const error = await t.throwsAsync(
     email.send({
       template: 'this-template-dir-is-empty',
       message: { to: 'niftylettuce+to@gmail.com' }
