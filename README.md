@@ -454,7 +454,7 @@ p= t('Welcome to Mars, the red planet.')
 > `subject.pug`:
 
 ```pug
-p= `${t('Hi')} ${name}, t('welcome to Mars')`
+p= `${t('Hi')} ${name}, ${t('welcome to Mars')}`
 ```
 
 Note that if you use [Lad][], you have a built-in filter called `translate`:
@@ -824,7 +824,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com)
 
 
-## 
+##
 
 [node]: https://nodejs.org
 
