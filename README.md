@@ -410,6 +410,8 @@ If you do not do this, then your Pug templates will re-compile and re-cache ever
 
 All you need to do is simply pass an [i18n][] configuration object as `config.i18n` (or an empty one as this example shows to use defaults).
 
+> Don't want to handle localization and translation yourself?  Just use [Lad][lad] – it's built in and uses [mandarin][] (with automatic Google Translate support) under the hood!
+
 ```js
 const Email = require('email-templates');
 
@@ -445,20 +447,19 @@ Then slightly modify your templates to use localization functions.
 > `html.pug`:
 
 ```pug
-p= t(`Hi ${name},`)
+p= `${t('Hi')} ${name},`
 p= t('Welcome to Mars, the red planet.')
 ```
 
 > `subject.pug`:
 
 ```pug
-= t(`Hi ${name}, welcome to Mars`)
+p= `${t('Hi')} ${name}, t('welcome to Mars')`
 ```
 
 Note that if you use [Lad][], you have a built-in filter called `translate`:
 
 ```pug
-p: :translate(locale) Hi #{name}
 p: :translate(locale) Welcome to Mars, the red planet.
 ```
 
@@ -880,3 +881,5 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [express]: https://expressjs.com
 
 [opn-options]: https://github.com/sindresorhus/opn#options
+
+[mandarin]: https://github.com/niftylettuce/mandarin

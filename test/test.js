@@ -375,6 +375,7 @@ test('send mail with custom render function and no templates', async t => {
       } else {
         res = '';
       }
+
       return Promise.resolve(email.juiceResources(res));
     },
     transport: {

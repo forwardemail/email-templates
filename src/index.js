@@ -37,10 +37,12 @@ class Email {
       config.juiceResources = config.juiceOptions;
       delete config.juiceOptions;
     }
+
     if (config.disableJuice) {
       config.juice = false;
       delete config.disableJuice;
     }
+
     if (config.render) {
       config.customRender = true;
     }
@@ -154,6 +156,7 @@ class Email {
       const res = await readFile(filePath, 'utf8');
       return res;
     }
+
     const engineName = map && map[paths.ext] ? map[paths.ext] : paths.ext;
     const renderFn = engineSource[engineName];
     if (!engineName || !renderFn)
