@@ -63,6 +63,8 @@ class Email {
           },
           // locals to pass to templates for rendering
           locals: {
+            // turn on caching for non-development environments
+            cache: !['development', 'test'].includes(env),
             // pretty is automatically set to `false` for subject/text
             pretty: true
           }

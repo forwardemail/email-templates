@@ -352,11 +352,13 @@ Promise
 
 ### Cache Pug Templates
 
+Out of the box, templates are cached as they are compiled (e.g. as emails are sent, the template they're using is cached).  However these templates are not cached in-advance, so the first emails sent of each template will be slower to send.
+
 We strongly suggest to pre-cache your templates with [cache-pug-templates][] (if you're using the default [Pug][] template engine).
 
 If you do not do this, then your Pug templates will re-compile and re-cache every time you deploy new code and restart your app.
 
-Note that you will need to specify the `views` option to your `new CachePugTemplates({ views: '...' });` instance, with `views` being a file path (Array or String) to your email template directory.
+Note that you will need to specify the `views` option to your `new CachePugTemplates({ views: '...' });` instance, with `views` being a file path (Array or String) to your email template directory.  See [cache-pug-templates][] documentation for more information.
 
 ### Localization
 
@@ -681,6 +683,7 @@ For a list of all available options and defaults [view the configuration object]
     * `map` (Object) - a template file extension mapping, defaults to `{ hbs: 'handlebars', njk: 'nunjucks' }` (this is useful if you use different file extension naming conventions)
     * `engineSource` (Object) - the default template engine source, defaults to [consolidate][]
   * `locals` (Object) - locals to pass to templates for rendering
+    * `cache` (Boolean) - defaults to `false` for `development` and `test` environments, and `true` for all others (via `process.env.NODE_ENV`), whether or not to cache templates
     * `pretty` (Boolean) - defaults to `true`, but is automatically set to `false` for subject templates and text-based emails
 * `message` (Object) - default [Nodemailer message object][nodemailer-message-object] for messages to inherit (defaults to an empty object `{}`)
 * `send` (Boolean) - whether or not to send emails, defaults to `false` for `development` and `test` environments, and `true` for all others (via `process.env.NODE_ENV`) (**NOTE: IF YOU ARE NOT USING `NODE_ENV` YOU WILL NEED TO MANUALLY SET THIS TO `true`**)
