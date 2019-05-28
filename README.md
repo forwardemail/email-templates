@@ -352,59 +352,11 @@ Promise
 
 ### Cache Pug Templates
 
-We strongly suggest to follow this example and pre-cache your templates with [cache-pug-templates][] (if you're using the default [Pug][] template engine).
+We strongly suggest to pre-cache your templates with [cache-pug-templates][] (if you're using the default [Pug][] template engine).
 
 If you do not do this, then your Pug templates will re-compile and re-cache every time you deploy new code and restart your app.
 
-1. Ensure you have [Redis][] (v4.x+) installed:
-
-   * Mac: `brew install redis && brew services start redis`
-   * Ubuntu:
-
-     ```sh
-     sudo add-apt-repository -y ppa:chris-lea/redis-server
-     sudo apt-get update
-     sudo apt-get -y install redis-server
-     ```
-
-2. Install the packages:
-
-   [npm][]:
-
-   ```sh
-   npm install cache-pug-templates redis
-   ```
-
-   [yarn][]:
-
-   ```sh
-   yarn add cache-pug-templates redis
-   ```
-
-3. Configure it to read and cache your entire email templates directory:
-
-   ```js
-   const path = require('path');
-   const cachePugTemplates = require('cache-pug-templates');
-   const redis = require('redis');
-   const Email = require('email-templates');
-
-   const redisClient = redis.createClient();
-   const email = new Email({
-     message: {
-       from: 'niftylettuce@gmail.com'
-     },
-     transport: {
-       jsonTransport: true
-     }
-   });
-
-   cachePugTemplates(redisClient, email.config.views.root);
-
-   // ...
-   ```
-
-4. For more configuration options see [cache-pug-templates][].
+Note that you will need to specify the `views` option to your `new CachePugTemplates({ views: '...' });` instance, with `views` being a file path (String) to your email template directory.
 
 ### Localization
 
@@ -720,7 +672,33 @@ const email = new Email({
 
 ## Options
 
-For a list of all available options and defaults [view the configuration object](src/index.js).
+For a list of all available options and defaults [view the configuration object](src/index.js), or reference the list below:
+
+* `views` (Object)
+  * `root` (String) - defaults to the current working directory's "emails" folder via `path.resolve('emails')`
+  * `options` (Object)
+    * `extension` (String) - defaults to `'pug'`, and is the default file extension for templates
+    * `map` (Object) - a template file extension mapping, defaults to `{ hbs: 'handlebars', njk: 'nunjucks' }` (this is useful if you use different file extension naming conventions)
+    * `engineSource` (Object) - the default template engine source, defaults to [consolidate][]
+  * `locals` (Object) - locals to pass to templates for rendering
+    * `pretty` (Boolean) - defaults to `true`, but is automatically set to `false` for subject templates and text-based emails
+* `message` (Object) - default [Nodemailer message object][nodemailer-message-object] for messages to inherit (defaults to an empty object `{}`)
+* `send` (Boolean) - whether or not to send emails, defaults to `false` for `development` and `test` environments, and `true` for all others (via `process.env.NODE_ENV`) (**NOTE: IF YOU ARE NOT USING `NODE_ENV` YOU WILL NEED TO MANUALLY SET THIS TO `true`**)
+* `preview` (Boolean or Object) - whether or not to preview emails using [preview-email][], defaults to `false` unless the environment is `development` (via `process.env.NODE_ENV`)
+* `i18n` (Boolean or Object) - translation support for email templates, this accepts an I18N configuration object (defaults to `false`, which means it is disabled) which is passed along to [@ladjs/i18n][i18n] – see [Localization](#localization) example for more insight
+* `render` (Function) - defaults to a stable function that accepts two argument, `view` (String) and `locals` (Object) - you should not need to set this unless you have a need for custom rendering (see [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database))
+* `customRender` (Boolean) - defaults to `false`, unless you pass your own `render` function, and in that case it will be automatically set to `true`
+* `textOnly` (Boolean) - whether or not to force text-only rendering of a template and disregard the template folder (defaults to `false`)
+* `htmlToText` (Object) - configuration object for [html-to-text][]
+  * `ignoreImage` (Boolean) - defaults to `true`
+* `subjectPrefix` (Boolean or String) - defaults to `false`, but if set to a string it will use that string as a prefix for your emails' subjects
+* `juice` (Boolean) - whether or not to use [juice][] when rendering templates (defaults to `true`) (note that if you have a custom rendering function you will need to implement [juice][] in it yourself)
+* `juiceResources` (Object) - options to pass to `juice.juiceResources` method (only used if `juice` option is set to `true`, see [juice's][juice] API for more information
+  * `preserveImportant` (Boolean) - defaults to `true`
+  * `webResources` (Object) - an options object that will be passed to [web-resource-inliner][]
+    * `relativeTo` (String) - defaults to the current working directory's "build" folder via `path.resolve('build')` (**NOTE: YOU SHOULD MODIFY THIS PATH TO WHERE YOUR BUILD/ASSETS FOLDER IS**)
+    * `images` (Boolean or Number) - defaults to `false`, and is  whether or not to inline images unless they have an exclusion attribute (see [web-resource-inliner][] for more insight), if it is set to a Number then that is used as the KB threshold
+* `transport` (Object) - a transport configuration object or a Nodemailer transport instance created via `nodemailer.createTransport`, defaults to an empty object `{}`, see [Nodemailer transports][nodemailer-transports] documentation for more insight
 
 
 ## Plugins
@@ -860,8 +838,6 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 
 [cache-pug-templates]: https://github.com/ladjs/cache-pug-templates
 
-[redis]: https://redis.io/
-
 [preview-email]: https://github.com/niftylettuce/preview-email
 
 [attachments]: https://nodemailer.com/message/attachments/
@@ -883,3 +859,15 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [opn-options]: https://github.com/sindresorhus/opn#options
 
 [mandarin]: https://github.com/niftylettuce/mandarin
+
+[consolidate]: https://github.com/tj/consolidate.js
+
+[nodemailer-message-object]: https://nodemailer.com/message/
+
+[html-to-text]: https://github.com/werk85/node-html-to-text
+
+[web-resource-inliner]: https://github.com/jrit/web-resource-inliner
+
+[nodemailer-transports]: https://nodemailer.com/transports/
+
+[juice]: https://github.com/Automattic/juice
