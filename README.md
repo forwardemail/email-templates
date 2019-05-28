@@ -356,7 +356,7 @@ We strongly suggest to pre-cache your templates with [cache-pug-templates][] (if
 
 If you do not do this, then your Pug templates will re-compile and re-cache every time you deploy new code and restart your app.
 
-Note that you will need to specify the `views` option to your `new CachePugTemplates({ views: '...' });` instance, with `views` being a file path (String) to your email template directory.
+Note that you will need to specify the `views` option to your `new CachePugTemplates({ views: '...' });` instance, with `views` being a file path (Array or String) to your email template directory.
 
 ### Localization
 
