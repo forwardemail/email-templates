@@ -17,8 +17,8 @@
   ],
   "dependencies": {
     "@ladjs/i18n": "^1.1.0",
+    "@sindresorhus/is": "^0.17.1",
     "auto-bind": "^2.1.0",
-    "bluebird": "^3.5.5",
     "consolidate": "^0.15.1",
     "debug": "^4.1.1",
     "get-paths": "^0.0.4",
@@ -26,35 +26,35 @@
     "juice": "^5.2.0",
     "lodash": "^4.17.11",
     "nodemailer": "^6.2.1",
-    "preview-email": "^0.0.10",
-    "underscore.string": "^3.3.5"
+    "pify": "^4.0.1",
+    "preview-email": "^1.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "@commitlint/cli": "^7.6.1",
-    "@commitlint/config-conventional": "^7.6.0",
-    "ava": "^1.4.1",
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
+    "ava": "^2.1.0",
     "cheerio": "^1.0.0-rc.2",
     "codecov": "^3.5.0",
     "cross-env": "^5.2.0",
-    "ejs": "^2.6.1",
-    "eslint": "^5.16.0",
+    "ejs": "^2.6.2",
+    "eslint": "^6.0.0",
     "eslint-config-xo-lass": "^1.0.3",
     "eslint-plugin-node": "^9.1.0",
     "fixpack": "^2.3.1",
-    "husky": "^2.3.0",
-    "lint-staged": "^8.1.7",
+    "husky": "^2.4.1",
+    "lint-staged": "^8.2.1",
     "nodemailer-sendgrid": "^1.0.3",
     "nyc": "^14.1.1",
-    "pug": "^2.0.3",
+    "pug": "^2.0.4",
     "remark-cli": "^6.0.1",
-    "remark-preset-github": "^0.0.13",
+    "remark-preset-github": "^0.0.14",
     "xo": "^0.24.0"
   },
   "engines": {
-    "node": ">=6.4.0"
+    "node": ">=8"
   },
   "files": [
     "lib",
@@ -137,9 +137,6 @@
     ],
     "ignores": [
       "config.js"
-    ],
-    "rules": {
-      "no-use-extend-native/no-use-extend-native": "off"
-    }
+    ]
   }
 }

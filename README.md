@@ -11,10 +11,6 @@
 
 Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
 
-**Still on v4.x?**: v5.x is released with only one minor breaking change, see [breaking changes below](#v5-breaking-changes).
-
-**Still on v2.x?**: v3.x is released (you'll need Node v6.4.0+); see [breaking changes below](#v3-breaking-changes). [2.x branch][2-x-branch] docs available if necessary.
-
 
 ## Table of Contents
 
@@ -38,8 +34,11 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
   * [Open Email Previews in Firefox](#open-email-previews-in-firefox)
 * [Options](#options)
 * [Plugins](#plugins)
-* [V5 Breaking Changes](#v5-breaking-changes)
-* [V3 Breaking Changes](#v3-breaking-changes)
+* [Breaking Changes](#breaking-changes)
+  * [v6.0.0](#v600)
+  * [v5.0.0](#v500)
+  * [v4.0.0](#v400)
+  * [v3.0.0](#v300)
 * [Tip](#tip)
 * [Related](#related)
 * [Contributors](#contributors)
@@ -69,14 +68,12 @@ We've added [preview-email][] by default to this package!
 
 This means that (by default) in the development environment (e.g. `NODE_ENV=development`) your emails will be rendered to the tmp directory for you and automatically opened in the browser.
 
-If you have trouble previewing emails in your browser, you can configure a `preview` option which gets passed along to [opn's options][opn-options] (e.g. `{ app: 'firefox' }`).  See the example below for [Open Email Previews in Firefox](#open-email-previews-in-firefox).
+If you have trouble previewing emails in your browser, you can configure a `preview` option which gets passed along to [open's options][open-options] (e.g. `preview: { open: { app: 'firefox' } }`).
 
-<a target="_blank" href="https://github.com/niftylettuce/preview-email/blob/master/demo.png">View the demo</a>
+See the example below for [Open Email Previews in Firefox](#open-email-previews-in-firefox).
 
 
 ## Usage
-
-> **UPGRADING?** If you are upgrading from v2 to v3, see [v3 Breaking Changes](#v3-breaking-changes) below.  You'll need Node v6.4.0+ now.
 
 ### Debugging
 
@@ -657,7 +654,7 @@ email
 
 ### Open Email Previews in Firefox
 
-The `preview` option can be a custom Object of options to pass along to [opn's options][opn-options].
+The `preview` option can be a custom Object of options to pass along to [open's options][open-options].
 
 > Firefox example:
 
@@ -665,8 +662,10 @@ The `preview` option can be a custom Object of options to pass along to [opn's o
 const email = new Email({
   // ...
   preview: {
-    app: 'firefox',
-    wait: false
+    open: {
+      app: 'firefox',
+      wait: false
+    }
   }
 });
 ```
@@ -731,12 +730,42 @@ We also highly recommend to add to your default `config.locals` the following:
 * [font-awesome-assets][] - render any [Font Awesome][fa] icon as an image in an email w/retina support (no more Photoshop or Sketch exports!)
 
 
-## V5 Breaking Changes
+## Breaking Changes
 
-In version 5.x+, we changed the order of defaults being set.  See [#313](https://github.com/niftylettuce/email-templates/issues/313) for more information.  This allows you to override message options such as `from` (even if you have a global default `from` set).
+See the [Releases](https://github.com/niftylettuce/email-templates/releases) page for an up to date changelog.
 
+### v6.0.0
 
-## V3 Breaking Changes
+* Performance should be significantly improved as the rendering of subject, html, and text parts now occurs asynchronously in parallel (previously it was in series and had blocking lookup calls).
+* We removed [bluebird][] and replaced it with a lightweight alternative [pify][] (since all we were using was the `Promise.promisify` method from `bluebird` as well).
+* This package now only supports Node v8.x+ (due to [preview-email][]'s [open][] dependency requiring it).
+* Configuration for the `preview` option has slightly changed, which now allows you to [specify a custom template and stylesheets](https://github.com/niftylettuce/preview-email#custom-preview-template-and-stylesheets) for preview rendering.
+
+  > If you were using a custom `preview` option before, you will need to change it slightly:
+
+  ```diff
+  const email = new Email({
+    // ...
+    preview: {
+  +    open: {
+  +      app: 'firefox',
+  +      wait: false
+  +    }
+  -    app: 'firefox',
+  -    wait: false
+    }
+  });
+  ```
+
+### v5.0.0
+
+In version 4.x+, we changed the order of defaults being set.  See [#313](https://github.com/niftylettuce/email-templates/issues/313) for more information.  This allows you to override message options such as `from` (even if you have a global default `from` set).
+
+### v4.0.0
+
+See v5.0.0 above
+
+### v3.0.0
 
 > If you are upgrading from v2 or prior to v3, please note that the following breaking API changes occurred:
 
@@ -774,7 +803,7 @@ In version 5.x+, we changed the order of defaults being set.  See [#313](https:/
 
 5. A new method `email.send` has been added.  This allows you to create a Nodemailer transport and send an email template all at once (it calls `email.render` internally).  See the [Basic](#basic) usage documentation above for an example.
 
-6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](src/index.js).  Note that you can optionally pass an Object to `preview` option, which gets passed along to [opn's options][opn-options].
+6. There are new options `options.send` and `options.preview`.  Both are Boolean values and configured automatically based off the environment.  Take a look at the [configuration object](src/index.js).  Note that you can optionally pass an Object to `preview` option, which gets passed along to [open's options][open-options].
 
 7. If you wish to send emails in development or test environment (disabled by default), set `options.send` to `true`.
 
@@ -827,8 +856,6 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 
 [lad]: https://lad.js.org
 
-[2-x-branch]: https://github.com/niftylettuce/node-email-templates/tree/2.x
-
 [i18n]: https://github.com/ladjs/i18n#options
 
 [fa]: http://fontawesome.io/
@@ -859,7 +886,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 
 [express]: https://expressjs.com
 
-[opn-options]: https://github.com/sindresorhus/opn#options
+[open-options]: https://github.com/sindresorhus/open#options
 
 [mandarin]: https://github.com/niftylettuce/mandarin
 
@@ -874,3 +901,9 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [nodemailer-transports]: https://nodemailer.com/transports/
 
 [juice]: https://github.com/Automattic/juice
+
+[bluebird]: https://github.com/petkaantonov/bluebird
+
+[pify]: https://github.com/sindresorhus/pify
+
+[open]: https://github.com/sindresorhus/open

@@ -1,18 +1,17 @@
 const fs = require('fs');
 const path = require('path');
-const juice = require('juice');
-const debug = require('debug')('email-templates');
-const htmlToText = require('html-to-text');
 const I18N = require('@ladjs/i18n');
-const autoBind = require('auto-bind');
-const nodemailer = require('nodemailer');
-const consolidate = require('consolidate');
-const previewEmail = require('preview-email');
 const _ = require('lodash');
-const Promise = require('bluebird');
-const s = require('underscore.string');
-
+const autoBind = require('auto-bind');
+const consolidate = require('consolidate');
+const debug = require('debug')('email-templates');
 const getPaths = require('get-paths');
+const htmlToText = require('html-to-text');
+const is = require('@sindresorhus/is');
+const juice = require('juice');
+const nodemailer = require('nodemailer');
+const pify = require('pify');
+const previewEmail = require('preview-email');
 
 // promise version of `juice.juiceResources`
 const juiceResources = (html, options) => {
@@ -25,8 +24,8 @@ const juiceResources = (html, options) => {
 };
 
 const env = (process.env.NODE_ENV || 'development').toLowerCase();
-const stat = Promise.promisify(fs.stat);
-const readFile = Promise.promisify(fs.readFile);
+const stat = pify(fs.stat);
+const readFile = pify(fs.readFile);
 
 class Email {
   constructor(config = {}) {
@@ -148,6 +147,19 @@ class Email {
     }
   }
 
+  async checkAndRender(type, template, locals) {
+    const str = `${template}/${type}`;
+    if (!this.config.customRender) {
+      const exists = await this.templateExists(str);
+      if (!exists) return;
+    }
+
+    return this.render(str, {
+      ...locals,
+      ...(type === 'html' ? {} : { pretty: false })
+    });
+  }
+
   // promise version of consolidate's render
   // inspired by koa-views and re-uses the same config
   // <https://github.com/queckezz/koa-views>
@@ -167,11 +179,7 @@ class Email {
       );
 
     if (_.isObject(this.config.i18n)) {
-      const i18n = new I18N(
-        Object.assign({}, this.config.i18n, {
-          register: locals
-        })
-      );
+      const i18n = new I18N({ ...this.config.i18n, register: locals });
 
       // support `locals.user.last_locale`
       // (e.g. for <https://lad.js.org>)
@@ -181,7 +189,7 @@ class Email {
       if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
     }
 
-    const res = await Promise.promisify(renderFn)(filePath, locals);
+    const res = await pify(renderFn)(filePath, locals);
     // transform the html with juice using remote paths
     // google now supports media queries
     // https://developers.google.com/gmail/design/reference/supported_css
@@ -190,43 +198,23 @@ class Email {
     return html;
   }
 
-  // TODO: this needs refactored
-  // so that we render templates asynchronously
-  async renderAll(template, locals = {}, message = {}) {
-    let subjectTemplateExists = this.config.customRender;
-    let htmlTemplateExists = this.config.customRender;
-    let textTemplateExists = this.config.customRender;
+  async renderAll(template, locals = {}, nodemailerMessage = {}) {
+    const message = { ...nodemailerMessage };
 
-    if (template && !this.config.customRender)
-      [
-        subjectTemplateExists,
-        htmlTemplateExists,
-        textTemplateExists
-      ] = await Promise.all([
-        this.templateExists(`${template}/subject`),
-        this.templateExists(`${template}/html`),
-        this.templateExists(`${template}/text`)
-      ]);
-
-    if (!message.subject && subjectTemplateExists) {
-      message.subject = await this.render(
-        `${template}/subject`,
-        Object.assign({}, locals, { pretty: false })
+    if (template) {
+      const [subject, html, text] = await Promise.all(
+        ['subject', 'html', 'text'].map(type =>
+          this.checkAndRender(type, template, locals)
+        )
       );
-      message.subject = message.subject.trim();
+
+      if (subject) message.subject = subject.trim();
+      if (html) message.html = html;
+      if (text) message.text = text;
     }
 
     if (message.subject && this.config.subjectPrefix)
       message.subject = this.config.subjectPrefix + message.subject;
-
-    if (!message.html && htmlTemplateExists)
-      message.html = await this.render(`${template}/html`, locals);
-
-    if (!message.text && textTemplateExists)
-      message.text = await this.render(
-        `${template}/text`,
-        Object.assign({}, locals, { pretty: false })
-      );
 
     if (this.config.htmlToText && message.html && !message.text)
       // we'd use nodemailer-html-to-text plugin
@@ -244,9 +232,10 @@ class Email {
     // throw an error that says at least one must be found
     // otherwise the email would be blank (defeats purpose of email-templates)
     if (
-      s.isBlank(message.subject) &&
-      s.isBlank(message.text) &&
-      s.isBlank(message.html) &&
+      (!is.string(message.subject) ||
+        is.emptyStringOrWhitespace(message.subject)) &&
+      (!is.string(message.text) || is.emptyStringOrWhitespace(message.text)) &&
+      (!is.string(message.html) || is.emptyStringOrWhitespace(message.html)) &&
       _.isArray(message.attachments) &&
       _.isEmpty(message.attachments)
     )
@@ -258,14 +247,12 @@ class Email {
   }
 
   async send(options = {}) {
-    options = Object.assign(
-      {
-        template: '',
-        message: {},
-        locals: {}
-      },
-      options
-    );
+    options = {
+      template: '',
+      message: {},
+      locals: {},
+      ...options
+    };
 
     let { template, message, locals } = options;
 
@@ -294,7 +281,7 @@ class Email {
     if (this.config.preview) {
       debug('using `preview-email` to preview email');
       if (_.isObject(this.config.preview))
-        await previewEmail(message, null, true, this.config.preview);
+        await previewEmail(message, this.config.preview);
       else await previewEmail(message);
     }
 
