@@ -97,7 +97,9 @@ class Email {
         // pass a transport configuration object or a transport instance
         // (e.g. an instance is created via `nodemailer.createTransport`)
         // <https://nodemailer.com/transports/>
-        transport: {}
+        transport: {},
+        // last locale field name (also used by @ladjs/i18n)
+        lastLocaleField: 'last_locale'
       },
       config
     );
@@ -179,12 +181,24 @@ class Email {
       );
 
     if (_.isObject(this.config.i18n)) {
+      if (
+        this.config.i18n.lastLocaleField &&
+        this.config.lastLocaleField &&
+        this.config.i18n.lastLocaleField !== this.config.lastLocaleField
+      )
+        throw new Error(
+          `The 'lastLocaleField' (String) option for @ladjs/i18n and email-templates do not match, i18n value was ${this.config.i18n.lastLocaleField} and email-templates value was ${this.config.lastLocaleField}`
+        );
+
       const i18n = new I18N({ ...this.config.i18n, register: locals });
 
-      // support `locals.user.last_locale`
+      // support `locals.user.last_locale` (variable based name lastLocaleField)
       // (e.g. for <https://lad.js.org>)
-      if (_.isObject(locals.user) && _.isString(locals.user.last_locale))
-        locals.locale = locals.user.last_locale;
+      if (
+        _.isObject(locals.user) &&
+        _.isString(locals.user[this.config.lastLocaleField])
+      )
+        locals.locale = locals.user[this.config.lastLocaleField];
 
       if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
     }
