@@ -1,6 +1,7 @@
-const Email = require('..');
 const nodemailer = require('nodemailer');
 const nodemailerSendgrid = require('nodemailer-sendgrid');
+
+const Email = require('..');
 
 const transport = nodemailer.createTransport(
   nodemailerSendgrid({
