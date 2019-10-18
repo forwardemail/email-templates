@@ -51,6 +51,7 @@ class Email {
         views: {
           // directory where email templates reside
           root: path.resolve('emails'),
+          path: '<template><sep><type>',
           options: {
             // default file extension for template
             extension: 'pug',
@@ -150,13 +151,16 @@ class Email {
   }
 
   async checkAndRender(type, template, locals) {
-    const str = `${template}/${type}`;
+    const p = this.config.views.path
+      .replace(/<template>/g, template)
+      .replace(/<type>/g, type)
+      .replace(/<sep>/g, path.sep);
     if (!this.config.customRender) {
-      const exists = await this.templateExists(str);
+      const exists = await this.templateExists(p);
       if (!exists) return;
     }
 
-    return this.render(str, {
+    return this.render(p, {
       ...locals,
       ...(type === 'html' ? {} : { pretty: false })
     });
