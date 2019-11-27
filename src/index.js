@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
-const autoBind = require('auto-bind');
 const consolidate = require('consolidate');
 const debug = require('debug')('email-templates');
 const getPaths = require('get-paths');
@@ -112,7 +111,13 @@ class Email {
 
     debug('transformed config %O', this.config);
 
-    autoBind(this);
+    this.juiceResources = this.juiceResources.bind(this);
+    this.getTemplatePath = this.getTemplatePath.bind(this);
+    this.templateExists = this.templateExists.bind(this);
+    this.checkAndRender = this.checkAndRender.bind(this);
+    this.render = this.render.bind(this);
+    this.renderAll = this.renderAll.bind(this);
+    this.send = this.send.bind(this);
   }
 
   // shorthand use of `juiceResources` with the config
