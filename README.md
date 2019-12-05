@@ -1,6 +1,6 @@
 # [**Email Templates**](https://github.com/niftylettuce/email-templates)
 
-[![build status](https://img.shields.io/travis/niftylettuce/email-templates.svg)](https://travis-ci.org/niftylettuce/email-templates)
+[![build status](https:///travis-ci.com/forwardemail/email-templates.svg)](https://travis-ci.com/forwardemail/email-templates)
 [![code coverage](https://img.shields.io/codecov/c/github/niftylettuce/email-templates.svg)](https://codecov.io/gh/niftylettuce/email-templates)
 [![code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
