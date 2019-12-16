@@ -701,6 +701,7 @@ For a list of all available options and defaults [view the configuration object]
     * `relativeTo` (String) - defaults to the current working directory's "build" folder via `path.resolve('build')` (**NOTE: YOU SHOULD MODIFY THIS PATH TO WHERE YOUR BUILD/ASSETS FOLDER IS**)
     * `images` (Boolean or Number) - defaults to `false`, and is  whether or not to inline images unless they have an exclusion attribute (see [web-resource-inliner][] for more insight), if it is set to a Number then that is used as the KB threshold
 * `transport` (Object) - a transport configuration object or a Nodemailer transport instance created via `nodemailer.createTransport`, defaults to an empty object `{}`, see [Nodemailer transports][nodemailer-transports] documentation for more insight
+* `getPath` (Function) - a function that returns the path to a template file, defaults to `function (type, template) { return path.join(template, type); }`, and accepts three arguments `type`, `template`, and `locals`
 
 
 ## Plugins

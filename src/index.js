@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
 const consolidate = require('consolidate');
@@ -98,7 +99,10 @@ class Email {
         // <https://nodemailer.com/transports/>
         transport: {},
         // last locale field name (also used by @ladjs/i18n)
-        lastLocaleField: 'last_locale'
+        lastLocaleField: 'last_locale',
+        getPath(type, template) {
+          return path.join(template, type);
+        }
       },
       config
     );
@@ -155,7 +159,7 @@ class Email {
   }
 
   async checkAndRender(type, template, locals) {
-    const str = `${template}/${type}`;
+    const str = this.config.getPath(type, template, locals);
     if (!this.config.customRender) {
       const exists = await this.templateExists(str);
       if (!exists) return;
