@@ -221,23 +221,27 @@ class Email {
     return html;
   }
 
+  // eslint-disable-next-line complexity
   async renderAll(template, locals = {}, nodemailerMessage = {}) {
     const message = { ...nodemailerMessage };
 
-    if (template) {
+    if (template && (!message.subject || !message.html || !message.text)) {
       const [subject, html, text] = await Promise.all(
         ['subject', 'html', 'text'].map(type =>
           this.checkAndRender(type, template, locals)
         )
       );
 
-      if (subject) message.subject = subject.trim();
-      if (html) message.html = html;
-      if (text) message.text = text;
+      if (subject && !message.subject) message.subject = subject;
+      if (html && !message.html) message.html = html;
+      if (text && !message.text) message.text = text;
     }
 
     if (message.subject && this.config.subjectPrefix)
       message.subject = this.config.subjectPrefix + message.subject;
+
+    // trim subject
+    if (message.subject) message.subject = message.subject.trim();
 
     if (this.config.htmlToText && message.html && !message.text)
       // we'd use nodemailer-html-to-text plugin
