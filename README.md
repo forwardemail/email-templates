@@ -1,11 +1,11 @@
-# [**Email Templates**](https://github.com/niftylettuce/email-templates)
+# [**Email Templates**](https://github.com/forwardemail/email-templates)
 
 [![build status](https://travis-ci.com/forwardemail/email-templates.svg)](https://travis-ci.com/forwardemail/email-templates)
-[![code coverage](https://img.shields.io/codecov/c/github/niftylettuce/email-templates.svg)](https://codecov.io/gh/niftylettuce/email-templates)
+[![code coverage](https://img.shields.io/codecov/c/github/forwardemail/email-templates.svg)](https://codecov.io/gh/forwardemail/email-templates)
 [![code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![made with lass](https://img.shields.io/badge/made_with-lass-95CC28.svg)](https://lass.js.org)
-[![license](https://img.shields.io/github/license/niftylettuce/email-templates.svg)](LICENSE)
+[![license](https://img.shields.io/github/license/forwardemail/email-templates.svg)](LICENSE)
 
 > :heart: Love this project? Support <a href="https://github.com/niftylettuce" target="_blank">@niftylettuce's</a> [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software) on <a href="https://patreon.com/niftylettuce" target="_blank">Patreon</a> or <a href="https://paypal.me/niftylettuce">PayPal</a> :unicorn:
 
@@ -35,6 +35,7 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
 * [Options](#options)
 * [Plugins](#plugins)
 * [Breaking Changes](#breaking-changes)
+  * [v7.0.0](#v700)
   * [v6.0.0](#v600)
   * [v5.0.0](#v500)
   * [v4.0.0](#v400)
@@ -610,7 +611,7 @@ const email = new Email({
 
 ### Absolute Path to Templates
 
-As of v5.0.1+ we now support passing absolute paths to templates for rendering (per discussion in [#320](https://github.com/niftylettuce/email-templates/issues/320).
+As of v5.0.1+ we now support passing absolute paths to templates for rendering (per discussion in [#320](https://github.com/forwardemail/email-templates/issues/320).
 
 For both `email.send` and `email.render`, the `template` option passed can be a relative path or absolute:
 
@@ -733,7 +734,11 @@ We also highly recommend to add to your default `config.locals` the following:
 
 ## Breaking Changes
 
-See the [Releases](https://github.com/niftylettuce/email-templates/releases) page for an up to date changelog.
+See the [Releases](https://github.com/forwardemail/email-templates/releases) page for an up to date changelog.
+
+### v7.0.0
+
+We upgraded `preview-email` to `v2.0.0`, which supports stream attachments, and additionally the view rendering is slightly different (we simply iterate over header lines and format them in a `<pre><code>` block).  A major version bump was done due to the significant visual change in the preview rendering of emails.
 
 ### v6.0.0
 
@@ -760,7 +765,7 @@ See the [Releases](https://github.com/niftylettuce/email-templates/releases) pag
 
 ### v5.0.0
 
-In version 4.x+, we changed the order of defaults being set.  See [#313](https://github.com/niftylettuce/email-templates/issues/313) for more information.  This allows you to override message options such as `from` (even if you have a global default `from` set).
+In version 4.x+, we changed the order of defaults being set.  See [#313](https://github.com/forwardemail/email-templates/issues/313) for more information.  This allows you to override message options such as `from` (even if you have a global default `from` set).
 
 ### v4.0.0
 

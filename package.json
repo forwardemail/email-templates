@@ -4,7 +4,7 @@
   "version": "7.0.0",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
   "bugs": {
-    "url": "https://github.com/niftylettuce/email-templates/issues",
+    "url": "https://github.com/forwardemail/email-templates/issues",
     "email": "niftylettuce@gmail.com"
   },
   "commitlint": {
@@ -59,7 +59,7 @@
     "lib",
     "locales"
   ],
-  "homepage": "https://github.com/niftylettuce/email-templates",
+  "homepage": "https://github.com/forwardemail/email-templates",
   "husky": {
     "hooks": {
       "pre-commit": "npm test",
@@ -115,7 +115,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/niftylettuce/email-templates"
+    "url": "https://github.com/forwardemail/email-templates"
   },
   "scripts": {
     "ava": "cross-env NODE_ENV=test ava",
