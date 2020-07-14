@@ -263,7 +263,6 @@ class Email {
         is.emptyStringOrWhitespace(message.subject)) &&
       (!is.string(message.text) || is.emptyStringOrWhitespace(message.text)) &&
       (!is.string(message.html) || is.emptyStringOrWhitespace(message.html)) &&
-      _.isArray(message.attachments) &&
       _.isEmpty(message.attachments)
     )
       throw new Error(
