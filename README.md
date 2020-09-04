@@ -341,7 +341,7 @@ email
   .catch(console.error);
 ```
 
-The example above will be useful when you have structure like this, this will be useful when you have separate css file for every template
+The example above will be useful when you have a structure like this, this will be useful when you have a separate CSS file for every template
 
 ```sh
 .
