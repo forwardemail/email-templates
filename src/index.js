@@ -87,6 +87,10 @@ class Email {
         subjectPrefix: false,
         // <https://github.com/Automattic/juice>
         juice: true,
+        // Override juice global settings <https://github.com/Automattic/juice#juicecodeblockss>
+        juiceSettings: {
+          tableElements: ['TABLE']
+        },
         juiceResources: {
           preserveImportant: true,
           webResources: {
@@ -113,6 +117,13 @@ class Email {
     if (!_.isFunction(this.config.transport.sendMail))
       this.config.transport = nodemailer.createTransport(this.config.transport);
 
+    // Override juice global settings https://github.com/Automattic/juice#juicecodeblocks
+    if (_.isObject(this.config.juiceSettings)) {
+      _.forEach(this.config.juiceSettings, (key, value) => {
+        juice[key] = value;
+      });
+    }
+
     debug('transformed config %O', this.config);
 
     this.juiceResources = this.juiceResources.bind(this);
@@ -126,12 +137,20 @@ class Email {
 
   // shorthand use of `juiceResources` with the config
   // (mainly for custom renders like from a database)
-  juiceResources(html) {
-    return juiceResources(html, this.config.juiceResources);
+  juiceResources(html, juiceRenderResources = {}) {
+    const juiceR = _.merge(this.config.juiceResources, juiceRenderResources);
+    return juiceResources(html, juiceR);
   }
 
   // a simple helper function that gets the actual file path for the template
   async getTemplatePath(template) {
+    let juiceRenderResources = {};
+
+    if (_.isObject(template)) {
+      juiceRenderResources = template.juiceResources;
+      template = template.path;
+    }
+
     const [root, view] = path.isAbsolute(template)
       ? [path.dirname(template), path.basename(template)]
       : [this.config.views.root, template];
@@ -141,7 +160,7 @@ class Email {
       this.config.views.options.extension
     );
     const filePath = path.resolve(root, paths.rel);
-    return { filePath, paths };
+    return { filePath, paths, juiceRenderResources };
   }
 
   // returns true or false if a template exists
@@ -159,16 +178,27 @@ class Email {
   }
 
   async checkAndRender(type, template, locals) {
+    let juiceRenderResources = {};
+
+    if (_.isObject(template)) {
+      juiceRenderResources = template.juiceResources;
+      template = template.path;
+    }
+
     const str = this.config.getPath(type, template, locals);
     if (!this.config.customRender) {
       const exists = await this.templateExists(str);
       if (!exists) return;
     }
 
-    return this.render(str, {
-      ...locals,
-      ...(type === 'html' ? {} : { pretty: false })
-    });
+    return this.render(
+      str,
+      {
+        ...locals,
+        ...(type === 'html' ? {} : { pretty: false })
+      },
+      juiceRenderResources
+    );
   }
 
   // promise version of consolidate's render
@@ -176,7 +206,11 @@ class Email {
   // <https://github.com/queckezz/koa-views>
   async render(view, locals = {}) {
     const { map, engineSource } = this.config.views.options;
-    const { filePath, paths } = await this.getTemplatePath(view);
+    const {
+      filePath,
+      paths,
+      juiceRenderResources
+    } = await this.getTemplatePath(view);
     if (paths.ext === 'html' && !map) {
       const res = await readFile(filePath, 'utf8');
       return res;
@@ -217,7 +251,7 @@ class Email {
     // google now supports media queries
     // https://developers.google.com/gmail/design/reference/supported_css
     if (!this.config.juice) return res;
-    const html = await this.juiceResources(res);
+    const html = await this.juiceResources(res, juiceRenderResources);
     return html;
   }
 

@@ -256,6 +256,10 @@ If this asset is in another folder, then you will need to modify the default opt
 const email = new Email({
   // <https://github.com/Automattic/juice>
   juice: true,
+  // Override juice global settings <https://github.com/Automattic/juice#juicecodeblockss>
+  juiceSettings: {
+    tableElements: ['TABLE']
+  },
   juiceResources: {
     preserveImportant: true,
     webResources: {
@@ -309,6 +313,45 @@ The example above assumes you have the following directory structure (note that 
         ├── html.pug
         ├── text.pug
         └── subject.pug
+```
+
+The Promise for `email.render` resolves with a String (the HTML or text rendered).
+
+> If you need pass juiceResources in render function, with this option you don't need create Email instance every time
+
+```js
+const Email = require('email-templates');
+
+const email = new Email();
+
+email
+  .render({
+    path: 'mars/html',
+    juiceResources: {
+      preserveImportant: true,
+      webResources: {
+        // view folder path, it will get css from `mars/style.css`
+        relativeTo: path.resolve('mars')
+      }
+    }
+  }, {
+    name: 'Elon'
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+The example above will be useful when you have a structure like this, this will be useful when you have a separate CSS file for every template
+
+```sh
+.
+├── app.js
+└── emails
+    └── mars
+        ├── html.pug
+        ├── text.pug
+        ├── subject.pug
+        └── style.css
 ```
 
 The Promise for `email.render` resolves with a String (the HTML or text rendered).
