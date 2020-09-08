@@ -256,7 +256,7 @@ If this asset is in another folder, then you will need to modify the default opt
 const email = new Email({
   // <https://github.com/Automattic/juice>
   juice: true,
-  // Override juice global settings <https://github.com/Automattic/juice#juicecodeblockss>
+  // Override juice global settings <https://github.com/Automattic/juice#juicecodeblocks>
   juiceSettings: {
     tableElements: ['TABLE']
   },
