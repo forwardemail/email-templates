@@ -9,7 +9,7 @@ const Email = require('../lib');
 
 const root = path.join(__dirname, 'fixtures', 'emails');
 
-test('deep merges config', t => {
+test('deep merges config', (t) => {
   const email = new Email({
     transport: { jsonTransport: true },
     juiceResources: {
@@ -25,11 +25,11 @@ test('deep merges config', t => {
   );
 });
 
-test('returns itself without transport', t => {
+test('returns itself without transport', (t) => {
   t.true(new Email() instanceof Email);
 });
 
-test('inline css with juice using render without transport', async t => {
+test('inline css with juice using render without transport', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -49,7 +49,7 @@ test('inline css with juice using render without transport', async t => {
   t.is(color, 'red');
 });
 
-test('returns itself', t => {
+test('returns itself', (t) => {
   t.true(
     new Email({
       transport: {
@@ -59,7 +59,7 @@ test('returns itself', t => {
   );
 });
 
-test('allows custom nodemailer transport instances', t => {
+test('allows custom nodemailer transport instances', (t) => {
   t.true(
     new Email({
       transport: nodemailer.createTransport({
@@ -69,7 +69,7 @@ test('allows custom nodemailer transport instances', t => {
   );
 });
 
-test('send email', async t => {
+test('send email', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -101,7 +101,7 @@ test('send email', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
-test('throws with non-existing absolute template path', async t => {
+test('throws with non-existing absolute template path', async (t) => {
   const email = new Email({
     transport: {
       jsonTransport: true
@@ -122,7 +122,7 @@ test('throws with non-existing absolute template path', async t => {
   t.regex(error.message, /no such file or directory/);
 });
 
-test('sends with absolute template path', async t => {
+test('sends with absolute template path', async (t) => {
   const email = new Email({
     transport: {
       jsonTransport: true
@@ -143,7 +143,7 @@ test('sends with absolute template path', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
-test('send email with ejs template', async t => {
+test('send email with ejs template', async (t) => {
   const email = new Email({
     views: { root, options: { extension: 'ejs' } },
     message: {
@@ -174,7 +174,7 @@ test('send email with ejs template', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
-test('send email with subject prefix', async t => {
+test('send email with subject prefix', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -204,7 +204,7 @@ test('send email with subject prefix', async t => {
   t.is(message.subject, 'SUBJECTPREFIX Test email for niftylettuce');
 });
 
-test('send two emails with two different locals', async t => {
+test('send two emails with two different locals', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -244,7 +244,7 @@ test('send two emails with two different locals', async t => {
   t.pass();
 });
 
-test('send email with attachment', async t => {
+test('send email with attachment', async (t) => {
   const filePath = path.join(__dirname, 'fixtures', 'filename.png');
   const email = new Email({
     views: { root },
@@ -274,7 +274,7 @@ test('send email with attachment', async t => {
   t.true(Array.isArray(JSON.parse(res.message).attachments));
 });
 
-test('send email with locals.user.last_locale', async t => {
+test('send email with locals.user.last_locale', async (t) => {
   const email = new Email({
     views: { root },
     transport: {
@@ -302,7 +302,7 @@ test('send email with locals.user.last_locale', async t => {
   t.true(_.isObject(res));
 });
 
-test('send email with locals.locale', async t => {
+test('send email with locals.locale', async (t) => {
   const email = new Email({
     views: { root },
     transport: {
@@ -328,7 +328,7 @@ test('send email with locals.locale', async t => {
   t.true(_.isObject(res));
 });
 
-test('does not throw error with missing transport option (#293)', async t => {
+test('does not throw error with missing transport option (#293)', async (t) => {
   const email = new Email({
     views: { root },
     juiceResources: {
@@ -344,7 +344,7 @@ test('does not throw error with missing transport option (#293)', async t => {
   );
 });
 
-test('throws error with missing template on render call', async t => {
+test('throws error with missing template on render call', async (t) => {
   const email = new Email({
     views: { root },
     transport: {
@@ -364,9 +364,9 @@ test('throws error with missing template on render call', async t => {
   t.regex(error.message, /no such file or directory/);
 });
 
-test('send mail with custom render function and no templates', async t => {
+test('send mail with custom render function and no templates', async (t) => {
   const email = new Email({
-    render: view => {
+    render: (view) => {
       let res;
       if (view === 'noFolder/subject') {
         res = 'Test subject';
@@ -397,13 +397,13 @@ test('send mail with custom render function and no templates', async t => {
       locale: 'en'
     }
   });
-  const msg = JSON.parse(res.message);
+  const message = JSON.parse(res.message);
   t.true(_.isObject(res));
-  t.is(msg.subject, 'Test subject');
-  t.is(msg.html, 'Test html');
+  t.is(message.subject, 'Test subject');
+  t.is(message.html, 'Test html');
 });
 
-test('send email with html to text disabled', async t => {
+test('send email with html to text disabled', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -436,7 +436,7 @@ test('send email with html to text disabled', async t => {
   t.regex(message.text, /This is just a text test/);
 });
 
-test('send email with missing text template', async t => {
+test('send email with missing text template', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -468,7 +468,7 @@ test('send email with missing text template', async t => {
   t.regex(message.text, /This is just a html test/);
 });
 
-test('inline css with juice using render', async t => {
+test('inline css with juice using render', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -491,7 +491,7 @@ test('inline css with juice using render', async t => {
   t.is(color, 'red');
 });
 
-test('inline css with juice using send', async t => {
+test('inline css with juice using send', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -520,7 +520,7 @@ test('inline css with juice using send', async t => {
   t.is(color, 'red');
 });
 
-test('render text.pug only if html.pug does not exist', async t => {
+test('render text.pug only if html.pug does not exist', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -550,7 +550,7 @@ test('render text.pug only if html.pug does not exist', async t => {
   t.is(res.message.text, 'Hi niftylettuce,\nThis is just a test.');
 });
 
-test('preserve originalMessage in response object from sendMail', async t => {
+test('preserve originalMessage in response object from sendMail', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -580,7 +580,7 @@ test('preserve originalMessage in response object from sendMail', async t => {
   t.is(res.originalMessage.text, 'Hi niftylettuce,\nThis is just a test.');
 });
 
-test('render text-only email with `textOnly` option', async t => {
+test('render text-only email with `textOnly` option', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -612,7 +612,7 @@ test('render text-only email with `textOnly` option', async t => {
   t.is(res.message.text, 'Hi niftylettuce,\nThis is just a text test.');
 });
 
-test('override config message via send options', async t => {
+test('override config message via send options', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -642,7 +642,7 @@ test('override config message via send options', async t => {
   t.is(res.message.from.address, 'niftylettuce+from+via+send@gmail.com');
 });
 
-test('should throw an error when no tmpl passed', async t => {
+test('should throw an error when no tmpl passed', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -663,7 +663,7 @@ test('should throw an error when no tmpl passed', async t => {
   t.regex(error.message, /No content was passed/);
 });
 
-test('should throw an error when tmpl dir not found', async t => {
+test('should throw an error when tmpl dir not found', async (t) => {
   const email = new Email({
     views: { root },
     message: {
@@ -687,7 +687,7 @@ test('should throw an error when tmpl dir not found', async t => {
   t.regex(error.message, /No content was passed/);
 });
 
-test('should throw an error when tmpl dir exists but no props', async t => {
+test('should throw an error when tmpl dir exists but no props', async (t) => {
   const email = new Email({
     views: { root },
     message: {

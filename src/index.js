@@ -185,14 +185,14 @@ class Email {
       template = template.path;
     }
 
-    const str = this.config.getPath(type, template, locals);
+    const string = this.config.getPath(type, template, locals);
     if (!this.config.customRender) {
-      const exists = await this.templateExists(str);
+      const exists = await this.templateExists(string);
       if (!exists) return;
     }
 
     return this.render(
-      str,
+      string,
       {
         ...locals,
         ...(type === 'html' ? {} : { pretty: false })
@@ -261,7 +261,7 @@ class Email {
 
     if (template && (!message.subject || !message.html || !message.text)) {
       const [subject, html, text] = await Promise.all(
-        ['subject', 'html', 'text'].map(type =>
+        ['subject', 'html', 'text'].map((type) =>
           this.checkAndRender(type, template, locals)
         )
       );
@@ -333,10 +333,10 @@ class Email {
     debug('locals (keys only): %O', Object.keys(locals));
 
     // get all available templates
-    const obj = await this.renderAll(template, locals, message);
+    const object = await this.renderAll(template, locals, message);
 
     // assign the object variables over to the message
-    Object.assign(message, obj);
+    Object.assign(message, object);
 
     if (this.config.preview) {
       debug('using `preview-email` to preview email');

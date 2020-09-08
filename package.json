@@ -16,44 +16,44 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^3.0.10",
-    "@sindresorhus/is": "^2.1.1",
-    "consolidate": "^0.15.1",
+    "@ladjs/i18n": "^6.0.0",
+    "@sindresorhus/is": "^3.1.2",
+    "consolidate": "^0.16.0",
     "debug": "^4.1.1",
     "get-paths": "^0.0.7",
     "html-to-text": "^5.1.1",
-    "juice": "^6.0.0",
-    "lodash": "^4.17.15",
-    "nodemailer": "^6.4.6",
+    "juice": "^7.0.0",
+    "lodash": "^4.17.20",
+    "nodemailer": "^6.4.11",
     "pify": "^5.0.0",
-    "preview-email": "^2.0.1"
+    "preview-email": "^2.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "ava": "2.x",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "ava": "^3.12.1",
     "cheerio": "^1.0.0-rc.3",
-    "codecov": "^3.6.5",
-    "cross-env": "6.x",
-    "ejs": "^3.1.2",
-    "eslint": "6.x",
+    "codecov": "^3.7.2",
+    "cross-env": "^7.0.2",
+    "ejs": "^3.1.5",
+    "eslint": "^7.8.1",
     "eslint-config-xo-lass": "^1.0.3",
     "eslint-plugin-node": "^11.1.0",
     "fixpack": "^3.0.6",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.3.0",
     "nodemailer-sendgrid": "^1.0.3",
-    "nyc": "^15.0.1",
-    "pug": "^2.0.4",
-    "remark-cli": "^8.0.0",
-    "remark-preset-github": "^1.0.0",
-    "xo": "0.25"
+    "nyc": "^15.1.0",
+    "pug": "^3.0.0",
+    "remark-cli": "^8.0.1",
+    "remark-preset-github": "^3.0.0",
+    "xo": "^0.33.1"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=8.3.0"
   },
   "files": [
     "lib",
@@ -136,6 +136,9 @@
     ],
     "ignores": [
       "config.js"
-    ]
+    ],
+    "rules": {
+      "unicorn/prevent-abbreviations": "off"
+    }
   }
 }
