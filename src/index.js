@@ -119,7 +119,9 @@ class Email {
 
     // Override juice global settings https://github.com/Automattic/juice#juicecodeblocks
     if (_.isObject(this.config.juiceSettings)) {
-      _.forEach(this.config.juiceSettings, (key, value) => juice[key] = value);
+      _.forEach(this.config.juiceSettings, (key, value) => {
+        juice[key] = value;
+      });
     }
 
     debug('transformed config %O', this.config);
@@ -176,7 +178,6 @@ class Email {
   }
 
   async checkAndRender(type, template, locals) {
-
     let juiceRenderResources = {};
 
     if (_.isObject(template)) {
@@ -190,10 +191,14 @@ class Email {
       if (!exists) return;
     }
 
-    return this.render(str, {
-      ...locals,
-      ...(type === 'html' ? {} : { pretty: false })
-    }, juiceRenderResources);
+    return this.render(
+      str,
+      {
+        ...locals,
+        ...(type === 'html' ? {} : { pretty: false })
+      },
+      juiceRenderResources
+    );
   }
 
   // promise version of consolidate's render
@@ -201,7 +206,11 @@ class Email {
   // <https://github.com/queckezz/koa-views>
   async render(view, locals = {}) {
     const { map, engineSource } = this.config.views.options;
-    const { filePath, paths, juiceRenderResources } = await this.getTemplatePath(view);
+    const {
+      filePath,
+      paths,
+      juiceRenderResources
+    } = await this.getTemplatePath(view);
     if (paths.ext === 'html' && !map) {
       const res = await readFile(filePath, 'utf8');
       return res;
