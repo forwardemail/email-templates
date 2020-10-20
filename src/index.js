@@ -340,9 +340,9 @@ class Email {
 
     if (this.config.preview) {
       debug('using `preview-email` to preview email');
-      if (_.isObject(this.config.preview))
-        await previewEmail(message, this.config.preview);
-      else await previewEmail(message);
+      await (_.isObject(this.config.preview)
+        ? previewEmail(message, this.config.preview)
+        : previewEmail(message));
     }
 
     if (!this.config.send) {
