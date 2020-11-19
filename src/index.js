@@ -8,7 +8,6 @@ const consolidate = require('consolidate');
 const debug = require('debug')('email-templates');
 const getPaths = require('get-paths');
 const htmlToText = require('html-to-text');
-const is = require('@sindresorhus/is');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
 const previewEmail = require('preview-email');
@@ -293,10 +292,9 @@ class Email {
     // throw an error that says at least one must be found
     // otherwise the email would be blank (defeats purpose of email-templates)
     if (
-      (!is.string(message.subject) ||
-        is.emptyStringOrWhitespace(message.subject)) &&
-      (!is.string(message.text) || is.emptyStringOrWhitespace(message.text)) &&
-      (!is.string(message.html) || is.emptyStringOrWhitespace(message.html)) &&
+      (!_.isString(message.subject) || _.isEmpty(_.trim(message.subject))) &&
+      (!_.isString(message.text) || _.isEmpty(_.trim(message.text))) &&
+      (!_.isString(message.html) || _.isEmpty(_.trim(message.html))) &&
       _.isEmpty(message.attachments)
     )
       throw new Error(

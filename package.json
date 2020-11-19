@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "@ladjs/i18n": "^6.0.5",
-    "@sindresorhus/is": "^4.0.0",
     "consolidate": "^0.16.0",
     "debug": "^4.2.0",
     "get-paths": "^0.0.7",
