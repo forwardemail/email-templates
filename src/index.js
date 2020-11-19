@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
@@ -7,10 +8,8 @@ const consolidate = require('consolidate');
 const debug = require('debug')('email-templates');
 const getPaths = require('get-paths');
 const htmlToText = require('html-to-text');
-const is = require('@sindresorhus/is');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
-const pify = require('pify');
 const previewEmail = require('preview-email');
 
 // promise version of `juice.juiceResources`
@@ -24,8 +23,8 @@ const juiceResources = (html, options) => {
 };
 
 const env = (process.env.NODE_ENV || 'development').toLowerCase();
-const stat = pify(fs.stat);
-const readFile = pify(fs.readFile);
+const stat = util.promisify(fs.stat);
+const readFile = util.promisify(fs.readFile);
 
 class Email {
   constructor(config = {}) {
@@ -246,7 +245,7 @@ class Email {
       if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
     }
 
-    const res = await pify(renderFn)(filePath, locals);
+    const res = await util.promisify(renderFn)(filePath, locals);
     // transform the html with juice using remote paths
     // google now supports media queries
     // https://developers.google.com/gmail/design/reference/supported_css
@@ -293,10 +292,9 @@ class Email {
     // throw an error that says at least one must be found
     // otherwise the email would be blank (defeats purpose of email-templates)
     if (
-      (!is.string(message.subject) ||
-        is.emptyStringOrWhitespace(message.subject)) &&
-      (!is.string(message.text) || is.emptyStringOrWhitespace(message.text)) &&
-      (!is.string(message.html) || is.emptyStringOrWhitespace(message.html)) &&
+      (!_.isString(message.subject) || _.isEmpty(_.trim(message.subject))) &&
+      (!_.isString(message.text) || _.isEmpty(_.trim(message.text))) &&
+      (!_.isString(message.html) || _.isEmpty(_.trim(message.html))) &&
       _.isEmpty(message.attachments)
     )
       throw new Error(

@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "@ladjs/i18n": "^6.0.5",
-    "@sindresorhus/is": "^4.0.0",
     "consolidate": "^0.16.0",
     "debug": "^4.2.0",
     "get-paths": "^0.0.7",
@@ -25,7 +24,6 @@
     "juice": "^7.0.0",
     "lodash": "^4.17.20",
     "nodemailer": "^6.4.14",
-    "pify": "^5.0.0",
     "preview-email": "^2.0.2"
   },
   "devDependencies": {
