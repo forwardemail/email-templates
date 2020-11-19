@@ -25,7 +25,6 @@
     "juice": "^7.0.0",
     "lodash": "^4.17.20",
     "nodemailer": "^6.4.14",
-    "pify": "^5.0.0",
     "preview-email": "^2.0.2"
   },
   "devDependencies": {
