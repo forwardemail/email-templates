@@ -16,39 +16,39 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^6.0.5",
+    "@ladjs/i18n": "^7.0.1",
     "consolidate": "^0.16.0",
-    "debug": "^4.2.0",
+    "debug": "^4.3.1",
     "get-paths": "^0.0.7",
-    "html-to-text": "^5.1.1",
+    "html-to-text": "^6.0.0",
     "juice": "^7.0.0",
     "lodash": "^4.17.20",
-    "nodemailer": "^6.4.14",
-    "preview-email": "^2.0.2"
+    "nodemailer": "^6.4.16",
+    "preview-email": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/cli": "^7.12.7",
+    "@babel/core": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "ava": "^3.13.0",
     "cheerio": "^1.0.0-rc.3",
-    "codecov": "^3.8.0",
+    "codecov": "^3.8.1",
     "cross-env": "^7.0.2",
     "ejs": "^3.1.5",
-    "eslint": "^7.11.0",
+    "eslint": "^7.14.0",
     "eslint-config-xo-lass": "^1.0.4",
     "eslint-plugin-node": "^11.1.0",
     "fixpack": "^3.0.6",
     "husky": "^4.3.0",
-    "lint-staged": "^10.4.2",
+    "lint-staged": "^10.5.1",
     "nodemailer-sendgrid": "^1.0.3",
     "nyc": "^15.1.0",
     "pug": "^3.0.0",
     "remark-cli": "^9.0.0",
-    "remark-preset-github": "^3.0.3",
-    "xo": "^0.34.1"
+    "remark-preset-github": "^3.0.4",
+    "xo": "^0.35.0"
   },
   "engines": {
     "node": ">=8.3.0"
