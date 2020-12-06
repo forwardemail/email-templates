@@ -35,6 +35,7 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
 * [Options](#options)
 * [Plugins](#plugins)
 * [Breaking Changes](#breaking-changes)
+  * [v8.0.0](#v800)
   * [v7.0.0](#v700)
   * [v6.0.0](#v600)
   * [v5.0.0](#v500)
@@ -778,6 +779,21 @@ We also highly recommend to add to your default `config.locals` the following:
 ## Breaking Changes
 
 See the [Releases](https://github.com/forwardemail/email-templates/releases) page for an up to date changelog.
+
+### v8.0.0
+
+We upgraded [html-to-text](https://github.com/html-to-text/node-html-to-text) to v6. As a result, automatically generated text versions of your emails will look slightly different, as per the example below:
+
+```diff
++Hi,
++
++email-templates rocks!
++
++Cheers,
++The team
+-Hi,email-templates rocks!
+-Cheers,The team
+```
 
 ### v7.0.0
 
