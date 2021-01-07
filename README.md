@@ -459,6 +459,68 @@ Note that if you use [Lad][], you have a built-in filter called `translate`:
 p: :translate(locale) Welcome to Mars, the red planet.
 ```
 
+#### Localization using Handlebars template engine
+
+If you are using handlebars and you are using localization files with named values, you will quickly see that
+there is no way to properly call the `t` function in your template and specify named values.
+
+If, for example you have this in your translation file:
+
+```json
+{
+  "greetings": "Hi {{ firstname }}",
+  "welcome_message": "Welcome to Mars, the red planet."
+}
+```
+
+And you would like to use it in your template like this:
+
+> `html.hbs`:
+
+```handlebars
+<p>{{ t "greetings" firstname="Marcus" }}</p>
+<p>{{ t "welcome_message" }}</p>
+```
+
+This would not work because the second argument sent by handlebars to the function would be a handlebar helper
+options object instead of just the named values.
+
+A possible workaround you can use is to introduce your own translation helper in your template locals:
+
+```js
+email
+  .send({
+    template: 'mars',
+    message: {
+      to: 'elon@spacex.com'
+    },
+    locals: {
+      locale: 'en', // <------ CUSTOMIZE LOCALE HERE (defaults to `i18n.defaultLocale` - `en`)
+      // is your user french?
+      // locale: 'fr',
+      name: 'Elon',
+      $t(key, options) {
+        // <------ THIS IS OUR OWN TRANSLATION HELPER
+        return options.data.root.t(
+          { phrase: key, locale: options.data.root.locale },
+          options.hash
+        );
+      }
+    }
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+Then slightly modify your templates to use your own translation helper functions.
+
+> `html.hbs`:
+
+```handlebars
+<p>{{ $t "greetings" firstname="Marcus" }}</p>
+<p>{{ $t "welcome_message" }}</p>
+```
+
 ### Text-Only Email (no HTML)
 
 If you wish to have only a text-based version of your email you can simply pass the option `textOnly: true`.
