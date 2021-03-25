@@ -118,9 +118,9 @@ class Email {
 
     // Override juice global settings https://github.com/Automattic/juice#juicecodeblocks
     if (_.isObject(this.config.juiceSettings)) {
-      _.forEach(this.config.juiceSettings, (key, value) => {
+      for (const [key, value] of Object.entries(this.config.juiceSettings)) {
         juice[key] = value;
-      });
+      }
     }
 
     debug('transformed config %O', this.config);
