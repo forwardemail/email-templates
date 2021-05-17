@@ -1094,14 +1094,14 @@
     underscore "~1.13.1"
     underscore.deep "~0.5.1"
 
-"@ladjs/i18n@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@ladjs/i18n/-/i18n-7.2.0.tgz#2855f8b2f90776e9920b41925ac03f30aa539e73"
-  integrity sha512-WpMkFxaBeQ6WKbN9WnT/MZ/QGxPkNYvDqYCdxu6s4dgfSjtEb9IUQfCM36K8FvqAMukHwnvH8IoEWpDZK12Pnw==
+"@ladjs/i18n@^7.2.2":
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/@ladjs/i18n/-/i18n-7.2.2.tgz#4148fb848fafbf9c20e64b1b7cb0e8b0c7c5cf56"
+  integrity sha512-N9jR6Fnd7gQ4Z1BMvjgNqAukC/B69D85NmLZ95w/X7ZwO1cdqr73DiOoWoYvswe5wYCbGpqDdqP0cxYo4BsrEw==
   dependencies:
     "@hapi/boom" "^9.1.2"
+    "@ladjs/country-language" "^0.2.1"
     boolean "3.0.4"
-    country-language "^0.1.7"
     debug "^4.3.1"
     i18n "^0.13.3"
     i18n-locales "^0.0.5"
@@ -2466,14 +2466,6 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
-
-country-language@^0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/country-language/-/country-language-0.1.7.tgz#7870f4ba125db9a6071f19737bd9ef9343ae35db"
-  integrity sha1-eHD0uhJduaYHHxlze9nvk0OuNds=
-  dependencies:
-    underscore "~1.7.0"
-    underscore.deep "~0.5.1"
 
 cross-env@^7.0.3:
   version "7.0.3"
@@ -8275,11 +8267,6 @@ underscore@~1.13.1:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
   integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
-
-underscore@~1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.7.0.tgz#6bbaf0877500d36be34ecaa584e0db9fef035209"
-  integrity sha1-a7rwh3UA02vjTsqlhODbn+8DUgk=
 
 unherit@^1.0.4:
   version "1.1.3"

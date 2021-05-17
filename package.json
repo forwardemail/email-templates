@@ -16,7 +16,7 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^7.2.0",
+    "@ladjs/i18n": "^7.2.2",
     "consolidate": "^0.16.0",
     "debug": "^4.3.1",
     "get-paths": "^0.0.7",
