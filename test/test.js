@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
-const Email = require('../lib');
+const Email = require('../lib/index.js');
 
 const root = path.join(__dirname, 'fixtures', 'emails');
 

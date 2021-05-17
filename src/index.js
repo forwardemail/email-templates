@@ -205,11 +205,8 @@ class Email {
   // <https://github.com/queckezz/koa-views>
   async render(view, locals = {}) {
     const { map, engineSource } = this.config.views.options;
-    const {
-      filePath,
-      paths,
-      juiceRenderResources
-    } = await this.getTemplatePath(view);
+    const { filePath, paths, juiceRenderResources } =
+      await this.getTemplatePath(view);
     if (paths.ext === 'html' && !map) {
       const res = await readFile(filePath, 'utf8');
       return res;
