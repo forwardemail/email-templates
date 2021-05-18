@@ -16,7 +16,7 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^7.2.2",
+    "@ladjs/i18n": "^7.2.3",
     "consolidate": "^0.16.0",
     "debug": "^4.3.1",
     "get-paths": "^0.0.7",
@@ -27,8 +27,8 @@
     "preview-email": "^3.0.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.16",
-    "@babel/core": "^7.14.2",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
