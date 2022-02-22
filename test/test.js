@@ -366,7 +366,7 @@ test('throws error with missing template on render call', async (t) => {
 
 test('send mail with custom render function and no templates', async (t) => {
   const email = new Email({
-    render: (view) => {
+    render(view) {
       let res;
       if (view === 'noFolder/subject') {
         res = 'Test subject';
