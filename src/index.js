@@ -234,13 +234,15 @@ class Email {
 
       // support `locals.user.last_locale` (variable based name lastLocaleField)
       // (e.g. for <https://lad.js.org>)
+      const locale = i18n.getLocale();
       if (
         _.isObject(locals.user) &&
         _.isString(locals.user[this.config.lastLocaleField])
       )
         locals.locale = locals.user[this.config.lastLocaleField];
+      else if (!_.isString(locals.locale)) locals.locale = locale;
 
-      if (_.isString(locals.locale)) i18n.setLocale(locals.locale);
+      if (locale !== locals.locale) i18n.setLocale(locals.locale);
     }
 
     const res = await util.promisify(renderFn)(filePath, locals);
