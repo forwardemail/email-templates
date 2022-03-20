@@ -35,6 +35,7 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
 * [Options](#options)
 * [Plugins](#plugins)
 * [Breaking Changes](#breaking-changes)
+  * [v9.0.0](#v900)
   * [v8.0.0](#v800)
   * [v7.0.0](#v700)
   * [v6.0.0](#v600)
@@ -841,6 +842,10 @@ We also highly recommend to add to your default `config.locals` the following:
 ## Breaking Changes
 
 See the [Releases](https://github.com/forwardemail/email-templates/releases) page for an up to date changelog.
+
+### v9.0.0
+
+This package now requires Node v10.x+ due to [web-resource-inliner](https://github.com/jrit/web-resource-inliner/blob/master/HISTORY.md#2020-07-09-v500) dependency.
 
 ### v8.0.0
 

@@ -3,6 +3,7 @@ node_js:
   - '10'
   - '12'
   - '14'
+  - '16'
 script:
   npm run test-coverage
 after_success:
