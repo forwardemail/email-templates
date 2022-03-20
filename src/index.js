@@ -8,7 +8,7 @@ const _ = require('lodash');
 const consolidate = require('consolidate');
 const debug = require('debug')('email-templates');
 const getPaths = require('get-paths');
-const htmlToText = require('html-to-text');
+const { convert } = require('html-to-text');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
 const previewEmail = require('preview-email');
@@ -80,9 +80,9 @@ class Email {
         customRender: false,
         // force text-only rendering of template (disregards template folder)
         textOnly: false,
-        // <https://github.com/werk85/node-html-to-text>
+        // <https://github.com/html-to-text/node-html-to-text>
         htmlToText: {
-          ignoreImage: true
+          selectors: [{ selector: 'img', format: 'skip' }]
         },
         subjectPrefix: false,
         // <https://github.com/Automattic/juice>
@@ -280,10 +280,8 @@ class Email {
       // we'd use nodemailer-html-to-text plugin
       // but we really don't need to support cid
       // <https://github.com/andris9/nodemailer-html-to-text>
-      message.text = htmlToText.fromString(
-        message.html,
-        this.config.htmlToText
-      );
+      // (and it is also not updated with latest html-to-text)
+      message.text = convert(message.html, this.config.htmlToText);
 
     // if we only want a text-based version of the email
     if (this.config.textOnly) delete message.html;
