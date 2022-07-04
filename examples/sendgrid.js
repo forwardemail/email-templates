@@ -11,7 +11,7 @@ const transport = nodemailer.createTransport(
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   // uncomment below to send emails in development/test env:
   // send: true

@@ -1,15 +1,12 @@
 # [**Email Templates**](https://github.com/forwardemail/email-templates)
 
-[![build status](https://travis-ci.com/forwardemail/email-templates.svg)](https://travis-ci.com/forwardemail/email-templates)
-[![code coverage](https://img.shields.io/codecov/c/github/forwardemail/email-templates.svg)](https://codecov.io/gh/forwardemail/email-templates)
+[![build status](https://github.com/forwardemail/email-templates/actions/workflows/ci.yml/badge.svg)](https://github.com/forwardemail/email-templates/actions/workflows/ci.yml)
 [![code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![made with lass](https://img.shields.io/badge/made_with-lass-95CC28.svg)](https://lass.js.org)
 [![license](https://img.shields.io/github/license/forwardemail/email-templates.svg)](LICENSE)
 
-> :heart: Love this project? Support <a href="https://github.com/niftylettuce" target="_blank">@niftylettuce's</a> [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software) on <a href="https://patreon.com/niftylettuce" target="_blank">Patreon</a> or <a href="https://paypal.me/niftylettuce">PayPal</a> :unicorn:
-
-Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with [Lad][].
+Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for [Forward Email][forward-email] and [Lad][].
 
 
 ## Table of Contents
@@ -35,6 +32,7 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
 * [Options](#options)
 * [Plugins](#plugins)
 * [Breaking Changes](#breaking-changes)
+  * [v10.0.0](#v1000)
   * [v9.0.0](#v900)
   * [v8.0.0](#v800)
   * [v7.0.0](#v700)
@@ -58,12 +56,6 @@ Create, [preview][preview-email], and send custom email templates for [Node.js][
 npm install email-templates pug
 ```
 
-[yarn][]:
-
-```sh
-yarn add email-templates pug
-```
-
 
 ## Preview
 
@@ -82,10 +74,10 @@ See the example below for [Open Email Previews in Firefox](#open-email-previews-
 
 #### Environment Flag
 
-If you run into any issues with configuration, files, templates, locals, etc, then you can use the `DEBUG` environment flag:
+If you run into any issues with configuration, files, templates, locals, etc, then you can use the `NODE_DEBUG` environment flag:
 
 ```sh
-DEBUG=email-templates node app.js
+NODE_DEBUG=email-templates node app.js
 ```
 
 This will output to the console all debug statements in our codebase for this package.
@@ -124,7 +116,7 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   // uncomment below to send emails in development/test env:
   // send: true
@@ -184,7 +176,7 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com',
+    from: 'test@example.com',
     attachments: [
       {
         filename: 'text1.txt',
@@ -215,7 +207,7 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   transport: {
     jsonTransport: true
@@ -414,7 +406,7 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   transport: {
     jsonTransport: true
@@ -533,7 +525,7 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   transport: {
     jsonTransport: true
@@ -572,7 +564,7 @@ const env = process.env.NODE_ENV || 'development';
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   transport: {
     jsonTransport: true
@@ -594,7 +586,7 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com'
+    from: 'test@example.com'
   },
   transport: {
     jsonTransport: true
@@ -633,12 +625,6 @@ email
    npm install ejs
    ```
 
-   [yarn][]:
-
-   ```sh
-   yarn add ejs
-   ```
-
 2. Set the extension in options and send an email
 
    ```js
@@ -646,7 +632,7 @@ email
 
    const email = new Email({
      message: {
-       from: 'niftylettuce@gmail.com'
+       from: 'test@example.com'
      },
      transport: {
        jsonTransport: true
@@ -672,12 +658,12 @@ const Email = require('email-templates');
 
 const email = new Email({
   message: {
-    from: 'niftylettuce@gmail.com',
+    from: 'test@example.com',
     headers: {
       'X-Some-Custom-Thing': 'Some-Value'
     },
     list: {
-      unsubscribe: 'https://niftylettuce.com/unsubscribe'
+      unsubscribe: 'https://example.com/unsubscribe'
     }
   },
   transport: {
@@ -843,6 +829,10 @@ We also highly recommend to add to your default `config.locals` the following:
 
 See the [Releases](https://github.com/forwardemail/email-templates/releases) page for an up to date changelog.
 
+### v10.0.0
+
+This package now requires Node v14+.
+
 ### v9.0.0
 
 This package now requires Node v10.x+ due to [web-resource-inliner](https://github.com/jrit/web-resource-inliner/blob/master/HISTORY.md#2020-07-09-v500) dependency.
@@ -871,7 +861,7 @@ We upgraded `preview-email` to `v2.0.0`, which supports stream attachments, and 
 * Performance should be significantly improved as the rendering of subject, html, and text parts now occurs asynchronously in parallel (previously it was in series and had blocking lookup calls).
 * We removed [bluebird][] and replaced it with a lightweight alternative [pify][] (since all we were using was the `Promise.promisify` method from `bluebird` as well).
 * This package now only supports Node v8.x+ (due to [preview-email][]'s [open][] dependency requiring it).
-* Configuration for the `preview` option has slightly changed, which now allows you to [specify a custom template and stylesheets](https://github.com/niftylettuce/preview-email#custom-preview-template-and-stylesheets) for preview rendering.
+* Configuration for the `preview` option has slightly changed, which now allows you to [specify a custom template and stylesheets](https://github.com/forwardemail/preview-email#custom-preview-template-and-stylesheets) for preview rendering.
 
   > If you were using a custom `preview` option before, you will need to change it slightly:
 
@@ -951,7 +941,6 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 * [lass][] - Scaffold a modern boilerplate for [Node.js][node]
 * [cabin][] - Logging and analytics solution for [Node.js][node], [Lad][], [Koa][], and [Express][]
 * [forward-email][] - Free, encrypted, and open-source email forwarding service for custom domains
-* [lipo][] - Free image manipulation API service built on top of [Sharp][]
 
 
 ## Contributors
@@ -971,8 +960,6 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 [node]: https://nodejs.org
 
 [npm]: https://www.npmjs.com/
-
-[yarn]: https://yarnpkg.com/
 
 [pug]: https://pugjs.org
 
@@ -1000,7 +987,7 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 
 [cache-pug-templates]: https://github.com/ladjs/cache-pug-templates
 
-[preview-email]: https://github.com/niftylettuce/preview-email
+[preview-email]: https://github.com/forwardemail/preview-email
 
 [attachments]: https://nodemailer.com/message/attachments/
 
@@ -1010,17 +997,13 @@ Instead of having to configure this for yourself, you could just use [Lad][] ins
 
 [forward-email]: https://forwardemail.net
 
-[lipo]: https://lipo.io
-
 [koa]: https://koajs.com/
-
-[sharp]: http://sharp.dimens.io/
 
 [express]: https://expressjs.com
 
 [open-options]: https://github.com/sindresorhus/open#options
 
-[mandarin]: https://github.com/niftylettuce/mandarin
+[mandarin]: https://github.com/ladjs/mandarin
 
 [consolidate]: https://github.com/tj/consolidate.js
 

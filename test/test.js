@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
-const Email = require('../lib/index.js');
+const Email = require('..');
 
 const root = path.join(__dirname, 'fixtures', 'emails');
 
@@ -33,7 +33,7 @@ test('inline css with juice using render without transport', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     juiceResources: {
       webResources: {
@@ -42,7 +42,7 @@ test('inline css with juice using render without transport', async (t) => {
     }
   });
   const html = await email.render('test/html', {
-    name: 'niftylettuce'
+    name: 'test'
   });
   const $ = cheerio.load(html);
   const color = $('p').css('color');
@@ -73,7 +73,7 @@ test('send email', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -87,11 +87,11 @@ test('send email', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   const message = JSON.parse(res.message);
@@ -147,7 +147,7 @@ test('send email with ejs template', async (t) => {
   const email = new Email({
     views: { root, options: { extension: 'ejs' } },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -161,15 +161,15 @@ test('send email with ejs template', async (t) => {
   const res = await email.send({
     template: 'test-ejs',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   const message = JSON.parse(res.message);
-  t.is(message.subject, 'Test email for niftylettuce');
+  t.is(message.subject, 'Test email for test');
   t.regex(message.html, /This is just a html test/);
   t.regex(message.text, /This is just a text test/);
 });
@@ -178,7 +178,7 @@ test('send email with subject prefix', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -193,22 +193,22 @@ test('send email with subject prefix', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   const message = JSON.parse(res.message);
-  t.is(message.subject, 'SUBJECTPREFIX Test email for niftylettuce');
+  t.is(message.subject, 'SUBJECTPREFIX Test email for test');
 });
 
 test('send two emails with two different locals', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -222,25 +222,25 @@ test('send two emails with two different locals', async (t) => {
   let res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce1' }
+    locals: { name: 'test1' }
   });
   res.message = JSON.parse(res.message);
-  t.is(res.message.subject, 'Test email for niftylettuce1');
+  t.is(res.message.subject, 'Test email for test1');
   res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce2' }
+    locals: { name: 'test2' }
   });
   res.message = JSON.parse(res.message);
-  t.is(res.message.subject, 'Test email for niftylettuce2');
+  t.is(res.message.subject, 'Test email for test2');
   t.pass();
 });
 
@@ -267,7 +267,7 @@ test('send email with attachment', async (t) => {
   ];
   const res = await email.send({
     message: {
-      from: 'niftylettuce+from@gmail.com',
+      from: 'test+from@gmail.com',
       attachments
     }
   });
@@ -290,10 +290,10 @@ test('send email with locals.user.last_locale', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com'
+      to: 'test+to@gmail.com'
     },
     locals: {
-      name: 'niftylettuce',
+      name: 'test',
       user: {
         last_locale: 'en'
       }
@@ -318,10 +318,10 @@ test('send email with locals.locale', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com'
+      to: 'test+to@gmail.com'
     },
     locals: {
-      name: 'niftylettuce',
+      name: 'test',
       locale: 'en'
     }
   });
@@ -339,7 +339,7 @@ test('does not throw error with missing transport option (#293)', async (t) => {
   });
   await t.notThrowsAsync(
     email.render('test/html', {
-      name: 'niftylettuce'
+      name: 'test'
     })
   );
 });
@@ -358,7 +358,7 @@ test('throws error with missing template on render call', async (t) => {
   });
   const error = await t.throwsAsync(
     email.render('missing', {
-      name: 'niftylettuce'
+      name: 'test'
     })
   );
   t.regex(error.message, /no such file or directory/);
@@ -390,10 +390,10 @@ test('send mail with custom render function and no templates', async (t) => {
   const res = await email.send({
     template: 'noFolder',
     message: {
-      to: 'niftylettuce+to@gmail.com'
+      to: 'test+to@gmail.com'
     },
     locals: {
-      name: 'niftylettuce',
+      name: 'test',
       locale: 'en'
     }
   });
@@ -407,7 +407,7 @@ test('send email with html to text disabled', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -422,11 +422,11 @@ test('send email with html to text disabled', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   const message = JSON.parse(res.message);
@@ -440,7 +440,7 @@ test('send email with missing text template', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -454,11 +454,11 @@ test('send email with missing text template', async (t) => {
   const res = await email.send({
     template: 'test-html-only',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   const message = JSON.parse(res.message);
@@ -472,7 +472,7 @@ test('inline css with juice using render', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -484,7 +484,7 @@ test('inline css with juice using render', async (t) => {
     }
   });
   const html = await email.render('test/html', {
-    name: 'niftylettuce'
+    name: 'test'
   });
   const $ = cheerio.load(html);
   const color = $('p').css('color');
@@ -495,7 +495,7 @@ test('inline css with juice using send', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -509,9 +509,9 @@ test('inline css with juice using send', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com'
+      to: 'test+to@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   const message = JSON.parse(res.message);
@@ -524,7 +524,7 @@ test('render text.pug only if html.pug does not exist', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -538,23 +538,23 @@ test('render text.pug only if html.pug does not exist', async (t) => {
   const res = await email.send({
     template: 'test-text-only',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   res.message = JSON.parse(res.message);
   t.true(_.isUndefined(res.message.html));
-  t.is(res.message.text, 'Hi niftylettuce,\nThis is just a test.');
+  t.is(res.message.text, 'Hi test,\nThis is just a test.');
 });
 
 test('preserve originalMessage in response object from sendMail', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -568,23 +568,23 @@ test('preserve originalMessage in response object from sendMail', async (t) => {
   const res = await email.send({
     template: 'test-text-only',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   t.true(_.isObject(res.originalMessage));
   t.true(_.isUndefined(res.originalMessage.html));
-  t.is(res.originalMessage.text, 'Hi niftylettuce,\nThis is just a test.');
+  t.is(res.originalMessage.text, 'Hi test,\nThis is just a test.');
 });
 
 test('render text-only email with `textOnly` option', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -600,23 +600,23 @@ test('render text-only email with `textOnly` option', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   res.message = JSON.parse(res.message);
   t.true(_.isUndefined(res.message.html));
-  t.is(res.message.text, 'Hi niftylettuce,\nThis is just a text test.');
+  t.is(res.message.text, 'Hi test,\nThis is just a text test.');
 });
 
 test('override config message via send options', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -630,23 +630,23 @@ test('override config message via send options', async (t) => {
   const res = await email.send({
     template: 'test',
     message: {
-      from: 'niftylettuce+from+via+send@gmail.com',
-      to: 'niftylettuce+to@gmail.com',
-      cc: 'niftylettuce+cc@gmail.com',
-      bcc: 'niftylettuce+bcc@gmail.com'
+      from: 'test+from+via+send@gmail.com',
+      to: 'test+to@gmail.com',
+      cc: 'test+cc@gmail.com',
+      bcc: 'test+bcc@gmail.com'
     },
-    locals: { name: 'niftylettuce' }
+    locals: { name: 'test' }
   });
   t.true(_.isObject(res));
   res.message = JSON.parse(res.message);
-  t.is(res.message.from.address, 'niftylettuce+from+via+send@gmail.com');
+  t.is(res.message.from.address, 'test+from+via+send@gmail.com');
 });
 
 test('should throw an error when no tmpl passed', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -658,7 +658,7 @@ test('should throw an error when no tmpl passed', async (t) => {
     }
   });
   const error = await t.throwsAsync(
-    email.send({ message: { to: 'niftylettuce+to@gmail.com' } })
+    email.send({ message: { to: 'test+to@gmail.com' } })
   );
   t.regex(error.message, /No content was passed/);
 });
@@ -667,7 +667,7 @@ test('should throw an error when tmpl dir not found', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -681,7 +681,7 @@ test('should throw an error when tmpl dir not found', async (t) => {
   const error = await t.throwsAsync(
     email.send({
       template: 'this-template-dir-does-not-exist',
-      message: { to: 'niftylettuce+to@gmail.com' }
+      message: { to: 'test+to@gmail.com' }
     })
   );
   t.regex(error.message, /No content was passed/);
@@ -691,7 +691,7 @@ test('should throw an error when tmpl dir exists but no props', async (t) => {
   const email = new Email({
     views: { root },
     message: {
-      from: 'niftylettuce+from@gmail.com'
+      from: 'test+from@gmail.com'
     },
     transport: {
       jsonTransport: true
@@ -705,7 +705,7 @@ test('should throw an error when tmpl dir exists but no props', async (t) => {
   const error = await t.throwsAsync(
     email.send({
       template: 'this-template-dir-is-empty',
-      message: { to: 'niftylettuce+to@gmail.com' }
+      message: { to: 'test+to@gmail.com' }
     })
   );
   t.regex(error.message, /No content was passed/);

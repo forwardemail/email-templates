@@ -1,69 +1,51 @@
 {
   "name": "email-templates",
-  "description": "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for sending beautiful emails with Lad.",
+  "description": "Create, preview, and send custom email templates for Node.js. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for Forward Email and Lad.",
   "version": "9.0.0",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
   "bugs": {
     "url": "https://github.com/forwardemail/email-templates/issues",
     "email": "niftylettuce@gmail.com"
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "contributors": [
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^7.2.6",
+    "@ladjs/i18n": "^8.0.0",
     "consolidate": "^0.16.0",
-    "debug": "^4.3.4",
     "get-paths": "^0.0.7",
-    "html-to-text": "^8.1.0",
+    "html-to-text": "^8.2.0",
     "juice": "^8.0.0",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.7.2",
+    "nodemailer": "^6.7.6",
     "preview-email": "^3.0.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.8",
-    "@babel/preset-env": "^7.16.11",
-    "@commitlint/cli": "^16.2.3",
-    "@commitlint/config-conventional": "^16.2.1",
-    "ava": "^4.1.0",
-    "cheerio": "^1.0.0-rc.10",
-    "codecov": "^3.8.3",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "ava": "^4.3.0",
+    "cheerio": "^1.0.0-rc.12",
     "cross-env": "^7.0.3",
-    "ejs": "^3.1.6",
-    "eslint": "^8.11.0",
-    "eslint-config-xo-lass": "^1.0.6",
-    "eslint-plugin-node": "^11.1.0",
+    "ejs": "^3.1.8",
+    "eslint": "^8.19.0",
+    "eslint-config-xo-lass": "^2.0.1",
     "fixpack": "^4.0.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nodemailer-sendgrid": "^1.0.3",
     "nyc": "^15.1.0",
     "pug": "^3.0.2",
-    "remark-cli": "^10.0.1",
-    "remark-preset-github": "^4.0.1",
-    "xo": "^0.48.0"
+    "remark-cli": "^11.0.0",
+    "remark-preset-github": "^4.0.4",
+    "xo": "^0.50.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=14"
   },
   "files": [
-    "lib",
-    "locales"
+    "index.js"
   ],
   "homepage": "https://github.com/forwardemail/email-templates",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "keywords": [
     "consolidate",
     "email",
@@ -84,60 +66,15 @@
     "transport"
   ],
   "license": "MIT",
-  "lint-staged": {
-    "linters": {
-      "*.js": [
-        "xo --fix",
-        "git add"
-      ],
-      "*.md": [
-        "remark . -qfo",
-        "git add"
-      ],
-      "package.json": [
-        "fixpack",
-        "git add"
-      ]
-    }
-  },
-  "main": "lib/index.js",
-  "prettier": {
-    "singleQuote": true,
-    "bracketSpacing": true,
-    "trailingComma": "none"
-  },
-  "remarkConfig": {
-    "plugins": [
-      "preset-github"
-    ]
-  },
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/forwardemail/email-templates"
   },
   "scripts": {
-    "ava": "cross-env NODE_ENV=test ava",
-    "build": "npm run build:clean && npm run build:lib",
-    "build:clean": "rimraf lib",
-    "build:lib": "babel src --out-dir lib",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "lint": "xo && remark . -qfo && eslint lib",
-    "nyc": "cross-env NODE_ENV=test nyc ava",
-    "test": "npm run build && npm run lint && npm run ava",
-    "test-coverage": "npm run build && npm run lint && npm run nyc"
-  },
-  "xo": {
-    "prettier": true,
-    "space": true,
-    "extends": [
-      "xo-lass"
-    ],
-    "ignores": [
-      "config.js"
-    ],
-    "rules": {
-      "unicorn/prevent-abbreviations": "off",
-      "unicorn/prefer-module": "off"
-    }
+    "lint": "xo --fix && remark . -qfo && fixpack",
+    "prepare": "husky install",
+    "pretest": "npm run lint",
+    "test": "cross-env NODE_ENV=test nyc ava"
   }
 }

@@ -1,9 +1,8 @@
 docute.init({
   debug: true,
   title: 'Email Templates',
-  repo: 'niftylettuce/email-templates',
-  'edit-link': 'https://github.com/niftylettuce/email-templates/tree/master/',
-  twitter: 'niftylettuce',
+  repo: 'forwardemail/email-templates',
+  'edit-link': 'https://github.com/forwardemail/email-templates/tree/master/',
   nav: {
     default: [
       {
@@ -12,7 +11,5 @@ docute.init({
       }
     ]
   },
-  plugins: [
-    docuteEmojify()
-  ]
+  plugins: [docuteEmojify()]
 });

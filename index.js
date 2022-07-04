@@ -6,12 +6,13 @@ const util = require('util');
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
 const consolidate = require('consolidate');
-const debug = require('debug')('email-templates');
 const getPaths = require('get-paths');
 const { convert } = require('html-to-text');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
 const previewEmail = require('preview-email');
+
+const debug = util.debuglog('email-templates');
 
 // promise version of `juice.juiceResources`
 const juiceResources = (html, options) => {
