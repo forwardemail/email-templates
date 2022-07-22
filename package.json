@@ -11,23 +11,23 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)"
   ],
   "dependencies": {
-    "@ladjs/i18n": "^8.0.0",
+    "@ladjs/i18n": "^8.0.1",
     "consolidate": "^0.16.0",
     "get-paths": "^0.0.7",
     "html-to-text": "^8.2.0",
     "juice": "^8.0.0",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.7.6",
-    "preview-email": "^3.0.5"
+    "nodemailer": "^6.7.7",
+    "preview-email": "^3.0.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "ava": "^4.3.0",
+    "ava": "^4.3.1",
     "cheerio": "^1.0.0-rc.12",
     "cross-env": "^7.0.3",
     "ejs": "^3.1.8",
-    "eslint": "^8.19.0",
+    "eslint": "^8.20.0",
     "eslint-config-xo-lass": "^2.0.1",
     "fixpack": "^4.0.0",
     "husky": "^8.0.1",
@@ -37,7 +37,7 @@
     "pug": "^3.0.2",
     "remark-cli": "^11.0.0",
     "remark-preset-github": "^4.0.4",
-    "xo": "^0.50.0"
+    "xo": "^0.51.0"
   },
   "engines": {
     "node": ">=14"

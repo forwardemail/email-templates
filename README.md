@@ -6,7 +6,7 @@
 [![made with lass](https://img.shields.io/badge/made_with-lass-95CC28.svg)](https://lass.js.org)
 [![license](https://img.shields.io/github/license/forwardemail/email-templates.svg)](LICENSE)
 
-Create, [preview][preview-email], and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for [Forward Email][forward-email] and [Lad][].
+Create, [preview][preview-email] (in the browser and in the iOS Simulator), and send custom email templates for [Node.js][node]. Highly configurable and supports automatic inline CSS, stylesheets, embedded images and fonts, and much more! Made for [Forward Email][forward-email] and [Lad][].
 
 
 ## Table of Contents
@@ -59,7 +59,7 @@ npm install email-templates pug
 
 ## Preview
 
-We've added [preview-email][] by default to this package!
+We've added [preview-email][] by default to this package!  This package allows you to preview emails in the browser and in the iOS Simulator.
 
 This means that (by default) in the development environment (e.g. `NODE_ENV=development`) your emails will be rendered to the tmp directory for you and automatically opened in the browser.
 
@@ -780,7 +780,7 @@ For a list of all available options and defaults [view the configuration object]
     * `pretty` (Boolean) - defaults to `true`, but is automatically set to `false` for subject templates and text-based emails
 * `message` (Object) - default [Nodemailer message object][nodemailer-message-object] for messages to inherit (defaults to an empty object `{}`)
 * `send` (Boolean) - whether or not to send emails, defaults to `false` for `development` and `test` environments, and `true` for all others (via `process.env.NODE_ENV`) (**NOTE: IF YOU ARE NOT USING `NODE_ENV` YOU WILL NEED TO MANUALLY SET THIS TO `true`**)
-* `preview` (Boolean or Object) - whether or not to preview emails using [preview-email][], defaults to `false` unless the environment is `development` (via `process.env.NODE_ENV`)
+* `preview` (Boolean or Object) - whether or not to preview emails using [preview-email][], defaults to `false` unless the environment is `development` (via `process.env.NODE_ENV`) – if you wish to disable the iOS Simulator then pass `{ openSimulator: false }`
 * `i18n` (Boolean or Object) - translation support for email templates, this accepts an I18N configuration object (defaults to `false`, which means it is disabled) which is passed along to [@ladjs/i18n][i18n] – see [Localization](#localization) example for more insight
 * `render` (Function) - defaults to a stable function that accepts two argument, `view` (String) and `locals` (Object) - you should not need to set this unless you have a need for custom rendering (see [Custom Rendering (e.g. from a MongoDB database)](#custom-rendering-eg-from-a-mongodb-database))
 * `customRender` (Boolean) - defaults to `false`, unless you pass your own `render` function, and in that case it will be automatically set to `true`
