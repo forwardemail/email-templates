@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+const path = require('node:path');
+const fs = require('node:fs');
 const test = require('ava');
 const nodemailer = require('nodemailer');
 const cheerio = require('cheerio');
@@ -36,6 +36,7 @@ test('inline css with juice using render without transport', async (t) => {
       from: 'test+from@gmail.com'
     },
     juiceResources: {
+      applyStyleTags: true,
       webResources: {
         relativeTo: root
       }
@@ -468,6 +469,29 @@ test('send email with missing text template', async (t) => {
   t.regex(message.text, /This is just a html test/);
 });
 
+test('does not inline css with juice using render by default', async (t) => {
+  const email = new Email({
+    views: { root },
+    message: {
+      from: 'test+from@gmail.com'
+    },
+    transport: {
+      jsonTransport: true
+    },
+    juiceResources: {
+      webResources: {
+        relativeTo: root
+      }
+    }
+  });
+  const html = await email.render('test/html', {
+    name: 'test'
+  });
+  const $ = cheerio.load(html);
+  const color = $('p').css('color');
+  t.is(color, undefined);
+});
+
 test('inline css with juice using render', async (t) => {
   const email = new Email({
     views: { root },
@@ -478,6 +502,7 @@ test('inline css with juice using render', async (t) => {
       jsonTransport: true
     },
     juiceResources: {
+      applyStyleTags: true,
       webResources: {
         relativeTo: root
       }
@@ -501,6 +526,7 @@ test('inline css with juice using send', async (t) => {
       jsonTransport: true
     },
     juiceResources: {
+      applyStyleTags: true,
       webResources: {
         relativeTo: root
       }

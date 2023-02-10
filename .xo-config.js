@@ -2,5 +2,8 @@ module.exports = {
   prettier: true,
   space: true,
   extends: ['xo-lass'],
-  ignore: ['config.js']
+  ignore: ['config.js'],
+  rules: {
+    'unicorn/prefer-top-level-await': 'warn'
+  }
 };
