@@ -244,7 +244,7 @@ Simply include the path or URL to the stylesheet in your template's `<head>`:
 link(rel="stylesheet", href="/css/app.css", data-inline)
 ```
 
-This will look for the file `/css/app.css` in the `build/` folder.
+This will look for the file `/css/app.css` in the `build/` folder.  Also see [Optimized Pug Stylesheet Loading](#optimized-pug-stylesheet-loading) below.
 
 If this asset is in another folder, then you will need to modify the default options when creating an `Email` instance:
 
@@ -257,6 +257,8 @@ const email = new Email({
     tableElements: ['TABLE']
   },
   juiceResources: {
+    // set this to `true` (since as of v11 it is `false` by default)
+    applyStyleTags: true, // <------------ you need to set this to `true`
     webResources: {
       //
       // this is the relative directory to your CSS/image assets
