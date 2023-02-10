@@ -5,6 +5,6 @@ module.exports = {
   ignore: ['config.js'],
   rules: {
     'unicorn/prefer-top-level-await': 'warn',
-    'unicorn/prefer-node-protocol': 'warn'
+    'unicorn/prefer-node-protocol': 'off'
   }
 };
