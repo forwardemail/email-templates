@@ -1,5 +1,5 @@
-const path = require('node:path');
-const fs = require('node:fs');
+const path = require('path');
+const fs = require('fs');
 const test = require('ava');
 const nodemailer = require('nodemailer');
 const cheerio = require('cheerio');

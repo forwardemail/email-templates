@@ -1,7 +1,7 @@
-const process = require('node:process');
-const fs = require('node:fs');
-const path = require('node:path');
-const util = require('node:util');
+const process = require('process');
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
 
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
