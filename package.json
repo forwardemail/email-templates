@@ -18,7 +18,7 @@
     "juice": "^8.1.0",
     "lodash": "^4.17.21",
     "nodemailer": "^6.9.1",
-    "preview-email": "^3.0.7"
+    "preview-email": "^3.0.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
