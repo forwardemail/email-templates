@@ -4,7 +4,6 @@ const test = require('ava');
 const nodemailer = require('nodemailer');
 const cheerio = require('cheerio');
 const _ = require('lodash');
-
 const Email = require('..');
 
 const root = path.join(__dirname, 'fixtures', 'emails');

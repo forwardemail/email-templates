@@ -2,7 +2,6 @@ const process = require('process');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
-
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
 const consolidate = require('consolidate');

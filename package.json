@@ -14,30 +14,30 @@
     "@ladjs/i18n": "^8.0.3",
     "consolidate": "^0.16.0",
     "get-paths": "^0.0.7",
-    "html-to-text": "^9.0.3",
-    "juice": "^8.1.0",
+    "html-to-text": "^9.0.5",
+    "juice": "^9.0.0",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.9.1",
-    "preview-email": "^3.0.10"
+    "nodemailer": "^6.9.2",
+    "preview-email": "^3.0.11"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.2",
-    "@commitlint/config-conventional": "^17.4.2",
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
     "ava": "^5.2.0",
     "cheerio": "^1.0.0-rc.12",
     "cross-env": "^7.0.3",
-    "ejs": "^3.1.8",
-    "eslint": "^8.33.0",
+    "ejs": "^3.1.9",
+    "eslint": "^8.40.0",
     "eslint-config-xo-lass": "^2.0.1",
     "fixpack": "^4.0.0",
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.1",
+    "lint-staged": "^13.2.2",
     "nodemailer-sendgrid": "^1.0.3",
     "nyc": "^15.1.0",
     "pug": "^3.0.2",
     "remark-cli": "^11.0.0",
     "remark-preset-github": "^4.0.4",
-    "xo": "^0.53.1"
+    "xo": "^0.54.2"
   },
   "engines": {
     "node": ">=14"
