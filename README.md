@@ -766,7 +766,7 @@ For a list of all available options and defaults [view the configuration object]
   * `options` (Object)
     * `extension` (String) - defaults to `'pug'`, and is the default file extension for templates
     * `map` (Object) - a template file extension mapping, defaults to `{ hbs: 'handlebars', njk: 'nunjucks' }` (this is useful if you use different file extension naming conventions)
-    * `engineSource` (Object) - the default template engine source, defaults to [consolidate][]
+    * `engineSource` (Object) - the default template engine source, defaults to [@ladjs/consolidate][consolidate]
   * `locals` (Object) - locals to pass to templates for rendering
     * `cache` (Boolean) - defaults to `false` for `development` and `test` environments, and `true` for all others (via `process.env.NODE_ENV`), whether or not to cache templates
     * `pretty` (Boolean) - defaults to `true`, but is automatically set to `false` for subject templates and text-based emails
@@ -979,7 +979,7 @@ See v5.0.0 above
 
 [pug]: https://pugjs.org
 
-[supported-engines]: https://github.com/tj/consolidate.js/#supported-template-engines
+[supported-engines]: https://github.com/ladjs/consolidate/#engines
 
 [nodemailer]: https://nodemailer.com/plugins/
 
@@ -1019,7 +1019,7 @@ See v5.0.0 above
 
 [mandarin]: https://github.com/ladjs/mandarin
 
-[consolidate]: https://github.com/tj/consolidate.js
+[consolidate]: https://github.com/ladjs/consolidate
 
 [nodemailer-message-object]: https://nodemailer.com/message/
 
