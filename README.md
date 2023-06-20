@@ -8,6 +8,8 @@
 
 Create, [preview][preview-email] (browser/iOS Simulator), and send custom email templates for [Node.js][node].  Made for [Forward Email][forward-email] and [Lad][].
 
+> **Need to send emails that land in the inbox instead of spam folder? [Click here to learn how to send JavaScript contact forms and more with Node.js](https://forwardemail.net/docs/how-to-javascript-contact-forms-node-js)**
+
 
 ## Table of Contents
 
@@ -109,7 +111,7 @@ email
 
 ### Basic
 
-> You can swap the `transport` option with a [Nodemailer transport][nodemailer-transport] configuration object or transport instance. We highly recommend using [Postmark][] for your transport (it's the default in [Lad][]).
+> You can swap the `transport` option with a [Nodemailer transport][nodemailer-transport] configuration object or transport instance. We highly recommend using [Forward Email][forward-email] for your transport (it's the default in [Lad][]).
 >
 > If you want to send emails in `development` or `test` environments, set `options.send` to `true`.
 
@@ -996,8 +998,6 @@ See v5.0.0 above
 [fa]: http://fontawesome.io/
 
 [nodemailer-transport]: https://nodemailer.com/transports/
-
-[postmark]: https://postmarkapp.com/
 
 [ejs]: http://ejs.co/
 
