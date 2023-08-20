@@ -186,7 +186,7 @@ class Email {
       template = template.path;
     }
 
-    const string = this.config.getPath(type, template, locals);
+    const string = this.config.getPath(type, template);
     if (!this.config.customRender) {
       const exists = await this.templateExists(string);
       if (!exists) return;
