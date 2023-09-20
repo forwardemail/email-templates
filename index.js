@@ -9,7 +9,6 @@ const getPaths = require('get-paths');
 const { convert } = require('html-to-text');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
-const previewEmail = require('preview-email');
 
 const debug = util.debuglog('email-templates');
 
@@ -337,6 +336,7 @@ class Email {
 
     if (this.config.preview) {
       debug('using `preview-email` to preview email');
+      const previewEmail = require('preview-email');
       await (_.isObject(this.config.preview)
         ? previewEmail(message, this.config.preview)
         : previewEmail(message));
