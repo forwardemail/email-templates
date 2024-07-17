@@ -9,7 +9,12 @@ const getPaths = require('get-paths');
 const { convert } = require('html-to-text');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
-const previewEmail = require('preview-email');
+
+let previewEmail;
+
+try {
+  previewEmail = require('preview-email');
+} catch {}
 
 const debug = util.debuglog('email-templates');
 
@@ -337,6 +342,16 @@ class Email {
 
     if (this.config.preview) {
       debug('using `preview-email` to preview email');
+      if (typeof previewEmail !== 'function') {
+        // don't break production apps
+        // (in case someone upgrades major without reading changelog on GH releases)
+        const err = new TypeError(
+          'Optional dependency "preview-email" not installed, but required for "previewEmail" option in "email-templates" usage (e.g. set "previewEmail: false" or "npm install preview-email" to resolve)'
+        );
+        if (env === 'production') console.error(err);
+        else throw err;
+      }
+
       await (_.isObject(this.config.preview)
         ? previewEmail(message, this.config.preview)
         : previewEmail(message));
