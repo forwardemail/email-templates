@@ -346,7 +346,7 @@ class Email {
         // don't break production apps
         // (in case someone upgrades major without reading changelog on GH releases)
         const err = new TypeError(
-          'Optional dependency "preview-email" not installed, but required for "previewEmail" option in "email-templates" usage (e.g. set "previewEmail: false" or "npm install preview-email" to resolve)'
+          'Optional dependency "preview-email" not installed, but required for "preview" option in "email-templates" usage (e.g. set "preview: false" or "npm install preview-email" to resolve)'
         );
         if (env === 'production') console.error(err);
         else throw err;
