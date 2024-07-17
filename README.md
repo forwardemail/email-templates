@@ -36,6 +36,7 @@ Create, [preview][preview-email] (browser/iOS Simulator), and send custom email 
   * [Optimized Pug Stylesheet Loading](#optimized-pug-stylesheet-loading)
 * [Plugins](#plugins)
 * [Breaking Changes](#breaking-changes)
+  * [v12.0.0](#v1200)
   * [v11.0.0](#v1100)
   * [v10.0.0](#v1000)
   * [v9.0.0](#v900)
@@ -52,12 +53,12 @@ Create, [preview][preview-email] (browser/iOS Simulator), and send custom email 
 
 ## Install
 
-> By default we recommend [pug][] for your template engine, but you can use [any template engine][supported-engines].
+> By default we recommend [pug][] for your template engine, but you can use [any template engine][supported-engines].  Note that [preview-email][] is an optional dependency and is extremely helpful for rendering development previews of your emails automatically in your browser.
 
 [npm][]:
 
 ```sh
-npm install email-templates pug
+npm install email-templates preview-email pug
 ```
 
 
@@ -841,6 +842,10 @@ const email = new Email({
 ## Breaking Changes
 
 See the [Releases](https://github.com/forwardemail/email-templates/releases) page for an up to date changelog.
+
+### v12.0.0
+
+The `preview-email` dependency is now an optional dependency.  You will need to `npm install preview-email` or set `preview: false`, otherwise an error will be thrown in non-production environments and `console.error` in production environments if `preview` option is a truthy value.  The default value for `preview` is `preview: process.NODE_ENV === 'development'`.
 
 ### v11.0.0
 
