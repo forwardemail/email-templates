@@ -251,7 +251,7 @@ class Email {
       if (locale !== locals.locale) i18n.setLocale(locals.locale);
     }
 
-    const res = await util.promisify(renderFn)(filePath, locals);
+    const res = await renderFn(filePath, locals);
     // transform the html with juice using remote paths
     // google now supports media queries
     // https://developers.google.com/gmail/design/reference/supported_css
