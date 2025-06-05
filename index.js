@@ -9,6 +9,7 @@ const getPaths = require('get-paths');
 const { convert } = require('html-to-text');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
+const { isPromise } = require('util/types');
 
 let previewEmail;
 
@@ -251,7 +252,11 @@ class Email {
       if (locale !== locals.locale) i18n.setLocale(locals.locale);
     }
 
-    const res = await util.promisify(renderFn)(filePath, locals);
+    const res = await (isPromise(
+      Reflect.apply(renderFn, this, [filePath, locals])
+    )
+      ? renderFn(filePath, locals)
+      : util.promisify(renderFn)(filePath, locals));
     // transform the html with juice using remote paths
     // google now supports media queries
     // https://developers.google.com/gmail/design/reference/supported_css
