@@ -1,7 +1,7 @@
 {
   "name": "email-templates",
   "description": "Create, preview (browser/iOS Simulator), and send custom email templates for Node.js. Made for Forward Email and Lad.",
-  "version": "12.0.2",
+  "version": "12.0.3",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com)",
   "bugs": {
     "url": "https://github.com/forwardemail/email-templates/issues",
