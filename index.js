@@ -2,6 +2,7 @@ const process = require('process');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
+const { isPromise } = require('util/types');
 const I18N = require('@ladjs/i18n');
 const _ = require('lodash');
 const consolidate = require('@ladjs/consolidate');
@@ -9,7 +10,6 @@ const getPaths = require('get-paths');
 const { convert } = require('html-to-text');
 const juice = require('juice');
 const nodemailer = require('nodemailer');
-const { isPromise } = require('util/types');
 
 let previewEmail;
 
