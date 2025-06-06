@@ -15,7 +15,7 @@
     "@ladjs/i18n": "^8.0.3",
     "get-paths": "^0.0.7",
     "html-to-text": "^9.0.5",
-    "juice": "^10.0.0",
+    "juice": "^11.0.0",
     "lodash": "^4.17.21",
     "nodemailer": "^6.9.14"
   },
