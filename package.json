@@ -17,7 +17,7 @@
     "html-to-text": "^9.0.5",
     "juice": "^10.0.0",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.9.14"
+    "nodemailer": "^7.0.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
