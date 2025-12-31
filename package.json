@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@ladjs/consolidate": "^1.0.4",
-    "@ladjs/i18n": "^8.0.3",
+    "@ladjs/i18n": "^10.0.0",
     "get-paths": "^0.0.7",
     "html-to-text": "^9.0.5",
     "juice": "^11.0.3",
