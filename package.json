@@ -15,9 +15,9 @@
     "@ladjs/i18n": "^8.0.3",
     "get-paths": "^0.0.7",
     "html-to-text": "^9.0.5",
-    "juice": "^10.0.0",
+    "juice": "^11.0.3",
     "lodash": "^4.17.21",
-    "nodemailer": "^7.0.11"
+    "nodemailer": "^7.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
@@ -40,7 +40,7 @@
     "xo": "^0.54.2"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "files": [
     "index.js"

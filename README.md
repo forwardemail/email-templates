@@ -843,6 +843,10 @@ const email = new Email({
 
 See the [Releases](https://github.com/forwardemail/email-templates/releases) page for an up to date changelog.
 
+### v13.0.0
+
+This package now requires Node v18+.
+
 ### v12.0.0
 
 The `preview-email` dependency is now an optional dependency.  You will need to `npm install preview-email` or set `preview: false`, otherwise an error will be thrown in non-production environments and `console.error` in production environments if `preview` option is a truthy value.  The default value for `preview` is `preview: process.NODE_ENV === 'development'`.
