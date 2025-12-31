@@ -36,6 +36,7 @@ Create, [preview][preview-email] (browser/iOS Simulator), and send custom email 
   * [Optimized Pug Stylesheet Loading](#optimized-pug-stylesheet-loading)
 * [Plugins](#plugins)
 * [Breaking Changes](#breaking-changes)
+  * [v13.0.0](#v1300)
   * [v12.0.0](#v1200)
   * [v11.0.0](#v1100)
   * [v10.0.0](#v1000)
