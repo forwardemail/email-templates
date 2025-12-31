@@ -10,9 +10,10 @@ jobs:
         os:
           - ubuntu-latest
         node_version:
-          - 14
-          - 16
           - 18
+          - 20
+          - 22
+          - 24
     name: Node ${{ matrix.node_version }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
