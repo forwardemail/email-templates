@@ -14,9 +14,9 @@
     "@ladjs/consolidate": "^1.0.4",
     "@ladjs/i18n": "^10.0.0",
     "get-paths": "^0.0.7",
-    "html-to-text": "^9.0.5",
+    "html-to-text": "^10.0.0",
     "juice": "^11.0.3",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "nodemailer": "^7.0.12"
   },
   "devDependencies": {
