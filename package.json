@@ -33,7 +33,7 @@
     "lint-staged": "^13.2.2",
     "nodemailer-sendgrid": "^1.0.3",
     "nyc": "^15.1.0",
-    "preview-email": "^3.0.17",
+    "preview-email": "^3.4.0",
     "pug": "^3.0.3",
     "remark-cli": "11.0.0",
     "remark-preset-github": "^4.0.4",
