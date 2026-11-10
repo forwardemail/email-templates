@@ -10,7 +10,6 @@ jobs:
         os:
           - ubuntu-latest
         node_version:
-          - 18
           - 20
           - 22
           - 24
